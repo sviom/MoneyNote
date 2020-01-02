@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteAPI", "MoneyNoteAPI\MoneyNoteAPI.csproj", "{3F901C9A-1BC2-4FBF-835A-56392E1AB13A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteLibrary", "MoneyNoteLibrary\MoneyNoteLibrary.csproj", "{04D0E5BB-7FBC-4C06-B180-4A35749AF4E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F901C9A-1BC2-4FBF-835A-56392E1AB13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F901C9A-1BC2-4FBF-835A-56392E1AB13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F901C9A-1BC2-4FBF-835A-56392E1AB13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F901C9A-1BC2-4FBF-835A-56392E1AB13A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D0E5BB-7FBC-4C06-B180-4A35749AF4E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D0E5BB-7FBC-4C06-B180-4A35749AF4E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D0E5BB-7FBC-4C06-B180-4A35749AF4E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D0E5BB-7FBC-4C06-B180-4A35749AF4E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CF98003-F913-40EF-8E52-F0179D0A0CAA}
+	EndGlobalSection
+EndGlobal
