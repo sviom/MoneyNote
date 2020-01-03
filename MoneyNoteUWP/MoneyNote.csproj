@@ -129,6 +129,9 @@
     <Compile Include="Views\MoneyCreateView.xaml.cs">
       <DependentUpon>MoneyCreateView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MoneyDetailView.xaml.cs">
+      <DependentUpon>MoneyDetailView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -203,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MoneyCreateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MoneyDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

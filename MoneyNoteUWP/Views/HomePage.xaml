@@ -28,7 +28,8 @@
                        VerticalAlignment="Center"/>
         </StackPanel>
         <ListView x:Name="MoneyListView" Grid.Column="1" Grid.Row="1"
-                  ItemsSource="{x:Bind ViewModel.MoneyList}">
+                  ItemsSource="{x:Bind ViewModel.MoneyList}"
+                  SelectionChanged="MoneyListView_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -36,7 +37,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:MoneyItem">
+                <DataTemplate x:DataType="model:MoneyItem" x:DefaultBindMode="OneWay">
                     <Grid Margin="0,10,0,10"
                           Padding="0,0,0,5"
                           BorderBrush="LightGray" BorderThickness="0,0,0,1"
@@ -45,12 +46,12 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        
+
                         <StackPanel Orientation="Horizontal" Grid.Row="0">
                             <TextBlock Text="{x:Bind UpdatedTime}"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
-                        
+
                         <Grid HorizontalAlignment="Stretch"
                               Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -72,18 +73,33 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button x:Name="NavigateCreatePage"
-                Click="NavigateCreatePage_Click"
-                Grid.ColumnSpan="3"
-                Grid.RowSpan="2"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                Margin="20" Height="50"
-                CornerRadius="10">
-            <Button.Content>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="작성페이지로" />
-                </StackPanel>
-            </Button.Content>
-        </Button>
+        <RelativePanel x:Name="CommonButtonPanel"
+                       Grid.RowSpan="2" Grid.ColumnSpan="3"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                       Margin="20">
+            <Button x:Name="NavigateCreatePage"
+                    Click="NavigateCreatePage_Click"
+                    Height="50"
+                    Margin="0,0,20,0"
+                    CornerRadius="5">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="작성페이지로" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="LogOutButton"
+                    Click="LogOutButton_Click"
+                    RelativePanel.RightOf="NavigateCreatePage"
+                    Height="50"
+                    CornerRadius="5">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="로그아웃" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </RelativePanel>
     </Grid>
 </Page>

@@ -75,10 +75,33 @@ namespace MoneyNoteLibrary.ViewModels
 
         public MoneyViewModel()
         {
+            Initialize();
+        }
+
+        public MoneyViewModel(MoneyItem item)
+        {
+            Initialize();
+            SetViewModel(item);
+        }
+
+        public void Initialize()
+        {
             MoneyList = new ObservableCollection<MoneyItem>();
         }
 
+        public void SetViewModel(MoneyItem item)
+        {
+            Title = item.Title;
+            Description = item.Description;
+            Money = item.Money;
+        }
+
         public void SaveMoney()
+        {
+
+        }
+
+        public void ModifyMoney()
         {
 
         }
