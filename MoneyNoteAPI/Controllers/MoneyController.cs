@@ -9,7 +9,7 @@ using MoneyNoteLibrary.Models;
 
 namespace MoneyNoteAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MoneyController : ControllerBase
     {
