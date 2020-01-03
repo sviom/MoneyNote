@@ -14,7 +14,7 @@ namespace MoneyNoteAPI
 {
     public class Program
     {
-        private static string GetKeyVaultEndpoint() => "https://todaylunchkeyvault.vault.azure.net";
+        public static string GetKeyVaultEndpoint() => "https://todaylunchkeyvault.vault.azure.net";
 
         public static void Main(string[] args)
         {

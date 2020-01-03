@@ -17,5 +17,10 @@ namespace MoneyNoteAPI.Controllers
         {
             return new List<MoneyItem>();
         }
+
+        public bool SaveMoney()
+        {
+            return true;
+        }
     }
 }
