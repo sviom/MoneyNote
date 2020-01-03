@@ -24,11 +24,11 @@ namespace MoneyNoteAPI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public async void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            var connectionString = await KeyVault.OnGetAsync("MoneyNoteConnectionString");
-            services.AddDbContext<MoneyContext>(options => options.UseSqlServer(connectionString));
+            //var connectionString = KeyVault.OnGetAsync("MoneyNoteConnectionString").Result;            
+            //services.AddDbContext<MoneyContext>(options => options.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

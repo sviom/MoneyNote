@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MoneyNoteAPI.Context;
 using MoneyNoteLibrary.Models;
 
 namespace MoneyNoteAPI.Controllers
@@ -15,12 +16,19 @@ namespace MoneyNoteAPI.Controllers
         [HttpPost]
         public List<MoneyItem> GetAllMoney()
         {
-            return new List<MoneyItem>();
+            var moneyList = SqlLauncher.GetAll<MoneyItem>();
+            return moneyList;
         }
 
-        public bool SaveMoney()
+        [HttpPost]
+        public bool SaveMoney(MoneyItem moneyItem)
         {
-            return true;
+            bool result = false;
+            var item = SqlLauncher.Insert(moneyItem);
+            if (item != null)
+                result = true;
+
+            return result;
         }
     }
 }
