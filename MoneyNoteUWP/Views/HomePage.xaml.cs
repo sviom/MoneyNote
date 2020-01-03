@@ -1,6 +1,8 @@
-﻿using MoneyNoteLibrary.ViewModels;
+﻿using MoneyNoteLibrary.Models;
+using MoneyNoteLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -16,14 +18,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x412에 나와 있습니다.
+// 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234238에 나와 있습니다.
 
-namespace MoneyNote
+namespace MoneyNote.Views
 {
     /// <summary>
     /// 자체적으로 사용하거나 프레임 내에서 탐색할 수 있는 빈 페이지입니다.
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class HomePage : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,8 +34,8 @@ namespace MoneyNote
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private LoginViewModel _ViewModel;
-        public LoginViewModel ViewModel
+        private MoneyViewModel _ViewModel;
+        public MoneyViewModel ViewModel
         {
             get { return _ViewModel; }
             set
@@ -46,27 +48,33 @@ namespace MoneyNote
             }
         }
 
-        public MainPage()
+        public HomePage()
         {
             this.InitializeComponent();
-            this.Loaded += MainPage_Loaded;
-            this.Unloaded += MainPage_Unloaded;
+            this.Loaded += HomePage_Loaded;
+            this.Unloaded += HomePage_Unloaded;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void HomePage_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new LoginViewModel();
+            ViewModel = new MoneyViewModel();
+            ViewModel.MoneyList = test;
         }
 
-        private void MainPage_Unloaded(object sender, RoutedEventArgs e)
+        private void HomePage_Unloaded(object sender, RoutedEventArgs e)
         {
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private ObservableCollection<MoneyItem> test = new ObservableCollection<MoneyItem>()
         {
-            bool result = ViewModel.LogIn();
-            if (result)
-                Frame.Navigate(typeof(Views.HomePage));
+            new MoneyItem(){ Title = "TEst", Money=1000000 },
+            new MoneyItem(){ Title = "TEst", Money=1000000 },
+            new MoneyItem(){ Title = "TEst", Money=1000000 },
+        };
+
+        private void NavigateCreatePage_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MoneyCreateView));
         }
     }
 }
