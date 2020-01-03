@@ -13,7 +13,7 @@ namespace MoneyNoteLibrary.Common
 #if DEBUG
         public static string basic = "http://localhost:50456/api/money/";
 #else
-        public static string basic = "https://moneynoteapi.azurewebsites.net/api/";
+        public static string basic = "https://moneynoteapi.azurewebsites.net/api/money/";
 #endif
 
         public static async Task<List<U>> GetAll<T, U>(T item) where T : class
