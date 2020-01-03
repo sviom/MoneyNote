@@ -12,11 +12,5 @@ namespace MoneyNoteAPI.Context
         public MoneyContext(DbContextOptions<MoneyContext> options) : base(options) { }
 
         public DbSet<MoneyItem> MoneyItems { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<MoneyItem>().to
-        }
     }
 }
