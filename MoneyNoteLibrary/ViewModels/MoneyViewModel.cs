@@ -31,19 +31,22 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        private double _Money;
-        public double Money
+        private string _MoneyText;
+        public string MoneyText
         {
-            get { return _Money; }
+            get { return _MoneyText; }
             set
             {
-                if (_Money == value)
+                if (_MoneyText == value)
                     return;
 
-                _Money = value;
+                _MoneyText = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
+
+        public double Money = 0;
 
         private string _Title;
         public string Title
@@ -56,6 +59,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _Title = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
@@ -70,8 +74,28 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _Description = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
+
+        private DateTimeOffset _CreatedTime = DateTimeOffset.Now;
+        public DateTimeOffset CreatedTime
+        {
+            get { return _CreatedTime; }
+            set
+            {
+                if (_CreatedTime == value)
+                    return;
+
+                _CreatedTime = value;
+                OnPropertyChanged();
+                ValidCheck();
+            }
+        }
+
+        public bool IsValidMoney => double.TryParse(MoneyText, out Money);
+
+        public bool IsEnableSave => IsValidMoney && !string.IsNullOrEmpty(Title);
 
         public MoneyViewModel()
         {
@@ -94,6 +118,13 @@ namespace MoneyNoteLibrary.ViewModels
             Title = item.Title;
             Description = item.Description;
             Money = item.Money;
+            CreatedTime = item.CreatedTime;
+        }
+
+        public void ValidCheck()
+        {
+            OnPropertyChanged(nameof(IsValidMoney));
+            OnPropertyChanged(nameof(IsEnableSave));
         }
 
         public void SaveMoney()

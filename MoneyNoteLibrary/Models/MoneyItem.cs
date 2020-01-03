@@ -10,7 +10,7 @@ namespace MoneyNoteLibrary.Models
         public string Title { get; set; }
         public double Money { get; set; }
         public string Description { get; set; }
-        public DateTime CreatedTime { get; set; }
-        public DateTime UpdatedTime { get; set; }
+        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.Now;
     }
 }
