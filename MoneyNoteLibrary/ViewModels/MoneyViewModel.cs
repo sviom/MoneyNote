@@ -1,4 +1,5 @@
-﻿using MoneyNoteLibrary.Models;
+﻿using MoneyNoteLibrary.Common;
+using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -108,9 +109,10 @@ namespace MoneyNoteLibrary.ViewModels
             SetViewModel(item);
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
             MoneyList = new ObservableCollection<MoneyItem>();
+            await HttpLauncher.GetAll();
         }
 
         public void SetViewModel(MoneyItem item)
