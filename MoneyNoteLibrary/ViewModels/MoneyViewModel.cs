@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MoneyNoteLibrary.ViewModels
 {
@@ -32,22 +33,20 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        private string _MoneyText;
-        public string MoneyText
+        private DateTimeOffset _CreatedTime;
+        public DateTimeOffset CreatedTime
         {
-            get { return _MoneyText; }
+            get { return _CreatedTime; }
             set
             {
-                if (_MoneyText == value)
+                if (_CreatedTime == value)
                     return;
 
-                _MoneyText = value;
+                _CreatedTime = value;
                 OnPropertyChanged();
                 ValidCheck();
             }
         }
-
-        public double Money = 0;
 
         private string _Title;
         public string Title
@@ -79,22 +78,22 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        private DateTimeOffset _CreatedTime = DateTimeOffset.Now;
-        public DateTimeOffset CreatedTime
+        private string _MoneyText;
+        public string MoneyText
         {
-            get { return _CreatedTime; }
+            get { return _MoneyText; }
             set
             {
-                if (_CreatedTime == value)
+                if (_MoneyText == value)
                     return;
 
-                _CreatedTime = value;
+                _MoneyText = value;
                 OnPropertyChanged();
                 ValidCheck();
             }
         }
 
-        public bool IsValidMoney => double.TryParse(MoneyText, out Money);
+        public bool IsValidMoney => Common.ValidCheck.IsValidNumber(MoneyText);
 
         public bool IsEnableSave => IsValidMoney && !string.IsNullOrEmpty(Title);
 
@@ -112,14 +111,18 @@ namespace MoneyNoteLibrary.ViewModels
         public async void Initialize()
         {
             MoneyList = new ObservableCollection<MoneyItem>();
-            await HttpLauncher.GetAll();
+            var result = await HttpLauncher.GetAll<User, MoneyItem>(new User() { Id = Guid.NewGuid(), Name = "test" });
+            foreach (var item in result)
+            {
+                MoneyList.Add(item);
+            }
         }
 
         public void SetViewModel(MoneyItem item)
         {
             Title = item.Title;
             Description = item.Description;
-            Money = item.Money;
+            MoneyText = item.Money.ToString();
             CreatedTime = item.CreatedTime;
         }
 
@@ -129,9 +132,19 @@ namespace MoneyNoteLibrary.ViewModels
             OnPropertyChanged(nameof(IsEnableSave));
         }
 
-        public void SaveMoney()
+        public async Task SaveMoney()
         {
+            double mo = 0;
+            double.TryParse(MoneyText, out mo);
 
+            var item = new MoneyItem()
+            {
+                Title = Title,
+                Description = Description,
+                Money = mo
+            };
+
+            await HttpLauncher.Insert(item);
         }
 
         public void ModifyMoney()

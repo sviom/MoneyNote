@@ -58,19 +58,11 @@ namespace MoneyNote.Views
         private void HomePage_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel = new MoneyViewModel();
-            ViewModel.MoneyList = test;
         }
 
         private void HomePage_Unloaded(object sender, RoutedEventArgs e)
         {
         }
-
-        private ObservableCollection<MoneyItem> test = new ObservableCollection<MoneyItem>()
-        {
-            new MoneyItem(){ Title = "TEst", Money=1000000 },
-            new MoneyItem(){ Title = "TEst", Money=1000000 },
-            new MoneyItem(){ Title = "TEst", Money=1000000 },
-        };
 
         private void NavigateCreatePage_Click(object sender, RoutedEventArgs e)
         {

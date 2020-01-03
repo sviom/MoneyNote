@@ -14,21 +14,17 @@ namespace MoneyNoteAPI.Controllers
     public class MoneyController : ControllerBase
     {
         [HttpPost]
-        public List<MoneyItem> GetAllMoney([FromBody]ApiRequest<string> id)
+        public List<MoneyItem> GetAllMoney([FromBody]ApiRequest<User> user)
         {
             var moneyList = SqlLauncher.GetAll<MoneyItem>();
             return moneyList;
         }
 
         [HttpPost]
-        public bool SaveMoney(MoneyItem moneyItem)
+        public MoneyItem SaveMoney([FromBody]ApiRequest<MoneyItem> item)
         {
-            bool result = false;
-            var item = SqlLauncher.Insert(moneyItem);
-            if (item != null)
-                result = true;
-
-            return result;
+            var insertResult = SqlLauncher.Insert(item.Content);
+            return insertResult;
         }
     }
 }

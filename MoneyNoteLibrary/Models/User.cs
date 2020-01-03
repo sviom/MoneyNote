@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MoneyNoteLibrary.Models
 {
-    public class Login : ICommon
+    public class User : ICommon
     {
         public Guid Id { get; set; }
 

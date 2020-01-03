@@ -68,9 +68,10 @@ namespace MoneyNote.Views
                 Frame.GoBack();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SaveMoney();
+            await ViewModel.SaveMoney();
+            Frame.Navigate(typeof(HomePage));
         }
     }
 }

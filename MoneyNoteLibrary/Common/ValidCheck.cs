@@ -54,5 +54,11 @@ namespace MoneyNoteLibrary.Common
                 return false;
             }
         }
+
+        public static bool IsValidNumber(string value)
+        {
+            double outResult = 0;
+            return double.TryParse(value, out outResult);
+        }
     }
 }
