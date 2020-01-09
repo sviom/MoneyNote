@@ -128,6 +128,19 @@ namespace MoneyNoteLibrary.ViewModels
             Description = item.Description;
             MoneyText = item.Money.ToString();
             CreatedTime = item.CreatedTime;
+            switch (item.Division)
+            {
+                case Enums.MoneyEnum.MoneyCategory.Expense:
+                    IsIncome = false;
+                    IsExpense = true;
+                    break;
+                case Enums.MoneyEnum.MoneyCategory.Income:
+                    IsIncome = true;
+                    IsExpense = false;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void ValidCheck()
@@ -139,8 +152,7 @@ namespace MoneyNoteLibrary.ViewModels
 
         public async Task SaveMoney()
         {
-            double mo = 0;
-            double.TryParse(MoneyText, out mo);
+            double.TryParse(MoneyText, out double mo);
 
             var item = new MoneyItem()
             {

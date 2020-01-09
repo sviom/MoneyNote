@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Data;
+using MoneyNoteLibrary.Enums;
+using static MoneyNoteLibrary.Enums.MoneyEnum;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
+
+namespace MoneyNote.Converter
+{
+    public class DivisionColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var color = new SolidColorBrush(Colors.Black);
+            if (value is MoneyCategory category)
+            {
+                switch (category)
+                {
+                    case MoneyCategory.Expense:
+                        color = new SolidColorBrush(Colors.Red);
+                        break;
+                    case MoneyCategory.Income:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return color;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return new SolidColorBrush(Colors.Black);
+        }
+    }
+}
