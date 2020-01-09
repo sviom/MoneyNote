@@ -32,8 +32,8 @@ namespace MoneyNote.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private MoneyViewModel _ViewModel;
-        public MoneyViewModel ViewModel
+        private MoneyHandleViewModel _ViewModel;
+        public MoneyHandleViewModel ViewModel
         {
             get { return _ViewModel; }
             set
@@ -55,7 +55,7 @@ namespace MoneyNote.Views
 
         private void MoneyCreateView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MoneyViewModel();
+            ViewModel = new MoneyHandleViewModel();
         }
 
         private void MoneyCreateView_Unloaded(object sender, RoutedEventArgs e)

@@ -9,11 +9,19 @@
     x:DefaultBindMode="OneWay"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Style x:Key="CommonButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="ForestGreen"></Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+    </Page.Resources>
+    
     <Grid>
         <Button x:Name="BackButton" 
                 Click="BackButton_Click"
                 HorizontalAlignment="Left" VerticalAlignment="Top"
-                CornerRadius="5"
+                Style="{StaticResource CommonButtonStyle}"
                 Margin="20">
             <Button.Content>
                 <StackPanel Orientation="Horizontal">
@@ -27,7 +35,12 @@
                     Margin="20">
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="작성"/>
 
-            <TextBlock>날짜</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="수입" IsChecked="{x:Bind ViewModel.IsIncome, Mode=TwoWay}" GroupName="MoneyDivisionGroup"></RadioButton>
+                <RadioButton Content="지출" IsChecked="{x:Bind ViewModel.IsExpense, Mode=TwoWay}" GroupName="MoneyDivisionGroup"></RadioButton>
+            </StackPanel>
+
+            <TextBlock Margin="0,10,0,0">날짜</TextBlock>
             <CalendarDatePicker HorizontalAlignment="Stretch" CornerRadius="5"
                                 Date="{x:Bind ViewModel.CreatedTime, Mode=TwoWay}"/>
 
@@ -48,7 +61,7 @@
                     Click="ModifyButton_Click"
                     IsEnabled="{x:Bind ViewModel.IsEnableSave}"
                     Margin="0,20,0,0"
-                    CornerRadius="5"
+                    Style="{StaticResource CommonButtonStyle}"
                     HorizontalAlignment="Stretch">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">

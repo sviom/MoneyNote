@@ -47,8 +47,8 @@ namespace MoneyNote.Views
             }
         }
 
-        private MoneyViewModel _ViewModel;
-        public MoneyViewModel ViewModel
+        private MoneyHandleViewModel _ViewModel;
+        public MoneyHandleViewModel ViewModel
         {
             get { return _ViewModel; }
             set
@@ -70,7 +70,7 @@ namespace MoneyNote.Views
 
         private void MoneyDetailView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MoneyViewModel(MoneyItem);
+            ViewModel = new MoneyHandleViewModel(MoneyItem);
         }
 
         private void MoneyDetailView_Unloaded(object sender, RoutedEventArgs e)

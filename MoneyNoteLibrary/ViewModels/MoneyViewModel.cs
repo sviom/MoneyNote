@@ -34,70 +34,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        private DateTimeOffset _CreatedTime;
-        public DateTimeOffset CreatedTime
-        {
-            get { return _CreatedTime; }
-            set
-            {
-                if (_CreatedTime == value)
-                    return;
-
-                _CreatedTime = value;
-                OnPropertyChanged();
-                ValidCheck();
-            }
-        }
-
-        private string _Title;
-        public string Title
-        {
-            get { return _Title; }
-            set
-            {
-                if (_Title == value)
-                    return;
-
-                _Title = value;
-                OnPropertyChanged();
-                ValidCheck();
-            }
-        }
-
-        private string _Description;
-        public string Description
-        {
-            get { return _Description; }
-            set
-            {
-                if (_Description == value)
-                    return;
-
-                _Description = value;
-                OnPropertyChanged();
-                ValidCheck();
-            }
-        }
-
-        private string _MoneyText;
-        public string MoneyText
-        {
-            get { return _MoneyText; }
-            set
-            {
-                if (_MoneyText == value)
-                    return;
-
-                _MoneyText = value;
-                OnPropertyChanged();
-                ValidCheck();
-            }
-        }
-
-        public bool IsValidMoney => Common.ValidCheck.IsValidNumber(MoneyText);
-
-        public bool IsEnableSave => IsValidMoney && !string.IsNullOrEmpty(Title);
-
         public double MoneySum
         {
             get
@@ -116,12 +52,6 @@ namespace MoneyNoteLibrary.ViewModels
             Initialize();
         }
 
-        public MoneyViewModel(MoneyItem item)
-        {
-            Initialize();
-            SetViewModel(item);
-        }
-
         public async void Initialize()
         {
             MoneyList = new ObservableCollection<MoneyItem>();
@@ -130,40 +60,7 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 MoneyList.Add(item);
             }
-        }
-
-        public void SetViewModel(MoneyItem item)
-        {
-            Title = item.Title;
-            Description = item.Description;
-            MoneyText = item.Money.ToString();
-            CreatedTime = item.CreatedTime;
-        }
-
-        public void ValidCheck()
-        {
-            OnPropertyChanged(nameof(IsValidMoney));
-            OnPropertyChanged(nameof(IsEnableSave));
-        }
-
-        public async Task SaveMoney()
-        {
-            double mo = 0;
-            double.TryParse(MoneyText, out mo);
-
-            var item = new MoneyItem()
-            {
-                Title = Title,
-                Description = Description,
-                Money = mo
-            };
-
-            await HttpLauncher.Insert(item);
-        }
-
-        public void ModifyMoney()
-        {
-
+            OnPropertyChanged(nameof(MoneySum));
         }
     }
 }
