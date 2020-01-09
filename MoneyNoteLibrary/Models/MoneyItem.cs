@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MoneyNoteLibrary.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteLibrary.Models
 {
@@ -19,6 +21,9 @@ namespace MoneyNoteLibrary.Models
         public double Money { get; set; }
 
         public string Description { get; set; }
+
+        [Required]
+        public MoneyCategory Division { get; set; }
 
         [Required]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
