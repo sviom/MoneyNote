@@ -30,6 +30,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _MoneyList = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(MoneySum));
             }
         }
 
@@ -96,6 +97,19 @@ namespace MoneyNoteLibrary.ViewModels
         public bool IsValidMoney => Common.ValidCheck.IsValidNumber(MoneyText);
 
         public bool IsEnableSave => IsValidMoney && !string.IsNullOrEmpty(Title);
+
+        public double MoneySum
+        {
+            get
+            {
+                double result = 0;
+                foreach (var item in MoneyList)
+                {
+                    result += item.Money;
+                }
+                return result;
+            }
+        }
 
         public MoneyViewModel()
         {

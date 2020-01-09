@@ -10,6 +10,15 @@
     x:DefaultBindMode="OneWay"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Style x:Key="CommonButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="ForestGreen"></Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Height" Value="50"/>
+        </Style>
+    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -73,15 +82,19 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <StackPanel Grid.Row="1" Grid.Column="2">
+            <TextBlock Text="총합" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="{x:Bind ViewModel.MoneySum}" FontSize="30"/>
+        </StackPanel>
+
         <RelativePanel x:Name="CommonButtonPanel"
                        Grid.RowSpan="2" Grid.ColumnSpan="3"
                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
                        Margin="20">
             <Button x:Name="NavigateCreatePage"
                     Click="NavigateCreatePage_Click"
-                    Height="50"
-                    Margin="0,0,20,0"
-                    CornerRadius="5">
+                    Style="{StaticResource CommonButtonStyle}"
+                    Margin="0,0,20,0">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="작성페이지로" />
@@ -91,9 +104,8 @@
 
             <Button x:Name="LogOutButton"
                     Click="LogOutButton_Click"
-                    RelativePanel.RightOf="NavigateCreatePage"
-                    Height="50"
-                    CornerRadius="5">
+                    Style="{StaticResource CommonButtonStyle}"
+                    RelativePanel.RightOf="NavigateCreatePage">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="로그아웃" />
