@@ -72,7 +72,7 @@
                                        FontSize="20"
                                        FontWeight="Bold"/>
                             <TextBlock Text="{x:Bind Money}" 
-                                       Foreground="{StaticResource DivisionColorConverter}"
+                                       Foreground="{x:Bind Division, Converter={StaticResource DivisionColorConverter}}"
                                        HorizontalAlignment="Right"
                                        Grid.Column="1"
                                        FontSize="20" FontWeight="Normal"></TextBlock>
