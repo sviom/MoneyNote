@@ -30,7 +30,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _MoneyList = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(MoneySum));
+                ReCalculate();
             }
         }
 
@@ -41,8 +41,42 @@ namespace MoneyNoteLibrary.ViewModels
                 double result = 0;
                 foreach (var item in MoneyList)
                 {
-                    result += item.Money;
+                    //result += item.Money;
+                    if (item.Division == Enums.MoneyEnum.MoneyCategory.Expense)
+                        result -= item.Money;
+                    else
+                        result += item.Money;
                 }
+                return result;
+            }
+        }
+
+        public double IncomeSum
+        {
+            get
+            {
+                double result = 0;
+                foreach (var item in MoneyList)
+                {
+                    if (item.Division == Enums.MoneyEnum.MoneyCategory.Income)
+                        result += item.Money;
+                }
+
+                return result;
+            }
+        }
+
+        public double ExpenseSum
+        {
+            get
+            {
+                double result = 0;
+                foreach (var item in MoneyList)
+                {
+                    if (item.Division == Enums.MoneyEnum.MoneyCategory.Expense)
+                        result += item.Money;
+                }
+
                 return result;
             }
         }
@@ -60,7 +94,14 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 MoneyList.Add(item);
             }
+            ReCalculate();
+        }
+
+        public void ReCalculate()
+        {
             OnPropertyChanged(nameof(MoneySum));
+            OnPropertyChanged(nameof(IncomeSum));
+            OnPropertyChanged(nameof(ExpenseSum));
         }
     }
 }
