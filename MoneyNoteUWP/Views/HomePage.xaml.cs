@@ -34,19 +34,7 @@ namespace MoneyNote.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private MoneyViewModel _ViewModel;
-        public MoneyViewModel ViewModel
-        {
-            get { return _ViewModel; }
-            set
-            {
-                if (_ViewModel == value)
-                    return;
-
-                _ViewModel = value;
-                OnPropertyChanged();
-            }
-        }
+        public static HomePage CurrentHomePage;
 
         public HomePage()
         {
@@ -57,33 +45,11 @@ namespace MoneyNote.Views
 
         private void HomePage_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MoneyViewModel();
+            CurrentHomePage = this;
         }
 
         private void HomePage_Unloaded(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void NavigateCreatePage_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MoneyCreateView));
-        }
-
-        private void MoneyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is ListView listView)
-            {
-                var selectedItem = listView.SelectedItem;
-                if (selectedItem is MoneyItem item)
-                {
-                    this.Frame.Navigate(typeof(MoneyDetailView), item);
-                }
-            }
-        }
-
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
