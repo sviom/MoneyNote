@@ -12,29 +12,16 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Pivot Margin="10">
-            <Pivot.Title>
-                <StackPanel>
-                    <TextBlock Text="MoneyNote" FontSize="30" />
-                </StackPanel>
-            </Pivot.Title>
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock>목록보기</TextBlock>
-                </PivotItem.Header>
-                <custom:MoneyBasicList />
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock>월별보기</TextBlock>
-                </PivotItem.Header>
-            </PivotItem>
 
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock>설정</TextBlock>
-                </PivotItem.Header>
-            </PivotItem>
-        </Pivot>
+        <NavigationView IsBackEnabled="True" 
+                        ItemInvoked="NavigationView_ItemInvoked"
+                        BackRequested="NavigationView_BackRequested">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="BasicListView" Icon="List" Tag="MoneyBasicListPage">목록보기</NavigationViewItem>
+                <NavigationViewItem x:Name="MonthlyListView" Icon="CalendarDay">월별보기</NavigationViewItem>
+                <NavigationViewItem x:Name="CategoryView" Icon="Comment">카테고리</NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" Margin="12,0,0,0"></Frame>
+        </NavigationView>
     </Grid>
 </Page>

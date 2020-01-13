@@ -1,5 +1,4 @@
-﻿using MoneyNote.Views;
-using MoneyNoteLibrary.Models;
+﻿using MoneyNoteLibrary.Models;
 using MoneyNoteLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,11 +17,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// 사용자 정의 컨트롤 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234236에 나와 있습니다.
+// 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234238에 나와 있습니다.
 
-namespace MoneyNote.UserControls
+namespace MoneyNote.Views
 {
-    public sealed partial class MoneyBasicList : UserControl, INotifyPropertyChanged
+    /// <summary>
+    /// 자체적으로 사용하거나 프레임 내에서 탐색할 수 있는 빈 페이지입니다.
+    /// </summary>
+    public sealed partial class MoneyBasicListPage : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,7 +47,7 @@ namespace MoneyNote.UserControls
             }
         }
 
-        public MoneyBasicList()
+        public MoneyBasicListPage()
         {
             this.InitializeComponent();
             this.Loaded += MoneyBasicList_Loaded;

@@ -46,10 +46,37 @@ namespace MoneyNote.Views
         private void HomePage_Loaded(object sender, RoutedEventArgs e)
         {
             CurrentHomePage = this;
+            ContentFrame.Navigate(typeof(MoneyBasicListPage));
         }
 
         private void HomePage_Unloaded(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.IsSettingsInvoked)
+            {
+                ContentFrame.Navigate(typeof(SettingPage));
+            }
+            else
+            {
+                var pageName = args.InvokedItemContainer.Tag ?? "";
+                switch (pageName.ToString())
+                {
+                    case "MoneyBasicListPage":
+                        ContentFrame.Navigate(typeof(MoneyBasicListPage));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (ContentFrame.CanGoBack)
+                ContentFrame.GoBack();
         }
     }
 }
