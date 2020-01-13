@@ -16,12 +16,18 @@
         <NavigationView IsBackEnabled="True" 
                         ItemInvoked="NavigationView_ItemInvoked"
                         BackRequested="NavigationView_BackRequested">
+            <NavigationView.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{x:Bind PageHeader}"/>
+                </StackPanel>
+            </NavigationView.Header>
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="BasicListView" Icon="List" Tag="MoneyBasicListPage">목록보기</NavigationViewItem>
+                <NavigationViewItem x:Name="BasicListView" Icon="List" Tag="MoneyBasicListPage" >목록보기</NavigationViewItem>
                 <NavigationViewItem x:Name="MonthlyListView" Icon="CalendarDay">월별보기</NavigationViewItem>
                 <NavigationViewItem x:Name="CategoryView" Icon="Comment">카테고리</NavigationViewItem>
             </NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame" Margin="12,0,0,0"></Frame>
+            
+            <Frame x:Name="ContentFrame" Margin="12"></Frame>
         </NavigationView>
     </Grid>
 </Page>

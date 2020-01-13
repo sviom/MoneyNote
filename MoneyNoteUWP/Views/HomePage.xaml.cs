@@ -36,6 +36,20 @@ namespace MoneyNote.Views
 
         public static HomePage CurrentHomePage;
 
+        private string _PageHeader = "목록보기";
+        public string PageHeader
+        {
+            get { return _PageHeader; }
+            set
+            {
+                if (_PageHeader == value)
+                    return;
+
+                _PageHeader = value;
+                OnPropertyChanged();
+            }
+        }
+
         public HomePage()
         {
             this.InitializeComponent();
@@ -57,6 +71,7 @@ namespace MoneyNote.Views
         {
             if (args.IsSettingsInvoked)
             {
+                PageHeader = "설정";
                 ContentFrame.Navigate(typeof(SettingPage));
             }
             else
@@ -65,6 +80,7 @@ namespace MoneyNote.Views
                 switch (pageName.ToString())
                 {
                     case "MoneyBasicListPage":
+                        PageHeader = "목록보기";
                         ContentFrame.Navigate(typeof(MoneyBasicListPage));
                         break;
                     default:
