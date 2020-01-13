@@ -19,10 +19,6 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -81,7 +77,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" >
+        <StackPanel Grid.Column="1" Margin="10,0,0,0" >
             <TextBlock Text="총합" Style="{StaticResource SubtitleTextBlockStyle}" />
             <TextBlock Text="{x:Bind ViewModel.MoneySum}" FontSize="30"/>
 
@@ -93,7 +89,7 @@
         </StackPanel>
 
         <RelativePanel x:Name="CommonButtonPanel"
-                       Grid.RowSpan="2" Grid.ColumnSpan="2"
+                       Grid.ColumnSpan="2"
                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
                        Margin="20">
             <Button x:Name="NavigateCreatePage"
