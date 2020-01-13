@@ -13,11 +13,11 @@
 
     <Grid>
         <Pivot Margin="10">
-            <Pivot.Title>
+            <!--<Pivot.Title>
                 <StackPanel>
                     <TextBlock Text="MoneyNote" FontSize="30" />
                 </StackPanel>
-            </Pivot.Title>
+            </Pivot.Title>-->
             <PivotItem>
                 <PivotItem.Header>
                     <TextBlock>목록보기</TextBlock>
