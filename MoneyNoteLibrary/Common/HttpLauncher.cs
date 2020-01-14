@@ -50,7 +50,7 @@ namespace MoneyNoteLibrary.Common
             }
         }
 
-        public static async Task<T> Test<T>(this MoneyApi api, T item)
+        public static async Task<T> ApiLauncher<T>(this MoneyApi api, T item)
         {
             T result;
             using (var client = new HttpClient())

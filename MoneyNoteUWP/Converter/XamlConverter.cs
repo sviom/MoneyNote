@@ -74,4 +74,23 @@ namespace MoneyNote.Converter
             return "";
         }
     }
+
+    public class StringNotNullToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var result = false;
+            if (value is string item)
+            {
+                if (!string.IsNullOrEmpty(item))
+                    result = true;
+            }
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return false;
+        }
+    }
 }

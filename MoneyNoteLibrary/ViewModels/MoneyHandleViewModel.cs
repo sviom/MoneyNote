@@ -191,7 +191,7 @@ namespace MoneyNoteLibrary.ViewModels
             PreMoneyItem.Money = mo;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
 
-            await MoneyApi.UpdateMoney.Test(PreMoneyItem);
+            await MoneyApi.UpdateMoney.ApiLauncher(PreMoneyItem);
         }
     }
 }

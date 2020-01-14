@@ -40,7 +40,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 업데이트
             /// </summary>
-            UpdateMoney
+            UpdateMoney,
+            /// <summary>
+            /// 회원가입
+            /// </summary>
+            SignUp
         }
     }
 }

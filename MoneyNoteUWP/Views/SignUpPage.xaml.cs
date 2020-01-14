@@ -16,14 +16,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x412에 나와 있습니다.
+// 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234238에 나와 있습니다.
 
-namespace MoneyNote
+namespace MoneyNote.Views
 {
     /// <summary>
     /// 자체적으로 사용하거나 프레임 내에서 탐색할 수 있는 빈 페이지입니다.
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class SignUpPage : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,8 +32,8 @@ namespace MoneyNote
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private LoginViewModel _ViewModel;
-        public LoginViewModel ViewModel
+        private SignUpViewModel _ViewModel;
+        public SignUpViewModel ViewModel
         {
             get { return _ViewModel; }
             set
@@ -46,32 +46,28 @@ namespace MoneyNote
             }
         }
 
-        public MainPage()
+        public SignUpPage()
         {
             this.InitializeComponent();
-            this.Loaded += MainPage_Loaded;
-            this.Unloaded += MainPage_Unloaded;
+            this.Loaded += SignUpPage_Loaded;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void SignUpPage_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new LoginViewModel();
+            ViewModel = new SignUpViewModel();
         }
 
-        private void MainPage_Unloaded(object sender, RoutedEventArgs e)
+        private async void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool result = ViewModel.LogIn();
+            var result = await ViewModel.SignUp();
             if (result)
-                Frame.Navigate(typeof(Views.HomePage));
+                Frame.Navigate(typeof(HomePage));
         }
 
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Views.SignUpPage));
+            if (Frame.CanGoBack)
+                Frame.GoBack();
         }
     }
 }

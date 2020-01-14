@@ -1,0 +1,136 @@
+﻿using MoneyNoteLibrary.Common;
+using MoneyNoteLibrary.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyApiInfo;
+
+namespace MoneyNoteLibrary.ViewModels
+{
+    public class SignUpViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string _NickName;
+        public string NickName
+        {
+            get { return _NickName; }
+            set
+            {
+                if (_NickName == value)
+                    return;
+
+                _NickName = value;
+                OnPropertyChanged();
+                ValidCheck();
+            }
+        }
+
+        private string _EmailAddress;
+        public string EmailAddress
+        {
+            get { return _EmailAddress; }
+            set
+            {
+                if (_EmailAddress == value)
+                    return;
+
+                _EmailAddress = value;
+                OnPropertyChanged();
+                ValidCheck();
+            }
+        }
+
+        private string _Password;
+        public string Password
+        {
+            get { return _Password; }
+            set
+            {
+                if (_Password == value)
+                    return;
+
+                _Password = value;
+                OnPropertyChanged();
+                ValidCheck();
+            }
+        }
+
+        private string _ConfirmPassword;
+        public string ConfirmPassword
+        {
+            get { return _ConfirmPassword; }
+            set
+            {
+                if (_ConfirmPassword == value)
+                    return;
+
+                _ConfirmPassword = value;
+                OnPropertyChanged();
+                ValidCheck();
+            }
+        }
+
+        public bool IsValidPassword => Password != null ? (Password.Length > 8 && Password.Equals(ConfirmPassword)) : false;
+
+        public bool IsSignUpEnable => Common.ValidCheck.IsValidEmail(EmailAddress) && IsValidPassword && IsValidNickName;
+
+        public bool IsValidNickName => !string.IsNullOrEmpty(NickName);
+
+        private string _ErrorMessage;
+        public string ErrorMessage
+        {
+            get { return _ErrorMessage; }
+            set
+            {
+                if (_ErrorMessage == value)
+                    return;
+
+                _ErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public SignUpViewModel() { }
+
+        public void ValidCheck()
+        {
+            OnPropertyChanged(nameof(IsValidPassword));
+            OnPropertyChanged(nameof(IsValidNickName));
+            OnPropertyChanged(nameof(IsSignUpEnable));
+        }
+
+        public async Task<bool> SignUp()
+        {
+            var result = false;
+            var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
+
+            var signUpUser = new User()
+            {
+                Email = EmailAddress,
+                Name = NickName,
+                Password = encryptedPassword
+            };
+            var user = await MoneyApi.SignUp.ApiLauncher(signUpUser);
+
+            if (user != null)
+            {
+                result = true;
+            }
+            else
+            {
+                ErrorMessage = "에러!!";
+            }
+
+            return result;
+        }
+    }
+}

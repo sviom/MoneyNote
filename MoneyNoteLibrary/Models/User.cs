@@ -24,5 +24,10 @@ namespace MoneyNoteLibrary.Models
         public string ConfirmPassword { get; set; }
 
         public List<MoneyItem> MoneyItems { get; set; }
+
+        [Required]
+        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
+
+        public DateTimeOffset UpdatedTime { get; set; }
     }
 }

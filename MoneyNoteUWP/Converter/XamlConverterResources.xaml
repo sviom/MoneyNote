@@ -6,5 +6,5 @@
     <local:DivisionColorConverter x:Key="DivisionColorConverter"/>
     <local:MoneyDividerConverter x:Key="MoneyDividerConverter"/>
     <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
-
+    <local:StringNotNullToVisibilityConverter x:Key="StringNotNullToVisibilityConverter"/>
 </ResourceDictionary>
