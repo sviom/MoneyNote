@@ -26,5 +26,12 @@ namespace MoneyNoteAPI.Controllers
             var insertResult = SqlLauncher.Insert(item.Content);
             return insertResult;
         }
+
+        [HttpPost]
+        public MoneyItem UpdateMoney([FromBody]ApiRequest<MoneyItem> item)
+        {
+            var insertResult = SqlLauncher.Update(item.Content);
+            return insertResult;
+        }
     }
 }

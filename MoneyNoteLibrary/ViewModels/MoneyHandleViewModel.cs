@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
@@ -182,8 +183,15 @@ namespace MoneyNoteLibrary.ViewModels
             await HttpLauncher.Insert(item);
         }
 
-        public void ModifyMoney()
+        public async Task ModifyMoney()
         {
+            double.TryParse(MoneyText, out double mo);
+            PreMoneyItem.Title = Title;
+            PreMoneyItem.Description = Description;
+            PreMoneyItem.Money = mo;
+            PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+
+            await MoneyApi.UpdateMoney.Test(PreMoneyItem);
         }
     }
 }
