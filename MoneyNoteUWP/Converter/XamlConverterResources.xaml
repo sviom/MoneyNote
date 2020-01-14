@@ -4,5 +4,7 @@
     xmlns:local="using:MoneyNote.Converter">
 
     <local:DivisionColorConverter x:Key="DivisionColorConverter"/>
+    <local:MoneyDividerConverter x:Key="MoneyDividerConverter"/>
+    <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
 
 </ResourceDictionary>

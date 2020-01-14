@@ -36,6 +36,9 @@ namespace MoneyNote.Views
 
         public static HomePage CurrentHomePage;
 
+        public Frame MenuContent => this.ContentFrame;
+
+
         private string _PageHeader = "목록보기";
         public string PageHeader
         {

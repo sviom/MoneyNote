@@ -37,4 +37,41 @@ namespace MoneyNote.Converter
             return new SolidColorBrush(Colors.Black);
         }
     }
+
+    public class MoneyDividerConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            string result = string.Empty;
+            if (value is double money)
+            {
+                result = money.ToString("C1");
+            }
+
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return value.ToString();
+        }
+    }
+
+    public class DateTimeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            string result = string.Empty;
+            if (value is DateTimeOffset dateTime)
+            {
+                result = dateTime.ToString("yyyy-MM-dd");
+            }
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return "";
+        }
+    }
 }

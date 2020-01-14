@@ -18,23 +18,7 @@
     </Page.Resources>
 
     <Grid>
-        <Button x:Name="BackButton" 
-                Click="BackButton_Click"
-                HorizontalAlignment="Left" VerticalAlignment="Top"
-                Style="{StaticResource CommonButtonStyle}"
-                Margin="20">
-            <Button.Content>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="뒤로가기" />
-                </StackPanel>
-            </Button.Content>
-        </Button>
-
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center"
-                    MinWidth="300"
-                    Margin="20">
-            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="작성"/>
-
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" MaxWidth="600">
             <StackPanel Orientation="Horizontal">
                 <RadioButton Content="수입" IsChecked="{x:Bind ViewModel.IsIncome, Mode=TwoWay}" GroupName="MoneyDivisionGroup"></RadioButton>
                 <RadioButton Content="지출" IsChecked="{x:Bind ViewModel.IsExpense, Mode=TwoWay}" GroupName="MoneyDivisionGroup"></RadioButton>

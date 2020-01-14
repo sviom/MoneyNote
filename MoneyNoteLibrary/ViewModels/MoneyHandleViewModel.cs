@@ -18,6 +18,21 @@ namespace MoneyNoteLibrary.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private MoneyItem _PreMoneyItem;
+        public MoneyItem PreMoneyItem
+        {
+            get { return _PreMoneyItem; }
+            set
+            {
+                if (_PreMoneyItem == value)
+                    return;
+
+                _PreMoneyItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private DateTimeOffset _CreatedTime = DateTimeOffset.Now;
         public DateTimeOffset CreatedTime
         {
@@ -124,6 +139,8 @@ namespace MoneyNoteLibrary.ViewModels
 
         public void SetViewModel(MoneyItem item)
         {
+            PreMoneyItem = item;
+
             Title = item.Title;
             Description = item.Description;
             MoneyText = item.Money.ToString();
@@ -167,7 +184,6 @@ namespace MoneyNoteLibrary.ViewModels
 
         public void ModifyMoney()
         {
-
         }
     }
 }

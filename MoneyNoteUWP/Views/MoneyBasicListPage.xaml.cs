@@ -70,14 +70,14 @@ namespace MoneyNote.Views
                 var selectedItem = listView.SelectedItem;
                 if (selectedItem is MoneyItem item)
                 {
-                    HomePage.CurrentHomePage.Frame.Navigate(typeof(MoneyDetailView), item);
+                    HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyDetailView), item);
                 }
             }
         }
 
         private void NavigateCreatePage_Click(object sender, RoutedEventArgs e)
         {
-            HomePage.CurrentHomePage.Frame.Navigate(typeof(MoneyCreateView));
+            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyCreateView));
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
