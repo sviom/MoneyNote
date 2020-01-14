@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyNoteAPI.Context;
 
 namespace MoneyNoteAPI.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20200114140316_UserRelationAdd2")]
+    partial class UserRelationAdd2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,6 +86,7 @@ namespace MoneyNoteAPI.Migrations
                     b.HasOne("MoneyNoteLibrary.Models.User", "User")
                         .WithMany("MoneyItems")
                         .HasForeignKey("UserId")
+                        .HasConstraintName("FK_MoneyItem_User_Relation")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

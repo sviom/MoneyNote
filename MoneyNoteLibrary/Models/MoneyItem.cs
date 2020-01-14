@@ -29,5 +29,9 @@ namespace MoneyNoteLibrary.Models
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.Now;
+
+        public Guid UserId { get; set; }
+
+        public User User { get; set; }
     }
 }
