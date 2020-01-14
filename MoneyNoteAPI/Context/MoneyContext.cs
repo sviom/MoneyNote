@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace MoneyNoteAPI.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            var connectionString = KeyVault.OnGetAsync("MoneyNoteConnectionString").Result;
+            var connectionString = AzureKeyVault.OnGetAsync("MoneyNoteConnectionString").Result;
             optionsBuilder.UseSqlServer(connectionString);
         }
     }

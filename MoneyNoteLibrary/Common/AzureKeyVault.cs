@@ -3,13 +3,17 @@ using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.Services.AppAuthentication;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MoneyNoteAPI
+namespace MoneyNoteLibrary.Common
 {
-    public class KeyVault
+    public static class AzureKeyVault
     {
+        public static string SaltPassword => OnGetAsync("SaltPassword").Result;
+
+        public static string GetKeyVaultEndpoint() => "https://todaylunchkeyvault.vault.azure.net";
+
         public static async Task<string> OnGetAsync(string secretName)
         {
             var secretValue = "Your application description page.";
@@ -17,7 +21,7 @@ namespace MoneyNoteAPI
             {
                 var azureServiceTokenProvider = new AzureServiceTokenProvider();
                 var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-                var secret = await keyVaultClient.GetSecretAsync(Program.GetKeyVaultEndpoint() + "/secrets/" + secretName).ConfigureAwait(false);
+                var secret = await keyVaultClient.GetSecretAsync(GetKeyVaultEndpoint() + "/secrets/" + secretName).ConfigureAwait(false);
                 secretValue = secret.Value;
             }
             catch (KeyVaultErrorException keyVaultException)
