@@ -16,7 +16,7 @@
 
             <TextBlock Text="닉네임" Margin="0,10,0,0" />
             <TextBox x:Name="NickNameText" 
-                     Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{x:Bind ViewModel.NickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      CornerRadius="5"
                      HorizontalAlignment="Stretch" />
 

@@ -1,9 +1,13 @@
-﻿using System;
+﻿using MoneyNoteLibrary.Common;
+using MoneyNoteLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
@@ -59,9 +63,17 @@ namespace MoneyNoteLibrary.ViewModels
             OnPropertyChanged(nameof(IsEnableLogin));
         }
 
-        public bool LogIn()
+        public async Task<bool> LogIn()
         {
-            return true;
+            var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
+            var tempUser = new User()
+            {
+                Email = Email,
+                Password = encryptedPassword
+            };
+
+            var result = await MoneyApi.LogIn.ApiLauncher<User, bool>(tempUser);
+            return result.Result;
         }
     }
 }

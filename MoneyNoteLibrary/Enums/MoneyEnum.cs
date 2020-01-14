@@ -44,7 +44,26 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 회원가입
             /// </summary>
-            SignUp
+            SignUp,
+            /// <summary>
+            /// 로그인
+            /// </summary>
+            LogIn
+        }
+
+        /// <summary>
+        /// 연결 컨트롤러 이름
+        /// </summary>
+        public enum ControllerEnum
+        {
+            /// <summary>
+            /// 금액관련
+            /// </summary>
+            money,
+            /// <summary>
+            /// 사용자관련
+            /// </summary>
+            user
         }
     }
 }

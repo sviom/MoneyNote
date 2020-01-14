@@ -12,7 +12,7 @@ namespace MoneyNoteLibrary.Common
     public static class HttpLauncher
     {
 #if DEBUG
-        public static string basic = "http://localhost:50456/api/money/";
+        public static string basic = "http://localhost:50456/api/";
 #else
         public static string basic = "https://moneynoteapi.azurewebsites.net/api/money/";
 #endif
@@ -50,20 +50,20 @@ namespace MoneyNoteLibrary.Common
             }
         }
 
-        public static async Task<T> ApiLauncher<T>(this MoneyApi api, T item)
+        public static async Task<ApiResult<U>> ApiLauncher<T, U>(this MoneyApi api, T item, ControllerEnum controllerEnum = ControllerEnum.money)
         {
-            T result;
+            ApiResult<U> result;
             using (var client = new HttpClient())
             {
                 var request = new ApiRequest<T>(item);
                 var itemString = JsonConvert.SerializeObject(request);
 
                 var content = new StringContent(itemString, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(basic + api, content);
+                var response = await client.PostAsync(basic + controllerEnum + "/" + api, content);
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var ss = JsonConvert.DeserializeObject<T>(responseContent);
-                result = ss;
+                var apiResult = JsonConvert.DeserializeObject<ApiResult<U>>(responseContent);
+                result = apiResult;
             }
             return result;
         }

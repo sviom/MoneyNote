@@ -119,7 +119,7 @@ namespace MoneyNoteLibrary.ViewModels
                 Name = NickName,
                 Password = encryptedPassword
             };
-            var user = await MoneyApi.SignUp.ApiLauncher(signUpUser);
+            var user = await MoneyApi.SignUp.ApiLauncher<User, User>(signUpUser, ControllerEnum.user);
 
             if (user != null)
             {

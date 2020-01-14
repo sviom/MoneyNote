@@ -62,9 +62,9 @@ namespace MoneyNote
         {
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            bool result = ViewModel.LogIn();
+            bool result = await ViewModel.LogIn();
             if (result)
                 Frame.Navigate(typeof(Views.HomePage));
         }

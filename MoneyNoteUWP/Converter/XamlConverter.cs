@@ -8,6 +8,7 @@ using MoneyNoteLibrary.Enums;
 using static MoneyNoteLibrary.Enums.MoneyEnum;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using Windows.UI.Xaml;
 
 namespace MoneyNote.Converter
 {
@@ -79,18 +80,18 @@ namespace MoneyNote.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var result = false;
+            var result = Visibility.Collapsed;
             if (value is string item)
             {
                 if (!string.IsNullOrEmpty(item))
-                    result = true;
+                    result = Visibility.Visible;
             }
             return result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return false;
+            return Visibility.Collapsed;
         }
     }
 }
