@@ -98,21 +98,10 @@
                     Margin="0,0,20,0">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="작성페이지로" />
+                        <TextBlock Text="작성하기" />
                     </StackPanel>
                 </Button.Content>
             </Button>
-
-            <!--<Button x:Name="LogOutButton"
-                    Click="LogOutButton_Click"
-                    Style="{StaticResource CommonButtonStyle}"
-                    RelativePanel.RightOf="NavigateCreatePage">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="로그아웃" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>-->
         </RelativePanel>
     </Grid>
 </Page>

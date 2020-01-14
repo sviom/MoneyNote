@@ -92,9 +92,10 @@ namespace MoneyNote.Views
                 Frame.GoBack();
         }
 
-        private void ModifyButton_Click(object sender, RoutedEventArgs e)
+        private async void ModifyButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ModifyMoney();
+            await ViewModel.ModifyMoney();
+            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
         }
     }
 }

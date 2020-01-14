@@ -71,7 +71,7 @@ namespace MoneyNote.Views
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             await ViewModel.SaveMoney();
-            Frame.Navigate(typeof(HomePage));
+            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
         }
     }
 }
