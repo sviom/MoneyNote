@@ -20,6 +20,8 @@ namespace MoneyNoteLibrary.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public ControllerEnum Controller => ControllerEnum.user;
+
         private string _Email;
         public string Email
         {
@@ -72,7 +74,7 @@ namespace MoneyNoteLibrary.ViewModels
                 Password = encryptedPassword
             };
 
-            var result = await MoneyApi.LogIn.ApiLauncher<User, bool>(tempUser);
+            var result = await MoneyApi.LogIn.ApiLauncher<User, bool>(tempUser, Controller);
             return result.Result;
         }
     }
