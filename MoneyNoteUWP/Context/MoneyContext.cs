@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MoneyNoteAPI.Context
+namespace MoneyNote.Context
 {
     public class MoneyContext : DbContext
     {
@@ -17,8 +17,7 @@ namespace MoneyNoteAPI.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            var connectionString = AzureKeyVault.OnGetAsync("MoneyNoteConnectionString").Result;
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlite("Data Source=moneydb.db");
         }
     }
 }
