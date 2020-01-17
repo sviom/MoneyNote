@@ -97,9 +97,9 @@ namespace MoneyNoteAPI.Context
         /// Object 개수 Counting, 조건 없으면 전체 개수 가져오기
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
+        /// <param name="expression"></param>
         /// <returns></returns>
-        public static int Count<T>(Func<T, bool> func = null) where T : class
+        public static int Count<T>(Expression<Func<T, bool>> expression = null) where T : class
         {
             int count = 0;
             try
@@ -107,14 +107,15 @@ namespace MoneyNoteAPI.Context
                 using (var db = new MoneyContext())
                 {
                     var dbSet = db.Set<T>();
-                    if (func != null)
-                        count = dbSet.Where(func).ToList().Count;
+                    if (expression != null)
+                        count = dbSet.Where(expression).ToList().Count;
                     else
                         count = dbSet.ToList().Count;
                 }
             }
             catch (Exception ex)
             {
+                throw;
                 //Insert(new Log() { Message = ex.Message, StackTrace = ex.StackTrace });
             }
             return count;

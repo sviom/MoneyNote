@@ -24,8 +24,8 @@ namespace MoneyNoteAPI.Controllers
         public ApiResult<User> LogIn([FromBody]ApiRequest<User> item)
         {
             var user = item.Content;
-            var countResult = SqlLauncher.Count<User>(x => x.Email.Equals(user.Email) && x.Password.Equals(user.Password));
-            var userResult = SqlLauncher.Get<User>(x => x.Email.Equals(user.Email) && x.Password.Equals(user.Password));
+            var countResult = SqlLauncher.Count<User>(x => x.Email == user.Email && x.Password == user.Password);
+            var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
             return new ApiResult<User>() { Result = countResult > 0, Content = userResult };
         }
     }

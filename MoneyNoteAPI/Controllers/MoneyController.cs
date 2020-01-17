@@ -16,7 +16,7 @@ namespace MoneyNoteAPI.Controllers
         [HttpPost]
         public List<MoneyItem> GetAllMoney([FromBody]ApiRequest<User> user)
         {
-            var moneyList = SqlLauncher.GetAll<MoneyItem>();
+            var moneyList = SqlLauncher.GetAll<MoneyItem>(x => x.UserId == user.Content.Id);
             return moneyList;
         }
 
