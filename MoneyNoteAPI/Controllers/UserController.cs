@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
+using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 
 namespace MoneyNoteAPI.Controllers
@@ -26,6 +27,9 @@ namespace MoneyNoteAPI.Controllers
             var user = item.Content;
             var countResult = SqlLauncher.Count<User>(x => x.Email == user.Email && x.Password == user.Password);
             var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
+
+            var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
+
             return new ApiResult<User>() { Result = countResult > 0, Content = userResult };
         }
     }
