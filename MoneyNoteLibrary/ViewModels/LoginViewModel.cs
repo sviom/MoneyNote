@@ -65,7 +65,7 @@ namespace MoneyNoteLibrary.ViewModels
             OnPropertyChanged(nameof(IsEnableLogin));
         }
 
-        public async Task<bool> LogIn()
+        public async Task<Tuple<bool, User>> LogIn()
         {
             var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
             var tempUser = new User()
@@ -74,8 +74,8 @@ namespace MoneyNoteLibrary.ViewModels
                 Password = encryptedPassword
             };
 
-            var result = await MoneyApi.LogIn.ApiLauncher<User, bool>(tempUser, Controller);
-            return result.Result;
+            var result = await MoneyApi.LogIn.ApiLauncher<User, User>(tempUser, Controller);
+            return new Tuple<bool, User>(result.Result, result.Content);
         }
     }
 }

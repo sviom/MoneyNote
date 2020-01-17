@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
@@ -18,6 +19,8 @@ namespace MoneyNoteLibrary.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public User LoginedUser { get; set; }
 
         private ObservableCollection<MoneyItem> _MoneyList;
         public ObservableCollection<MoneyItem> MoneyList
@@ -81,20 +84,26 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        public MoneyViewModel()
+        public MoneyViewModel(User user)
         {
+            LoginedUser = user;
             Initialize();
         }
 
         public async void Initialize()
         {
             MoneyList = new ObservableCollection<MoneyItem>();
-            var result = await HttpLauncher.GetAll<User, MoneyItem>(new User() { Id = Guid.NewGuid(), Name = "test" });
-            foreach (var item in result)
+            var result = await MoneyApi.GetAllMoney.ApiLauncher<User, List<MoneyItem>>(LoginedUser);
+            //var result = await HttpLauncher.GetAll<User, MoneyItem>(new User() { Id = Guid.NewGuid(), Name = "test" });
+
+            if (result.Result)
             {
-                MoneyList.Add(item);
+                foreach (var item in result.Content)
+                {
+                    MoneyList.Add(item);
+                }
+                ReCalculate();
             }
-            ReCalculate();
         }
 
         public void ReCalculate()

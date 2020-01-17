@@ -56,7 +56,7 @@ namespace MoneyNote.Views
 
         private void MoneyBasicList_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MoneyViewModel();
+            ViewModel = new MoneyViewModel(App.LogInedUser);
         }
 
         private void MoneyBasicList_Unloaded(object sender, RoutedEventArgs e)
