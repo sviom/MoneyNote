@@ -93,7 +93,9 @@ namespace MoneyNoteLibrary.ViewModels
         public async void Initialize()
         {
             MoneyList = new ObservableCollection<MoneyItem>();
-            var result = await MoneyApi.GetAllMoney.ApiLauncher<User, List<MoneyItem>>(LoginedUser);
+
+            var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
+            var result = await MoneyApi.GetAllMoney.ApiLauncher<string, List<MoneyItem>>(encryptedId);
             //var result = await HttpLauncher.GetAll<User, MoneyItem>(new User() { Id = Guid.NewGuid(), Name = "test" });
 
             if (result.Result)

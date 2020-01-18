@@ -28,7 +28,7 @@ namespace MoneyNoteAPI.Controllers
             var countResult = SqlLauncher.Count<User>(x => x.Email == user.Email && x.Password == user.Password);
             var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
 
-            var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
+            //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
 
             return new ApiResult<User>() { Result = countResult > 0, Content = userResult };
         }

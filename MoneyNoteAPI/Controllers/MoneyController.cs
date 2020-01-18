@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
+using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 
 namespace MoneyNoteAPI.Controllers
@@ -14,9 +15,11 @@ namespace MoneyNoteAPI.Controllers
     public class MoneyController : ControllerBase
     {
         [HttpPost]
-        public List<MoneyItem> GetAllMoney([FromBody]ApiRequest<User> user)
+        public List<MoneyItem> GetAllMoney([FromBody]ApiRequest<string> user)
         {
-            var moneyList = SqlLauncher.GetAll<MoneyItem>(x => x.UserId == user.Content.Id);
+            var baseId = user.Content;
+            UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
+            var moneyList = SqlLauncher.GetAll<MoneyItem>(x => x.UserId.ToString() == baseId);
             return moneyList;
         }
 

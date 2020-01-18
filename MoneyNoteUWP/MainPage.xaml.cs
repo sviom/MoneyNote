@@ -1,4 +1,5 @@
-﻿using MoneyNoteLibrary.ViewModels;
+﻿using MoneyNoteLibrary.Common;
+using MoneyNoteLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -67,6 +68,7 @@ namespace MoneyNote
             var result = await ViewModel.LogIn();
             if (result.Item1)
             {
+                AzureKeyVault.SaltPassword = await AzureKeyVault.OnGetAsync(KeyVaultName.SaltPassword.ToString());
                 Frame.Navigate(typeof(Views.HomePage));
                 App.LogInedUser = result.Item2;
             }

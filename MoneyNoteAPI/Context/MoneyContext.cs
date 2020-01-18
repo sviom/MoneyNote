@@ -17,7 +17,7 @@ namespace MoneyNoteAPI.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            var connectionString = AzureKeyVault.OnGetAsync("MoneyNoteConnectionString").Result;
+            var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
