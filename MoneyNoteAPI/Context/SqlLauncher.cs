@@ -11,14 +11,19 @@ namespace MoneyNoteAPI.Context
         public static T Insert<T>(T inputObject) where T : class
         {
             T addedObject = null;
-            using (var db = new MoneyContext())
+            try
             {
+                using var db = new MoneyContext();
                 db.Entry(inputObject).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 var set = db.Set<T>();
                 set.Add(inputObject);
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     addedObject = inputObject;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
             return addedObject;
         }
@@ -47,17 +52,15 @@ namespace MoneyNoteAPI.Context
             List<T> returnList = new List<T>();
             try
             {
-                using (var db = new MoneyContext())
+                using var db = new MoneyContext();
+                var dbSet = db.Set<T>();
+                if (expression != null)
                 {
-                    var dbSet = db.Set<T>();
-                    if (expression != null)
-                    {
-                        returnList = dbSet.Where(expression).ToList();
-                    }
-                    else
-                    {
-                        returnList = dbSet.ToList();
-                    }
+                    returnList = dbSet.Where(expression).ToList();
+                }
+                else
+                {
+                    returnList = dbSet.ToList();
                 }
             }
             catch (Exception ex)

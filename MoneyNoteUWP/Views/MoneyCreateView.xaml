@@ -53,6 +53,10 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
+
+            <TextBlock Text="{x:Bind ViewModel.ErrorMessage}" 
+                       Margin="0,5,0,0"
+                       Style="{StaticResource BasicErrorMessage}"/>
         </StackPanel>
     </Grid>
 </Page>

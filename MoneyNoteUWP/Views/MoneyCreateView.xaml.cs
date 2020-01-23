@@ -55,23 +55,18 @@ namespace MoneyNote.Views
 
         private void MoneyCreateView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MoneyHandleViewModel();
+            ViewModel = new MoneyHandleViewModel(App.LogInedUser);
         }
 
         private void MoneyCreateView_Unloaded(object sender, RoutedEventArgs e)
         {
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Frame.CanGoBack)
-                Frame.GoBack();
-        }
-
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            await ViewModel.SaveMoney();
-            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
+            var result = await ViewModel.SaveMoney();
+            if (result)
+                HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
         }
     }
 }

@@ -79,10 +79,5 @@ namespace MoneyNote.Views
         {
             HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyCreateView));
         }
-
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

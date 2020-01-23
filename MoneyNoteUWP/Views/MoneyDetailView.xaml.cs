@@ -70,7 +70,7 @@ namespace MoneyNote.Views
 
         private void MoneyDetailView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MoneyHandleViewModel(MoneyItem);
+            ViewModel = new MoneyHandleViewModel(App.LogInedUser, MoneyItem);
         }
 
         private void MoneyDetailView_Unloaded(object sender, RoutedEventArgs e)
@@ -86,16 +86,11 @@ namespace MoneyNote.Views
             }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.Frame.CanGoBack)
-                Frame.GoBack();
-        }
-
         private async void ModifyButton_Click(object sender, RoutedEventArgs e)
         {
-            await ViewModel.ModifyMoney();
-            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
+            var result = await ViewModel.ModifyMoney();
+            if (result)
+                HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
         }
     }
 }

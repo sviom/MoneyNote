@@ -33,6 +33,21 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        public User LoginedUser { get; set; }
+
+        private string _ErrorMessage;
+        public string ErrorMessage
+        {
+            get { return _ErrorMessage; }
+            set
+            {
+                if (_ErrorMessage == value)
+                    return;
+
+                _ErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
 
         private DateTimeOffset _CreatedTime = DateTimeOffset.Now;
         public DateTimeOffset CreatedTime
@@ -130,12 +145,17 @@ namespace MoneyNoteLibrary.ViewModels
 
         public bool IsEnableSave => IsValidMoney && !string.IsNullOrEmpty(Title) && IsValidDivision;
 
-        public MoneyHandleViewModel() { }
+        public MoneyHandleViewModel(User user)
+        {
+            LoginedUser = user;
+        }
 
-        public MoneyHandleViewModel(MoneyItem item)
+        public MoneyHandleViewModel(User user, MoneyItem item)
         {
             if (item != null)
                 SetViewModel(item);
+
+            LoginedUser = user;
         }
 
         public void SetViewModel(MoneyItem item)
@@ -168,8 +188,11 @@ namespace MoneyNoteLibrary.ViewModels
             OnPropertyChanged(nameof(IsEnableSave));
         }
 
-        public async Task SaveMoney()
+        public async Task<bool> SaveMoney()
         {
+            if (LoginedUser == null)
+                return false;
+
             double.TryParse(MoneyText, out double mo);
 
             var item = new MoneyItem()
@@ -177,20 +200,35 @@ namespace MoneyNoteLibrary.ViewModels
                 Title = Title,
                 Description = Description,
                 Money = mo,
-                Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense
+                Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
+                User = LoginedUser
             };
-            await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
+            var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
+
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+
+            return result.Result;
         }
 
-        public async Task ModifyMoney()
+        public async Task<bool> ModifyMoney()
         {
+            if (LoginedUser == null)
+                return false;
+
             double.TryParse(MoneyText, out double mo);
             PreMoneyItem.Title = Title;
             PreMoneyItem.Description = Description;
             PreMoneyItem.Money = mo;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+            PreMoneyItem.User = LoginedUser;
 
-            await MoneyApi.UpdateMoney.ApiLauncher<MoneyItem, MoneyItem>(PreMoneyItem);
+            var result = await MoneyApi.UpdateMoney.ApiLauncher<MoneyItem, MoneyItem>(PreMoneyItem);
+
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+
+            return result.Result;
         }
     }
 }
