@@ -31,8 +31,9 @@ namespace MoneyNoteAPI.Context
         public static List<T> InsertList<T>(List<T> inputList) where T : class
         {
             List<T> resultList = new List<T>();
-            using (var db = new MoneyContext())
+            try
             {
+                using var db = new MoneyContext();
                 foreach (var item in inputList)
                 {
                     var set = db.Set<T>();
@@ -43,6 +44,7 @@ namespace MoneyNoteAPI.Context
                 if (saveResult > 0)
                     resultList = inputList;
             }
+            catch (Exception ex) { }
 
             return resultList;
         }
@@ -75,19 +77,17 @@ namespace MoneyNoteAPI.Context
             T returnObject;
             try
             {
-                using (var db = new MoneyContext())
+                using var db = new MoneyContext();
+                var dbSet = db.Set<T>();
+                if (expression != null)
                 {
-                    var dbSet = db.Set<T>();
-                    if (expression != null)
-                    {
-                        returnObject = dbSet.Where(expression).FirstOrDefault();
-                    }
-                    else
-                    {
-                        returnObject = dbSet.FirstOrDefault();
-                    }
-                    return returnObject;
+                    returnObject = dbSet.Where(expression).FirstOrDefault();
                 }
+                else
+                {
+                    returnObject = dbSet.FirstOrDefault();
+                }
+                return returnObject;
             }
             catch (Exception ex)
             {
@@ -107,14 +107,12 @@ namespace MoneyNoteAPI.Context
             int count = 0;
             try
             {
-                using (var db = new MoneyContext())
-                {
-                    var dbSet = db.Set<T>();
-                    if (expression != null)
-                        count = dbSet.Where(expression).ToList().Count;
-                    else
-                        count = dbSet.ToList().Count;
-                }
+                using var db = new MoneyContext();
+                var dbSet = db.Set<T>();
+                if (expression != null)
+                    count = dbSet.Where(expression).ToList().Count;
+                else
+                    count = dbSet.ToList().Count;
             }
             catch (Exception ex)
             {
@@ -142,7 +140,7 @@ namespace MoneyNoteAPI.Context
                         result = true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
 
             }
@@ -154,17 +152,15 @@ namespace MoneyNoteAPI.Context
             T addedObject = null;
             try
             {
-                using (var db = new MoneyContext())
-                {
-                    db.Entry(updateObject).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                    var set = db.Set<T>();
-                    set.Update(updateObject);
-                    int saveResult = db.SaveChanges();
-                    if (saveResult > 0)
-                        addedObject = updateObject;
-                }
+                using var db = new MoneyContext();
+                db.Entry(updateObject).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var set = db.Set<T>();
+                set.Update(updateObject);
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    addedObject = updateObject;
             }
-            catch
+            catch (Exception ex)
             {
 
             }
