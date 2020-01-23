@@ -119,9 +119,9 @@ namespace MoneyNoteLibrary.ViewModels
                 Name = NickName,
                 Password = encryptedPassword
             };
-            var user = await MoneyApi.SignUp.ApiLauncher<User, User>(signUpUser, ControllerEnum.user);
 
-            if (user != null)
+            var signUpResult = await MoneyApi.SignUp.ApiLauncher<User, User>(signUpUser, ControllerEnum.user);
+            if (signUpResult.Result)
             {
                 result = true;
             }
@@ -129,7 +129,6 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 ErrorMessage = "에러!!";
             }
-
             return result;
         }
     }

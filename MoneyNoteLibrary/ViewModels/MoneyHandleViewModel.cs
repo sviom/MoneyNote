@@ -179,8 +179,7 @@ namespace MoneyNoteLibrary.ViewModels
                 Money = mo,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense
             };
-
-            await HttpLauncher.Insert(item);
+            await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
         }
 
         public async Task ModifyMoney()
