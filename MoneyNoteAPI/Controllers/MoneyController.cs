@@ -15,26 +15,58 @@ namespace MoneyNoteAPI.Controllers
     public class MoneyController : ControllerBase
     {
         [HttpPost]
-        public List<MoneyItem> GetAllMoney([FromBody]ApiRequest<string> user)
+        public ApiResult<List<MoneyItem>> GetAllMoney([FromBody]ApiRequest<string> user)
         {
-            var baseId = user.Content;
-            UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-            var moneyList = SqlLauncher.GetAll<MoneyItem>(x => x.UserId.ToString() == baseId);
-            return moneyList;
+            var result = new ApiResult<List<MoneyItem>>();
+
+            try
+            {
+                var baseId = user.Content;
+                //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
+                var moneyList = SqlLauncher.GetAll<MoneyItem>(x => x.UserId.ToString() == baseId);
+
+                result.Content = moneyList;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
 
         [HttpPost]
-        public MoneyItem SaveMoney([FromBody]ApiRequest<MoneyItem> item)
+        public ApiResult<MoneyItem> SaveMoney([FromBody]ApiRequest<MoneyItem> item)
         {
-            var insertResult = SqlLauncher.Insert(item.Content);
-            return insertResult;
+            var result = new ApiResult<MoneyItem>();
+            try
+            {
+                var insertResult = SqlLauncher.Insert(item.Content);
+                result.Content = insertResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
 
         [HttpPost]
-        public MoneyItem UpdateMoney([FromBody]ApiRequest<MoneyItem> item)
+        public ApiResult<MoneyItem> UpdateMoney([FromBody]ApiRequest<MoneyItem> item)
         {
-            var insertResult = SqlLauncher.Update(item.Content);
-            return insertResult;
+            var result = new ApiResult<MoneyItem>();
+            try
+            {
+                var updateResult = SqlLauncher.Update(item.Content);
+                result.Content = updateResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
     }
 }

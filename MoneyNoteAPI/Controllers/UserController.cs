@@ -15,22 +15,41 @@ namespace MoneyNoteAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public User SignUp([FromBody]ApiRequest<User> item)
+        public ApiResult<User> SignUp([FromBody]ApiRequest<User> item)
         {
-            var insertResult = SqlLauncher.Insert(item.Content);
-            return insertResult;
+            var result = new ApiResult<User>();
+            try
+            {
+                var insertResult = SqlLauncher.Insert(item.Content);
+                result.Content = insertResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
 
         [HttpPost]
         public ApiResult<User> LogIn([FromBody]ApiRequest<User> item)
         {
-            var user = item.Content;
-            var countResult = SqlLauncher.Count<User>(x => x.Email == user.Email && x.Password == user.Password);
-            var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
+            var result = new ApiResult<User>();
+            try
+            {
+                //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
+                var user = item.Content;
+                var countResult = SqlLauncher.Count<User>(x => x.Email == user.Email && x.Password == user.Password);
+                var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
 
-            //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-
-            return new ApiResult<User>() { Result = countResult > 0, Content = userResult };
+                result.Content = userResult;
+                result.Result = countResult > 0;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
     }
 }
