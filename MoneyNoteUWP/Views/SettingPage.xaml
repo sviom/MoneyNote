@@ -9,6 +9,20 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Pivot Title="EMAIL">
+            <PivotItem Header="All">
+                <TextBlock Text="all emails go here." />
+            </PivotItem>
+            <PivotItem Header="수입분류">
+                <StackPanel>
+                    <TextBlock Text="unread emails go here." />
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="지출분류">
+                <StackPanel>
+                    <TextBlock Text="unread emails go here." />
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

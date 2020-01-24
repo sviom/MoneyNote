@@ -9,14 +9,6 @@
     x:DefaultBindMode="OneWay"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
-        <Style x:Key="CommonButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="ForestGreen"></Setter>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="CornerRadius" Value="5"/>
-        </Style>
-    </Page.Resources>
-    
     <Grid>
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" MaxWidth="600">
             <StackPanel Orientation="Horizontal">
@@ -27,6 +19,9 @@
             <TextBlock Margin="0,10,0,0">날짜</TextBlock>
             <CalendarDatePicker HorizontalAlignment="Stretch" CornerRadius="5"
                                 Date="{x:Bind ViewModel.CreatedTime, Mode=TwoWay}"/>
+
+            <TextBlock Margin="0,10,0,0" Text="카테고리"/>
+            <ComboBox  HorizontalAlignment="Stretch" CornerRadius="5"/>
 
             <TextBlock Text="제목" Margin="0,10,0,0"/>
             <TextBox x:Name="TitleText" Text="{x:Bind ViewModel.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
