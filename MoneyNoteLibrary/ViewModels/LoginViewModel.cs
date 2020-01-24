@@ -22,6 +22,21 @@ namespace MoneyNoteLibrary.ViewModels
 
         public ControllerEnum Controller => ControllerEnum.user;
 
+        private string _ErrorMessage;
+        public string ErrorMessage
+        {
+            get { return _ErrorMessage; }
+            set
+            {
+                if (_ErrorMessage == value)
+                    return;
+
+                _ErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private string _Email;
         public string Email
         {
@@ -75,6 +90,10 @@ namespace MoneyNoteLibrary.ViewModels
             };
 
             var result = await MoneyApi.LogIn.ApiLauncher<User, User>(tempUser, Controller);
+
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+
             return new Tuple<bool, User>(result.Result, result.Content);
         }
     }
