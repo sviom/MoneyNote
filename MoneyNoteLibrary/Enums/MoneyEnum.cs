@@ -48,7 +48,27 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 로그인
             /// </summary>
-            LogIn
+            LogIn,
+            /// <summary>
+            /// 메인 카테고리 저장
+            /// </summary>
+            SaveMainCategory,
+            /// <summary>
+            /// 서브 카테고리 저장
+            /// </summary>
+            SaveSubCategory,
+            /// <summary>
+            /// 메인 카테고리 업데이트
+            /// </summary>
+            UpdateMainCategory,
+            /// <summary>
+            /// 서브 카테고리 업데이트
+            /// </summary>
+            UpdateSubCategory,
+            /// <summary>
+            /// 카테고리 목록 가져오기
+            /// </summary>
+            GetMainCategories
         }
 
         /// <summary>
@@ -63,7 +83,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 사용자관련
             /// </summary>
-            user
+            user,
+            /// <summary>
+            /// 카테고리관련
+            /// </summary>
+            category
         }
     }
 }

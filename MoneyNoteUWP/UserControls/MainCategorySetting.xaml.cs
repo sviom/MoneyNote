@@ -1,4 +1,5 @@
-﻿using MoneyNoteLibrary.ViewModels;
+﻿using MoneyNoteLibrary.Models;
+using MoneyNoteLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,7 +63,7 @@ namespace MoneyNote.UserControls
 
         private void MainCategorySetting_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new MainCategoryViewModel(Division);
+            ViewModel = new MainCategoryViewModel(App.LogInedUser, Division);
         }
 
         private void MainCategorySetting_Unloaded(object sender, RoutedEventArgs e)
@@ -72,12 +73,18 @@ namespace MoneyNote.UserControls
         private void MainCategoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MainCategoryListView.SelectedItem != null)
+            {
                 ViewModel.IsShowSubCategory = true;
+                if (MainCategoryListView.SelectedItem is MainCategory category)
+                {
+                    ViewModel.SelectedCategory = category;
+                }
+            }
         }
 
-        private void SaveCategory_Click(object sender, RoutedEventArgs e)
+        private async void SaveCategory_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SaveCategory();
+            await ViewModel.SaveCategory();
         }
     }
 }
