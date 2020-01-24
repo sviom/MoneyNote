@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteLibrary.Models
 {
@@ -17,7 +18,7 @@ namespace MoneyNoteLibrary.Models
         public string Title { get; set; }
 
         [Required]
-        public MoneyEnum Division { get; set; }
+        public MoneyCategory Division { get; set; }
 
         [Required]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
