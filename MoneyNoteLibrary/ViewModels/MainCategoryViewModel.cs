@@ -56,7 +56,8 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _IsShowSubCategory = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SaveButtonText));
+                SetSaveButton();
+                ValidCheck();
             }
         }
 
@@ -71,13 +72,9 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _IsShowAddNewCategory = value;
 
-                if (value)
-                    SaveButtonText = "새로운 카테고리 추가";
-                else
-                    SaveButtonText = "저장";
-
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SaveButtonText));
+                SetSaveButton();
+                ValidCheck();
             }
         }
 
@@ -92,6 +89,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _CategoryText = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
@@ -123,6 +121,12 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        public bool IsValidCategoryText => IsShowAddNewCategory && !string.IsNullOrEmpty(CategoryText);
+
+        public bool IsChangedCategory => false;
+
+        public bool IsSaveButtonEnabled => IsValidCategoryText || IsChangedCategory;
+
         public MainCategoryViewModel(MoneyCategory div)
         {
             Division = div;
@@ -133,10 +137,18 @@ namespace MoneyNoteLibrary.ViewModels
             // 수입 지출 구분에 따른 해당 메인 카테고리들 가져오기
         }
 
+        public void ValidCheck()
+        {
+            OnPropertyChanged(nameof(IsValidCategoryText));
+            OnPropertyChanged(nameof(IsChangedCategory));
+            OnPropertyChanged(nameof(IsSaveButtonEnabled));
+        }
+
         public void SaveCategory()
         {
             var category = new MainCategory()
             {
+                Division = Division,
                 Title = CategoryText
             };
 
@@ -147,10 +159,15 @@ namespace MoneyNoteLibrary.ViewModels
         {
             if (IsShowSubCategory)
             {
+                IsShowAddNewCategory = false;
+                SaveButtonText = "수정된 항목 저장";
             }
             else if (IsShowAddNewCategory)
             {
+                IsShowSubCategory = false;
+                SaveButtonText = "새로운 카테고리 추가";
             }
+            OnPropertyChanged(nameof(SaveButtonText));
         }
     }
 }

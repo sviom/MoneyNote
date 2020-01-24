@@ -52,7 +52,7 @@
                 <TextBlock Text="새로운 카테고리"
                            Margin="0,10,0,0"/>
                 <TextBox x:Name="NewCategoryText"
-                         Text="{x:Bind ViewModel.CategoryText, Mode=TwoWay}"
+                         Text="{x:Bind ViewModel.CategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          HorizontalAlignment="Stretch"
                          CornerRadius="5" />
                 <TextBlock Text="주 분류가 선택되어 있으면 해당 분류의 하위 분류로 추가됩니다. 주 분류가 선택되어 있지 않으면 주 분류로 추가됩니다."
@@ -67,6 +67,7 @@
                     Click="SaveCategory_Click"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Stretch"
+                    IsEnabled="{x:Bind ViewModel.IsSaveButtonEnabled}"
                     Style="{StaticResource CommonButtonStyle}"
                     Content="{x:Bind ViewModel.SaveButtonText}"
                     CornerRadius="5"/>
