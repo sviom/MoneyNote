@@ -3,32 +3,72 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MoneyNote.UserControls"
+    xmlns:model="using:MoneyNoteLibrary.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    x:DefaultBindMode="OneWay"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid Background="White">
         <StackPanel Margin="10,10,10,10">
-            <ListView Margin="0,10,0,0"></ListView>
+            <TextBlock Text="주 분류"/>
+            <ListView x:Name="MainCategoryListView"
+                      SelectionChanged="MainCategoryListView_SelectionChanged"
+                      HorizontalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:MainCategory">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{x:Bind Title, Mode=TwoWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-            <Button x:Name="AddNewCategory" 
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Stretch"
-                    CornerRadius="5"
-                    Content="추가"/>
+            <TextBlock Text="하위 분류"
+                       Margin="0,10,0,0"
+                       Visibility="{x:Bind ViewModel.IsShowSubCategory}"/>
+            <ListView x:Name="SubCategoryListView"
+                      HorizontalAlignment="Stretch"
+                      Visibility="{x:Bind ViewModel.IsShowSubCategory}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:SubCategory">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{x:Bind Title, Mode=TwoWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-            <TextBlock Text="새로운 카테고리"
-                       Margin="0,10,0,0"/>
-            <TextBox HorizontalAlignment="Stretch"
-                     CornerRadius="5"></TextBox>
+            <ToggleButton x:Name="AddNewCategory" 
+                          Margin="0,10,0,0"
+                          HorizontalAlignment="Stretch"
+                          CornerRadius="5"
+                          IsChecked="{x:Bind ViewModel.IsShowAddNewCategory, Mode=TwoWay}"
+                          Content="새 분류 추가"/>
+
+            <StackPanel Visibility="{x:Bind ViewModel.IsShowAddNewCategory}">
+                <TextBlock Text="새로운 카테고리"
+                           Margin="0,10,0,0"/>
+                <TextBox x:Name="NewCategoryText"
+                         Text="{x:Bind ViewModel.CategoryText, Mode=TwoWay}"
+                         HorizontalAlignment="Stretch"
+                         CornerRadius="5" />
+                <TextBlock Text="주 분류가 선택되어 있으면 해당 분류의 하위 분류로 추가됩니다. 주 분류가 선택되어 있지 않으면 주 분류로 추가됩니다."
+                           TextWrapping="WrapWholeWords"
+                           FontSize="10"/>
+                <TextBlock Text="현재 선택된 :"
+                           TextWrapping="Wrap"
+                           FontSize="10"/>
+            </StackPanel>
 
             <Button x:Name="SaveCategory"
+                    Click="SaveCategory_Click"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Stretch"
                     Style="{StaticResource CommonButtonStyle}"
-                    Content="저장"
+                    Content="{x:Bind ViewModel.SaveButtonText}"
                     CornerRadius="5"/>
         </StackPanel>
     </Grid>
