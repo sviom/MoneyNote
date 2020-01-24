@@ -36,6 +36,20 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private bool _IsRunProgressRing;
+        public bool IsRunProgressRing
+        {
+            get { return _IsRunProgressRing; }
+            set
+            {
+                if (_IsRunProgressRing == value)
+                    return;
+
+                _IsRunProgressRing = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _Email;
         public string Email
@@ -82,6 +96,8 @@ namespace MoneyNoteLibrary.ViewModels
 
         public async Task<Tuple<bool, User>> LogIn()
         {
+            IsRunProgressRing = true;
+
             var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
             var tempUser = new User()
             {
@@ -94,6 +110,7 @@ namespace MoneyNoteLibrary.ViewModels
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
 
+            IsRunProgressRing = false;
             return new Tuple<bool, User>(result.Result, result.Content);
         }
     }
