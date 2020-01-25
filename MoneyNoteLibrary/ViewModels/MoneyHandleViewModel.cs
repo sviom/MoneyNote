@@ -2,6 +2,7 @@
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -34,6 +35,34 @@ namespace MoneyNoteLibrary.ViewModels
         }
 
         public User LoginedUser { get; set; }
+
+        private ObservableCollection<MainCategory> _MainCategories;
+        public ObservableCollection<MainCategory> MainCategories
+        {
+            get { return _MainCategories; }
+            set
+            {
+                if (_MainCategories == value)
+                    return;
+
+                _MainCategories = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<SubCategory> _SubCategories;
+        public ObservableCollection<SubCategory> SubCategories
+        {
+            get { return _SubCategories; }
+            set
+            {
+                if (_SubCategories == value)
+                    return;
+
+                _SubCategories = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _ErrorMessage;
         public string ErrorMessage
@@ -121,6 +150,7 @@ namespace MoneyNoteLibrary.ViewModels
                 _IsExpense = value;
                 OnPropertyChanged();
                 ValidCheck();
+                CategoryInitialize();
             }
         }
 
@@ -135,7 +165,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _IsIncome = value;
                 OnPropertyChanged();
-                ValidCheck();
+                CategoryInitialize();
             }
         }
 
@@ -148,14 +178,24 @@ namespace MoneyNoteLibrary.ViewModels
         public MoneyHandleViewModel(User user)
         {
             LoginedUser = user;
+            CategoryInitialize();
         }
 
         public MoneyHandleViewModel(User user, MoneyItem item)
         {
+            LoginedUser = user;
+            CategoryInitialize();
+
             if (item != null)
                 SetViewModel(item);
+        }
 
-            LoginedUser = user;
+        public async void CategoryInitialize()
+        {
+            MainCategories = new ObservableCollection<MainCategory>();
+            SubCategories = new ObservableCollection<SubCategory>();
+
+            await GetMainCategories();
         }
 
         public void SetViewModel(MoneyItem item)
@@ -229,6 +269,23 @@ namespace MoneyNoteLibrary.ViewModels
                 ErrorMessage = "에러가 발생했습니다.";
 
             return result.Result;
+        }
+
+        public async Task GetMainCategories()
+        {
+            if (LoginedUser == null)
+                return;
+
+            var result = await MoneyApi.GetMainCategories.ApiLauncher<User, List<MainCategory>>(LoginedUser, ControllerEnum.category);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    var nowDivision = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+                    if (item.Division == nowDivision)
+                        MainCategories.Add(item);
+                }
+            }
         }
     }
 }
