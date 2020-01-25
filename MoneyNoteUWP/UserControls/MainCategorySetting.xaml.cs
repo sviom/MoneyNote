@@ -70,7 +70,7 @@ namespace MoneyNote.UserControls
         {
         }
 
-        private void MainCategoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void MainCategoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MainCategoryListView.SelectedItem != null)
             {
@@ -78,13 +78,24 @@ namespace MoneyNote.UserControls
                 if (MainCategoryListView.SelectedItem is MainCategory category)
                 {
                     ViewModel.SelectedCategory = category;
+                    await ViewModel.GetSubCategory(category);
                 }
             }
         }
 
         private async void SaveCategory_Click(object sender, RoutedEventArgs e)
         {
-            await ViewModel.SaveCategory();
+            if (ViewModel.SelectedCategory == null)
+                await ViewModel.SaveCategory();
+            else
+                await ViewModel.SaveSubCategory();
+        }
+
+        private void CancelSelectedCategory_Click(object sender, RoutedEventArgs e)
+        {
+            MainCategoryListView.SelectedItem = null;
+            ViewModel.SelectedCategory = null;
+            ViewModel.SetNewSaveMode();
         }
     }
 }

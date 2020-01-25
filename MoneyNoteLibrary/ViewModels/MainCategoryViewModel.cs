@@ -128,6 +128,8 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        public string SelectedCategoryTitle => SelectedCategory != null ? SelectedCategory.Title : string.Empty;
+
         private MainCategory _SelectedCategory;
         public MainCategory SelectedCategory
         {
@@ -139,6 +141,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _SelectedCategory = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedCategoryTitle));
             }
         }
 
@@ -200,6 +203,20 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        public async Task GetSubCategory(MainCategory selectedCategory)
+        {
+            SubCategories = new ObservableCollection<SubCategory>();
+            var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, List<SubCategory>>(selectedCategory, ControllerEnum.category);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    if (item.Division == Division)
+                        SubCategories.Add(item);
+                }
+            }
+        }
+
         public void ValidCheck()
         {
             OnPropertyChanged(nameof(IsValidCategoryText));
@@ -219,7 +236,7 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 Division = Division,
                 Title = CategoryText,
-                User = LoginedUser
+                User = LoginedUser,
             };
 
             var result = await MoneyApi.SaveMainCategory.ApiLauncher<MainCategory, MainCategory>(category, ControllerEnum.category);
@@ -234,9 +251,39 @@ namespace MoneyNoteLibrary.ViewModels
             return result.Result;
         }
 
+        public async Task<bool> SaveSubCategory()
+        {
+            if (string.IsNullOrEmpty(CategoryText))
+                return false;
+
+            if (LoginedUser == null)
+                return false;
+
+            if (SelectedCategory == null)
+                return false;
+
+            var category = new SubCategory()
+            {
+                Division = Division,
+                Title = CategoryText,
+                MainCategory = SelectedCategory
+            };
+
+            var result = await MoneyApi.SaveSubCategory.ApiLauncher<SubCategory, SubCategory>(category, ControllerEnum.category);
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+            else
+            {
+                if (IsShowAddNewCategory) IsShowAddNewCategory = false;
+                CategoryText = string.Empty;
+                SubCategories.Add(result.Content);
+            }
+            return result.Result;
+        }
+
         public void SetNewSaveMode()
         {
-            IsShowSubCategory = false;
+            //IsShowSubCategory = false;
             CategoryText = string.Empty;
             SaveButtonText = "새로운 카테고리 추가";
             if (SelectedCategory == null) AddCategoryButtonText = "새 분류 추가";

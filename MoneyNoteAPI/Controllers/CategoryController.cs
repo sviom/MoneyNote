@@ -33,6 +33,25 @@ namespace MoneyNoteAPI.Controllers
             return result;
         }
 
+
+        [HttpPost]
+        public ApiResult<List<SubCategory>> GetSubCategories([FromBody]ApiRequest<MainCategory> mainCategory)
+        {
+            var result = new ApiResult<List<SubCategory>>();
+            try
+            {
+                //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
+                var categoryList = SqlLauncher.GetAll<SubCategory>(x => x.MainCategoryId == mainCategory.Content.Id);
+                result.Content = categoryList;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
         [HttpPost]
         public ApiResult<MainCategory> SaveMainCategory([FromBody]ApiRequest<MainCategory> item)
         {

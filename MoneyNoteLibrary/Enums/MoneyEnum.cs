@@ -68,7 +68,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 카테고리 목록 가져오기
             /// </summary>
-            GetMainCategories
+            GetMainCategories,
+            /// <summary>
+            /// 하위 카테고리 목록 가져오기
+            /// </summary>
+            GetSubCategories
         }
 
         /// <summary>
