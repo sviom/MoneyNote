@@ -21,7 +21,7 @@
             </PivotItem>
             <PivotItem Header="지출분류">
                 <StackPanel>
-                    <TextBlock Text="unread emails go here." />
+                    <custom:MainCategorySetting Division="Expense" />
                 </StackPanel>
             </PivotItem>
         </Pivot>

@@ -150,7 +150,9 @@ namespace MoneyNoteLibrary.ViewModels
                 _IsExpense = value;
                 OnPropertyChanged();
                 ValidCheck();
-                CategoryInitialize();
+
+                if (value)
+                    CategoryInitialize();
             }
         }
 
@@ -165,7 +167,9 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _IsIncome = value;
                 OnPropertyChanged();
-                CategoryInitialize();
+
+                if (value)
+                    CategoryInitialize();
             }
         }
 
@@ -185,7 +189,6 @@ namespace MoneyNoteLibrary.ViewModels
         {
             LoginedUser = user;
             CategoryInitialize();
-
             if (item != null)
                 SetViewModel(item);
         }
