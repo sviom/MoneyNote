@@ -14,7 +14,7 @@ namespace MoneyNoteLibrary.Common
 #if DEBUG
         public static string basic = "http://localhost:50456/api/";
 #else
-        public static string basic = "https://moneynoteapi.azurewebsites.net/api/money/";
+        public static string basic = "https://moneynoteapi.azurewebsites.net/api/";
 #endif
 
         public static async Task<ApiResult<U>> ApiLauncher<T, U>(this MoneyApi api, T item, ControllerEnum controllerEnum = ControllerEnum.money)
