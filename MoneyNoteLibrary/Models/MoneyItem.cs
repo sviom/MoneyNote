@@ -32,6 +32,7 @@ namespace MoneyNoteLibrary.Models
 
         public Guid UserId { get; set; }
 
+        [Required]
         public User User { get; set; }
 
         [Required]
