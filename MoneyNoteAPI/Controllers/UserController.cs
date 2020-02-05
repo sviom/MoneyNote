@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
+using MoneyNoteAPI.Services;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 
@@ -20,7 +21,9 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<User>();
             try
             {
-                var insertResult = SqlLauncher.Insert(item.Content);
+                var service = new UserService();
+                var insertResult = service.SignUp(item.Content);
+
                 result.Content = insertResult;
                 result.Result = true;
             }

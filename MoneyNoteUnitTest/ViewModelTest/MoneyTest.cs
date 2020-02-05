@@ -1,9 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MoneyNoteLibrary;
 
-namespace MoneyNoteUnitTest
+namespace MoneyNoteUnitTest.ViewModelTest
 {
     [TestClass]
-    public class UnitTest1
+    public class MoneyTest
     {
         [TestMethod]
         public void TestMethod1()
