@@ -33,5 +33,14 @@ namespace MoneyNoteLibrary.Models
         public Guid UserId { get; set; }
 
         public User User { get; set; }
+
+        [Required]
+        public MainCategory MainCategory { get; set; }
+
+        public Guid MainCategoryId { get; set; }
+
+        public SubCategory SubCategory { get; set; }
+
+        public Guid SubCategoryId { get; set; }
     }
 }

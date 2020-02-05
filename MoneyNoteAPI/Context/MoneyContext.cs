@@ -14,11 +14,49 @@ namespace MoneyNoteAPI.Context
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<MainCategory> MainCategories { get; set; }
+
+        public DbSet<SubCategory> subCategories { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
             var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
             optionsBuilder.UseSqlServer(connectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<MoneyItem>()
+                .HasOne(x => x.MainCategory)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MoneyItem>()
+                .HasOne(x => x.SubCategory)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MoneyItem>()
+                .HasOne(x => x.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.MoneyItems)
+                .WithOne(y => y.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.MainCategories)
+                .WithOne(y => y.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MainCategory>()
+                .HasOne(x => x.User)
+                .WithMany(y => y.MainCategories)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
