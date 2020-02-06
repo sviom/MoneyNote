@@ -28,7 +28,7 @@ namespace MoneyNoteAPI.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MoneyItem>()
-                .HasOne<MainCategory>()
+                .HasOne(x => x.MainCategory)
                 .WithMany()
                 .OnDelete(DeleteBehavior.SetNull);
 
@@ -54,7 +54,7 @@ namespace MoneyNoteAPI.Context
 
             modelBuilder.Entity<SubCategory>()
                 .HasOne(x => x.MainCategory)
-                .WithMany()
+                .WithMany(y => y.SubCategories)
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);

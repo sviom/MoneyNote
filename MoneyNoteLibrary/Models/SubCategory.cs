@@ -25,6 +25,7 @@ namespace MoneyNoteLibrary.Models
 
         public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.Now;
 
+        [Required]
         public MainCategory MainCategory { get; set; }
 
         public Guid MainCategoryId { get; set; }
