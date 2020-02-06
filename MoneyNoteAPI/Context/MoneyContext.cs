@@ -28,15 +28,22 @@ namespace MoneyNoteAPI.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<MoneyItem>()
-                .HasOne(x => x.MainCategory)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
+
+            //modelBuilder.Entity<MoneyItem>()
+            //    .HasOne(x => x.MainCategory)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            //modelBuilder.Entity<MoneyItem>()
+            //    .HasOne(x => x.SubCategory)
+            //    .WithMany(y=>y.s)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<MoneyItem>()
-                .HasOne(x => x.SubCategory)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasOne(x => x.MainCategory);
+
+            modelBuilder.Entity<MoneyItem>()
+                .HasOne(x => x.SubCategory);
 
             modelBuilder.Entity<MoneyItem>()
                 .HasOne(x => x.User)
