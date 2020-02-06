@@ -9,13 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MoneyNoteLibrary.Common;
 
 namespace MoneyNoteAPI
 {
     public class Program
     {
-        public static string GetKeyVaultEndpoint() => "https://todaylunchkeyvault.vault.azure.net";
-
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -25,7 +24,7 @@ namespace MoneyNoteAPI
             Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((context, config) =>
             {
-                var keyVaultEndpoint = GetKeyVaultEndpoint();
+                var keyVaultEndpoint = AzureKeyVault.GetKeyVaultEndpoint();
                 if (!string.IsNullOrEmpty(keyVaultEndpoint))
                 {
                     var azureServiceTokenProvider = new AzureServiceTokenProvider();
