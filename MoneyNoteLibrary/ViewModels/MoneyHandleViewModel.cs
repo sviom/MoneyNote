@@ -276,7 +276,6 @@ namespace MoneyNoteLibrary.ViewModels
                 Money = mo,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
                 MainCategory = MainCategory,
-                SubCategory = SubCategory,
                 User = LoginedUser
             };
             var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
