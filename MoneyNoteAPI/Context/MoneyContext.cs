@@ -16,7 +16,7 @@ namespace MoneyNoteAPI.Context
 
         public DbSet<MainCategory> MainCategories { get; set; }
 
-        public DbSet<SubCategory> subCategories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

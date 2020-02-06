@@ -10,8 +10,8 @@ using MoneyNoteAPI.Context;
 namespace MoneyNoteAPI.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    [Migration("20200124090950_AddCategories")]
-    partial class AddCategories
+    [Migration("20200205122243_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,7 +47,7 @@ namespace MoneyNoteAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MainCategory");
+                    b.ToTable("MainCategories");
                 });
 
             modelBuilder.Entity("MoneyNoteLibrary.Models.MoneyItem", b =>
@@ -65,8 +65,14 @@ namespace MoneyNoteAPI.Migrations
                     b.Property<int>("Division")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("MainCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<double>("Money")
                         .HasColumnType("float");
+
+                    b.Property<Guid>("SubCategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -79,6 +85,10 @@ namespace MoneyNoteAPI.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MainCategoryId");
+
+                    b.HasIndex("SubCategoryId");
 
                     b.HasIndex("UserId");
 
@@ -111,7 +121,7 @@ namespace MoneyNoteAPI.Migrations
 
                     b.HasIndex("MainCategoryId");
 
-                    b.ToTable("SubCategory");
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("MoneyNoteLibrary.Models.User", b =>
@@ -150,12 +160,24 @@ namespace MoneyNoteAPI.Migrations
                     b.HasOne("MoneyNoteLibrary.Models.User", "User")
                         .WithMany("MainCategories")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("MoneyNoteLibrary.Models.MoneyItem", b =>
                 {
+                    b.HasOne("MoneyNoteLibrary.Models.MainCategory", "MainCategory")
+                        .WithMany()
+                        .HasForeignKey("MainCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MoneyNoteLibrary.Models.SubCategory", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("MoneyNoteLibrary.Models.User", "User")
                         .WithMany("MoneyItems")
                         .HasForeignKey("UserId")
