@@ -23,7 +23,8 @@
 
             <TextBlock Margin="0,10,0,0" Text="카테고리"/>
             <ComboBox  HorizontalAlignment="Stretch" CornerRadius="5"
-                       ItemsSource="{x:Bind ViewModel.MainCategories}">
+                       ItemsSource="{x:Bind ViewModel.MainCategories}"
+                       SelectedItem="{x:Bind ViewModel.MainCategory, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="model:MainCategory">
                         <StackPanel>

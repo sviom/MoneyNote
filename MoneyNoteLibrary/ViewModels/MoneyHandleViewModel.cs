@@ -173,6 +173,34 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private MainCategory _MainCategory;
+        public MainCategory MainCategory
+        {
+            get { return _MainCategory; }
+            set
+            {
+                if (_MainCategory == value)
+                    return;
+
+                _MainCategory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SubCategory _SubCategory;
+        public SubCategory SubCategory
+        {
+            get { return _SubCategory; }
+            set
+            {
+                if (_SubCategory == value)
+                    return;
+
+                _SubCategory = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsValidMoney => Common.ValidCheck.IsValidNumber(MoneyText);
 
         public bool IsValidDivision => IsExpense != IsIncome;
@@ -222,6 +250,9 @@ namespace MoneyNoteLibrary.ViewModels
                 default:
                     break;
             }
+
+            MainCategory = item.MainCategory;
+            SubCategory = item.SubCategory;
         }
 
         public void ValidCheck()
@@ -244,6 +275,8 @@ namespace MoneyNoteLibrary.ViewModels
                 Description = Description,
                 Money = mo,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
+                MainCategory = MainCategory,
+                SubCategory = SubCategory,
                 User = LoginedUser
             };
             var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
@@ -264,6 +297,8 @@ namespace MoneyNoteLibrary.ViewModels
             PreMoneyItem.Description = Description;
             PreMoneyItem.Money = mo;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+            PreMoneyItem.MainCategory = MainCategory;
+            PreMoneyItem.SubCategory = SubCategory;
             PreMoneyItem.User = LoginedUser;
 
             var result = await MoneyApi.UpdateMoney.ApiLauncher<MoneyItem, MoneyItem>(PreMoneyItem);
