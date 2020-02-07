@@ -41,12 +41,11 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
+                var service = new UserService();
                 var user = item.Content;
-                var countResult = SqlLauncher.Count<User>(x => x.Email == user.Email && x.Password == user.Password);
-                var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
-
+                (var userResult, var countResult) = service.LogIn(item.Content, x => x.Email == user.Email && x.Password == user.Password);
                 result.Content = userResult;
-                result.Result = countResult > 0;
+                result.Result = countResult;
             }
             catch
             {
