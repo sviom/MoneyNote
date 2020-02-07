@@ -8,7 +8,7 @@ using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteLibrary.Models
 {
-    public class MoneyItem
+    public class MoneyItem : ICommon
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

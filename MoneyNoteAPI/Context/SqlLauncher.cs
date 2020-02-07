@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using MoneyNoteLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -49,13 +51,24 @@ namespace MoneyNoteAPI.Context
             return resultList;
         }
 
-        public static List<T> GetAll<T>(Expression<Func<T, bool>> expression = null) where T : class
+        public static List<T> GetAll<T>(Expression<Func<T, bool>> expression = null) where T : class, ICommon
         {
             List<T> returnList = new List<T>();
             try
             {
                 using var db = new MoneyContext();
-                var dbSet = db.Set<T>();
+                //DbSet<T> dbSet;// = null;
+
+                DbSet<T> dbSet = db.Set<T>();
+
+                if (typeof(T) == typeof(MoneyItem))
+                {
+                    var ff = db.MoneyItems.Include(x => x.MainCategory);
+                    var ssdbSet = db.Set<MoneyItem>();
+                }
+                else
+                    dbSet = db.Set<T>();
+
                 if (expression != null)
                 {
                     returnList = dbSet.Where(expression).ToList();

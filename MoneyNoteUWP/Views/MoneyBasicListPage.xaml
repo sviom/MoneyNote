@@ -53,6 +53,9 @@
                         <StackPanel Orientation="Horizontal" Grid.Row="0">
                             <TextBlock Text="{x:Bind UpdatedTime, Converter={StaticResource DateTimeToStringConverter}}"
                                        VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind MainCategory.Title}"
+                                       VerticalAlignment="Center"
+                                       Foreground="Gray"/>
                         </StackPanel>
 
                         <Grid HorizontalAlignment="Stretch"

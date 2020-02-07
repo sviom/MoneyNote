@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
+using MoneyNoteAPI.Services;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 
@@ -23,8 +24,8 @@ namespace MoneyNoteAPI.Controllers
             {
                 var baseId = user.Content;
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-                var moneyList = SqlLauncher.GetAll<MoneyItem>(x => x.UserId.ToString() == baseId);
-
+                var service = new MoneyService();
+                var moneyList = service.GetMoneyList(x => x.UserId.ToString() == baseId);
                 result.Content = moneyList;
                 result.Result = true;
             }
@@ -41,7 +42,10 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MoneyItem>();
             try
             {
-                var insertResult = SqlLauncher.Insert(item.Content);
+                var service = new MoneyService();
+                var insertResult = service.SaveMoney(item.Content);
+
+                //var insertResult = SqlLauncher.Insert(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
             }
@@ -58,7 +62,10 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MoneyItem>();
             try
             {
-                var updateResult = SqlLauncher.Update(item.Content);
+                var service = new MoneyService();
+                var updateResult = service.UpdateMoney(item.Content);
+
+                //var updateResult = SqlLauncher.Update(item.Content);
                 result.Content = updateResult;
                 result.Result = true;
             }
