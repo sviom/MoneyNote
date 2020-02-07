@@ -50,7 +50,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-
         private string _Email;
         public string Email
         {

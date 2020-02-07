@@ -20,6 +20,20 @@ namespace MoneyNoteLibrary.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private bool _IsRunProgressRing;
+        public bool IsRunProgressRing
+        {
+            get { return _IsRunProgressRing; }
+            set
+            {
+                if (_IsRunProgressRing == value)
+                    return;
+
+                _IsRunProgressRing = value;
+                OnPropertyChanged();
+            }
+        }
+
         private MoneyItem _PreMoneyItem;
         public MoneyItem PreMoneyItem
         {
@@ -216,6 +230,7 @@ namespace MoneyNoteLibrary.ViewModels
         public MoneyHandleViewModel(User user, MoneyItem item)
         {
             LoginedUser = user;
+
             CategoryInitialize();
             if (item != null)
                 SetViewModel(item);
@@ -250,7 +265,6 @@ namespace MoneyNoteLibrary.ViewModels
                 default:
                     break;
             }
-
             MainCategory = item.MainCategory;
             SubCategory = item.SubCategory;
         }
@@ -314,6 +328,7 @@ namespace MoneyNoteLibrary.ViewModels
             if (LoginedUser == null)
                 return;
 
+            IsRunProgressRing = true;
             var result = await MoneyApi.GetMainCategories.ApiLauncher<User, List<MainCategory>>(LoginedUser, ControllerEnum.category);
             if (result.Result)
             {
@@ -324,6 +339,8 @@ namespace MoneyNoteLibrary.ViewModels
                         MainCategories.Add(item);
                 }
             }
+
+            IsRunProgressRing = false;
         }
     }
 }

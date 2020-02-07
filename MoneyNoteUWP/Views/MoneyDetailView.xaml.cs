@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -71,6 +72,10 @@ namespace MoneyNote.Views
         private void MoneyDetailView_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel = new MoneyHandleViewModel(App.LogInedUser, MoneyItem);
+
+            //if (ViewModel.MainCategories != null)
+            //    ViewModel.MainCategories.CollectionChanged += MainCategories_CollectionChanged;
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 
         private void MoneyDetailView_Unloaded(object sender, RoutedEventArgs e)
@@ -86,11 +91,39 @@ namespace MoneyNote.Views
             }
         }
 
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(ViewModel.IsRunProgressRing):
+                    if (!ViewModel.IsRunProgressRing)
+                        SetMainCategoryCombobox(MoneyItem.MainCategory);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private async void ModifyButton_Click(object sender, RoutedEventArgs e)
         {
             var result = await ViewModel.ModifyMoney();
             if (result)
                 HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
+        }
+
+        public void SetMainCategoryCombobox(MainCategory mainCategory)
+        {
+            if (mainCategory == null)
+                return;
+
+            foreach (var item in MainCategoryCombobox.Items)
+            {
+                if (item is MainCategory category)
+                {
+                    if (category.Id == mainCategory.Id)
+                        MainCategoryCombobox.SelectedItem = item;
+                }
+            }
         }
     }
 }

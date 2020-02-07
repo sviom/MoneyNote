@@ -22,6 +22,20 @@ namespace MoneyNoteLibrary.ViewModels
 
         public User LoginedUser { get; set; }
 
+        private bool _IsRunProgressRing;
+        public bool IsRunProgressRing
+        {
+            get { return _IsRunProgressRing; }
+            set
+            {
+                if (_IsRunProgressRing == value)
+                    return;
+
+                _IsRunProgressRing = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<MoneyItem> _MoneyList;
         public ObservableCollection<MoneyItem> MoneyList
         {
@@ -92,6 +106,7 @@ namespace MoneyNoteLibrary.ViewModels
 
         public async void Initialize()
         {
+            IsRunProgressRing = true;
             MoneyList = new ObservableCollection<MoneyItem>();
             //var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
             var result = await MoneyApi.GetAllMoney.ApiLauncher<string, List<MoneyItem>>(LoginedUser.Id.ToString());
@@ -103,6 +118,8 @@ namespace MoneyNoteLibrary.ViewModels
                 }
                 ReCalculate();
             }
+
+            IsRunProgressRing = false;
         }
 
         public void ReCalculate()
