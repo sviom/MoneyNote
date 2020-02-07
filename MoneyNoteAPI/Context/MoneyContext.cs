@@ -30,7 +30,7 @@ namespace MoneyNoteAPI.Context
             modelBuilder.Entity<MoneyItem>()
                 .HasOne(x => x.MainCategory)
                 .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MoneyItem>()
                 .HasOne(x => x.User)

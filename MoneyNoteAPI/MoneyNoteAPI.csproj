@@ -22,9 +22,5 @@
     <ProjectReference Include="..\MoneyNoteLibrary\MoneyNoteLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 
 </Project>
