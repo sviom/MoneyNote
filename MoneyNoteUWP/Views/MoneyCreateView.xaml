@@ -78,5 +78,10 @@
                        Margin="0,5,0,0"
                        Style="{StaticResource BasicErrorMessage}"/>
         </StackPanel>
+
+        <Grid Visibility="{x:Bind ViewModel.IsRunProgressRing}">
+            <Grid Background="White" Opacity="0.7"></Grid>
+            <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="{x:Bind ViewModel.IsRunProgressRing}"/>
+        </Grid>
     </Grid>
 </Page>

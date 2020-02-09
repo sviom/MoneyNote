@@ -34,6 +34,22 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+
+        private bool _IsMainCategoryProgress;
+        public bool IsMainCategoryProgress
+        {
+            get { return _IsMainCategoryProgress; }
+            set
+            {
+                if (_IsMainCategoryProgress == value)
+                    return;
+
+                _IsMainCategoryProgress = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private MoneyItem _PreMoneyItem;
         public MoneyItem PreMoneyItem
         {
@@ -329,6 +345,7 @@ namespace MoneyNoteLibrary.ViewModels
                 return;
 
             IsRunProgressRing = true;
+            IsMainCategoryProgress = true;
             var result = await MoneyApi.GetMainCategories.ApiLauncher<User, List<MainCategory>>(LoginedUser, ControllerEnum.category);
             if (result.Result)
             {
@@ -340,6 +357,7 @@ namespace MoneyNoteLibrary.ViewModels
                 }
             }
 
+            IsMainCategoryProgress = false;
             IsRunProgressRing = false;
         }
 
@@ -351,6 +369,7 @@ namespace MoneyNoteLibrary.ViewModels
             if (LoginedUser == null)
                 return;
 
+            IsRunProgressRing = true;
             var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, ObservableCollection<SubCategory>>(MainCategory, ControllerEnum.category);
             if (result.Result)
             {
@@ -361,6 +380,7 @@ namespace MoneyNoteLibrary.ViewModels
                         SubCategories.Add(item);
                 }
             }
+            IsRunProgressRing = false;
         }
     }
 }

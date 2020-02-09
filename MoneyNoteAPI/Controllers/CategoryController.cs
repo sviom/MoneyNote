@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
+using MoneyNoteAPI.Services;
 using MoneyNoteLibrary.Models;
 
 namespace MoneyNoteAPI.Controllers
@@ -20,11 +21,12 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
+                var service = new CategoryService();
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-                var categoryList = SqlLauncher.GetAll<MainCategory>(x => x.UserId == user.Content.Id);
+                var categoryList = service.GetMainCategories(x => x.UserId == user.Content.Id);
 
                 result.Content = categoryList;
-                result.Result = true;
+                result.Result = categoryList != null;
             }
             catch
             {
@@ -41,9 +43,12 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-                var categoryList = SqlLauncher.GetAll<SubCategory>(x => x.MainCategoryId == mainCategory.Content.Id);
+                //var categoryList = SqlLauncher.GetAll<SubCategory>(x => x.MainCategoryId == mainCategory.Content.Id);
+                var service = new CategoryService();
+                var categoryList = service.GetSubCategories(x => x.MainCategoryId == mainCategory.Content.Id);
+
                 result.Content = categoryList;
-                result.Result = true;
+                result.Result = categoryList != null;
             }
             catch
             {

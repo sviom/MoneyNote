@@ -72,9 +72,6 @@ namespace MoneyNote.Views
         private void MoneyDetailView_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel = new MoneyHandleViewModel(App.LogInedUser, MoneyItem);
-
-            //if (ViewModel.MainCategories != null)
-            //    ViewModel.MainCategories.CollectionChanged += MainCategories_CollectionChanged;
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 
@@ -95,9 +92,12 @@ namespace MoneyNote.Views
         {
             switch (e.PropertyName)
             {
-                case nameof(ViewModel.IsRunProgressRing):
-                    if (!ViewModel.IsRunProgressRing)
+                case nameof(ViewModel.IsMainCategoryProgress):
+                    if (!ViewModel.IsMainCategoryProgress)
+                    {
                         SetMainCategoryCombobox(MoneyItem.MainCategory);
+                    }
+                        
                     break;
                 default:
                     break;
