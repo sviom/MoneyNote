@@ -9,7 +9,7 @@
   <Identity
     Name="55954sViom.MoneyNote"
     Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
-    Version="1.0.0.0" />
+    Version="1.0.4.0" />
 
   <mp:PhoneIdentity PhoneProductId="4c45dca4-bb20-4afd-a2ee-ef458e8a385d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
