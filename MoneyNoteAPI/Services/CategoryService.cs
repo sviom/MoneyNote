@@ -32,7 +32,6 @@ namespace MoneyNoteAPI.Services
             {
                 throw ex;
             }
-            return null;
         }
 
         public List<SubCategory> GetSubCategories(Expression<Func<SubCategory, bool>> expression)
@@ -57,7 +56,6 @@ namespace MoneyNoteAPI.Services
             {
                 throw ex;
             }
-            return null;
         }
     }
 }

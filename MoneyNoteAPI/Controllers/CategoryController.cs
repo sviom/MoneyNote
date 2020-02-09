@@ -22,7 +22,6 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new CategoryService();
-                //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
                 var categoryList = service.GetMainCategories(x => x.UserId == user.Content.Id);
 
                 result.Content = categoryList;
@@ -35,15 +34,12 @@ namespace MoneyNoteAPI.Controllers
             return result;
         }
 
-
         [HttpPost]
         public ApiResult<List<SubCategory>> GetSubCategories([FromBody]ApiRequest<MainCategory> mainCategory)
         {
             var result = new ApiResult<List<SubCategory>>();
             try
             {
-                //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-                //var categoryList = SqlLauncher.GetAll<SubCategory>(x => x.MainCategoryId == mainCategory.Content.Id);
                 var service = new CategoryService();
                 var categoryList = service.GetSubCategories(x => x.MainCategoryId == mainCategory.Content.Id);
 
