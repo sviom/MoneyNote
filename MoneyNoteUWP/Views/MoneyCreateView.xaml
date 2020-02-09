@@ -34,6 +34,20 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
+            <TextBlock Margin="0,10,0,0" Text="하위분류" Visibility="{x:Bind ViewModel.SubCategories.Count, Converter={StaticResource CountVisibilityConverter}}"/>
+            <ComboBox HorizontalAlignment="Stretch" CornerRadius="5"
+                      ItemsSource="{x:Bind ViewModel.SubCategories}"
+                      SelectedItem="{x:Bind ViewModel.SubCategory, Mode=TwoWay}"
+                      Visibility="{x:Bind ViewModel.SubCategories.Count, Converter={StaticResource CountVisibilityConverter}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="model:SubCategory">
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind Title}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
             <TextBlock Text="제목"  Margin="0,10,0,0" />
             <TextBox x:Name="TitleText" Text="{x:Bind ViewModel.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      CornerRadius="5"></TextBox>

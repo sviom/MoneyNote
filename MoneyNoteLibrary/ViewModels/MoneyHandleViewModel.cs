@@ -342,5 +342,25 @@ namespace MoneyNoteLibrary.ViewModels
 
             IsRunProgressRing = false;
         }
+
+        public async Task GetSubCategories()
+        {
+            if (MainCategory == null)
+                return;
+
+            if (LoginedUser == null)
+                return;
+
+            var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, ObservableCollection<SubCategory>>(MainCategory, ControllerEnum.category);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    var nowDivision = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+                    if (item.Division == nowDivision)
+                        SubCategories.Add(item);
+                }
+            }
+        }
     }
 }

@@ -94,4 +94,22 @@ namespace MoneyNote.Converter
             return Visibility.Collapsed;
         }
     }
+
+    public class CountVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value is int count)
+            {
+                if (count > 0)
+                    return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return Visibility.Collapsed;
+        }
+    }
 }
