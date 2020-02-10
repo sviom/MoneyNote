@@ -69,8 +69,8 @@ namespace MoneyNote
             if (result)
             {
                 //AzureKeyVault.SaltPassword = await AzureKeyVault.OnGetAsync(KeyVaultName.SaltPassword.ToString());
-                Frame.Navigate(typeof(Views.HomePage));
                 App.LogInedUser = user;
+                Frame.Navigate(typeof(Views.HomePage));
             }
         }
 
