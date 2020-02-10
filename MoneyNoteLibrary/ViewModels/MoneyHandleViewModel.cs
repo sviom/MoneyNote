@@ -239,6 +239,9 @@ namespace MoneyNoteLibrary.ViewModels
                     return;
 
                 _SubCategory = value;
+
+                if (MainCategory != null)
+                    _SubCategory.MainCategory = MainCategory;
                 OnPropertyChanged();
             }
         }
@@ -318,7 +321,7 @@ namespace MoneyNoteLibrary.ViewModels
                 Money = mo,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
                 MainCategory = MainCategory,
-                
+                SubCategory = SubCategory,
                 User = LoginedUser
             };
             //SubCategory = SubCategory,
