@@ -88,7 +88,7 @@ namespace MoneyNote.Views
             }
         }
 
-        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -96,8 +96,13 @@ namespace MoneyNote.Views
                     if (!ViewModel.IsMainCategoryProgress)
                     {
                         SetMainCategoryCombobox(MoneyItem.MainCategory);
+                        await ViewModel.GetSubCategories();
                     }
                         
+                    break;
+                case nameof(ViewModel.IsSubCategoryProgress):
+                    if (!ViewModel.IsSubCategoryProgress)
+                        SetSubCategoryCombobox(MoneyItem.SubCategory);
                     break;
                 default:
                     break;
@@ -122,6 +127,21 @@ namespace MoneyNote.Views
                 {
                     if (category.Id == mainCategory.Id)
                         MainCategoryCombobox.SelectedItem = item;
+                }
+            }
+        }
+
+        public void SetSubCategoryCombobox(SubCategory subCategory)
+        {
+            if (subCategory == null)
+                return;
+
+            foreach (var item in SubCategoryCombobox.Items)
+            {
+                if (item is SubCategory category)
+                {
+                    if (category.Id == subCategory.Id)
+                        SubCategoryCombobox.SelectedItem = item;
                 }
             }
         }

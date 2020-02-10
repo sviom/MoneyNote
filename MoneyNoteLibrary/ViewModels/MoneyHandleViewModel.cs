@@ -34,7 +34,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-
         private bool _IsMainCategoryProgress;
         public bool IsMainCategoryProgress
         {
@@ -49,6 +48,19 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private bool _IsSubCategoryProgress;
+        public bool IsSubCategoryProgress
+        {
+            get { return _IsSubCategoryProgress; }
+            set
+            {
+                if (_IsSubCategoryProgress == value)
+                    return;
+
+                _IsSubCategoryProgress = value;
+                OnPropertyChanged();
+            }
+        }
 
         private MoneyItem _PreMoneyItem;
         public MoneyItem PreMoneyItem
@@ -306,9 +318,10 @@ namespace MoneyNoteLibrary.ViewModels
                 Money = mo,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
                 MainCategory = MainCategory,
-                SubCategory = SubCategory,
+                
                 User = LoginedUser
             };
+            //SubCategory = SubCategory,
             var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
 
             if (!result.Result)
@@ -369,6 +382,7 @@ namespace MoneyNoteLibrary.ViewModels
             if (LoginedUser == null)
                 return;
 
+            IsSubCategoryProgress = true;
             IsRunProgressRing = true;
             var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, ObservableCollection<SubCategory>>(MainCategory, ControllerEnum.category);
             if (result.Result)
@@ -381,6 +395,7 @@ namespace MoneyNoteLibrary.ViewModels
                 }
             }
             IsRunProgressRing = false;
+            IsSubCategoryProgress = false;
         }
     }
 }
