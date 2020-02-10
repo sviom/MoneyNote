@@ -65,12 +65,12 @@ namespace MoneyNote
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = await ViewModel.LogIn();
-            if (result.Item1)
+            (var result, var user) = await ViewModel.LogIn();
+            if (result)
             {
                 //AzureKeyVault.SaltPassword = await AzureKeyVault.OnGetAsync(KeyVaultName.SaltPassword.ToString());
                 Frame.Navigate(typeof(Views.HomePage));
-                App.LogInedUser = result.Item2;
+                App.LogInedUser = user;
             }
         }
 
