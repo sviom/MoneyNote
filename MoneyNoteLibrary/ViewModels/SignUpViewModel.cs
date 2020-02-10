@@ -108,7 +108,7 @@ namespace MoneyNoteLibrary.ViewModels
             OnPropertyChanged(nameof(IsSignUpEnable));
         }
 
-        public async Task<bool> SignUp()
+        public async Task<(bool, User)> SignUp()
         {
             var result = false;
             var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
@@ -129,7 +129,7 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 ErrorMessage = "에러!!";
             }
-            return result;
+            return (result, signUpResult.Content);
         }
     }
 }
