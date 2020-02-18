@@ -11,6 +11,8 @@ namespace MoneyNoteAPI.Services
 {
     public class MoneyService
     {
+        public static MoneyContext context = new MoneyContext();
+
         public List<MoneyItem> GetMoneyList(Expression<Func<MoneyItem, bool>> expression = null)
         {
             List<MoneyItem> returnList = new List<MoneyItem>();
@@ -21,9 +23,9 @@ namespace MoneyNoteAPI.Services
                 DbSet<MoneyItem> dbSet = db.Set<MoneyItem>();
 
                 if (expression == null)
-                    returnList = db.MoneyItems.Include(x => x.MainCategory).ToList();
+                    returnList = db.MoneyItems.Include(x => x.MainCategory).Include(y => y.SubCategory).ToList();
                 else
-                    returnList = db.MoneyItems.Include(x => x.MainCategory).Where(expression).ToList();
+                    returnList = db.MoneyItems.Include(x => x.MainCategory).Include(y => y.SubCategory).Where(expression).ToList();
             }
             catch (Exception ex)
             {
