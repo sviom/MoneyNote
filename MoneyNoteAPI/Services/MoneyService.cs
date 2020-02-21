@@ -23,9 +23,15 @@ namespace MoneyNoteAPI.Services
                 DbSet<MoneyItem> dbSet = db.Set<MoneyItem>();
 
                 if (expression == null)
-                    returnList = db.MoneyItems.Include(x => x.MainCategory).Include(y => y.SubCategory).ToList();
+                    returnList = db.MoneyItems
+                        .Include(x => x.MainCategory)
+                        .ThenInclude(main => main.SubCategories)
+                        .ToList();//.Include(y => y.SubCategory).ToList();
                 else
-                    returnList = db.MoneyItems.Include(x => x.MainCategory).Include(y => y.SubCategory).Where(expression).ToList();
+                    returnList = db.MoneyItems
+                        .Include(x => x.MainCategory)
+                        .ThenInclude(main => main.SubCategories)
+                        .Where(expression).ToList();
             }
             catch (Exception ex)
             {

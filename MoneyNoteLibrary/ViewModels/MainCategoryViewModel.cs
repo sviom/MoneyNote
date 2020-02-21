@@ -266,7 +266,7 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 Division = Division,
                 Title = CategoryText,
-                MainCategory = SelectedCategory
+                MainCategoryId = SelectedCategory.Id
             };
 
             var result = await MoneyApi.SaveSubCategory.ApiLauncher<SubCategory, SubCategory>(category, ControllerEnum.category);

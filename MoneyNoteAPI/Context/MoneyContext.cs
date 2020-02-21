@@ -52,10 +52,10 @@ namespace MoneyNoteAPI.Context
                 .WithMany(y => y.MainCategories)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<SubCategory>()
-                .HasOne(x => x.MainCategory)
-                .WithMany(y => y.SubCategories)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<SubCategory>()
+            //    .HasOne(x => x.MainCategory)
+            //    .WithMany(y => y.SubCategories)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }

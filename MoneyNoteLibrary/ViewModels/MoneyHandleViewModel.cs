@@ -241,7 +241,7 @@ namespace MoneyNoteLibrary.ViewModels
                 _SubCategory = value;
 
                 if (MainCategory != null)
-                    _SubCategory.MainCategory = MainCategory;
+                    _SubCategory.MainCategoryId = MainCategory.Id;
                 OnPropertyChanged();
             }
         }
