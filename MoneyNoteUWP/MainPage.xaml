@@ -22,7 +22,8 @@
                      Text="{x:Bind ViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Margin="0,10,0,0">Password</TextBlock>
             <PasswordBox x:Name="PasswordTextBox" CornerRadius="5"
-                         Password="{x:Bind ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                         Password="{x:Bind ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         KeyDown="PasswordTextBox_KeyDown" />
             <Button x:Name="LoginButton" 
                     Click="LoginButton_Click"
                     IsEnabled="{x:Bind ViewModel.IsEnableLogin}"

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -65,6 +66,24 @@ namespace MoneyNote
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            await Login();
+        }
+
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Views.SignUpPage));
+        }
+
+        private async void PasswordTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                await Login();
+            }
+        }
+
+        public async Task Login()
+        {
             (var result, var user) = await ViewModel.LogIn();
             if (result)
             {
@@ -72,11 +91,6 @@ namespace MoneyNote
                 App.LogInedUser = user;
                 Frame.Navigate(typeof(Views.HomePage));
             }
-        }
-
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Views.SignUpPage));
         }
     }
 }
