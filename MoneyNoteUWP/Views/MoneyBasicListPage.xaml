@@ -60,6 +60,20 @@
                                        VerticalAlignment="Center" />
                         </StackPanel>
 
+                        <!--<Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                CornerRadius="4" FontSize="12" Background="DarkGreen" Foreground="White">
+                            <Button.Content>
+                                <StackPanel>
+                                    <TextBlock Text="추가기능" />
+                                </StackPanel>
+                            </Button.Content>
+                            <Button.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                    <MenuFlyoutItem Text="삭제" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>-->
+
                         <Grid HorizontalAlignment="Stretch"
                               Grid.Row="1">
                             <Grid.ColumnDefinitions>

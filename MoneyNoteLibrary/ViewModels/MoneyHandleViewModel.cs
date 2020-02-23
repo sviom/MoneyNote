@@ -357,6 +357,16 @@ namespace MoneyNoteLibrary.ViewModels
             return result.Result;
         }
 
+        public async Task<bool> DeleteMoney()
+        {
+            PreMoneyItem.User = LoginedUser;
+            var result = await MoneyApi.DeleteMoney.ApiLauncher<MoneyItem, bool>(PreMoneyItem);
+            if (!result.Result)
+                ErrorMessage = "삭제 중 에러가 발생했습니다.";
+
+            return result.Content;
+        }
+
         public async Task GetMainCategories()
         {
             if (LoginedUser == null)

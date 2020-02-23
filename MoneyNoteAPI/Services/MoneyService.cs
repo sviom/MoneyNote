@@ -80,5 +80,25 @@ namespace MoneyNoteAPI.Services
 
             return null;
         }
+
+        public bool DeleteMoney(MoneyItem moneyItem)
+        {
+            try
+            {
+                using var db = new MoneyContext();
+                db.Entry(moneyItem).State = EntityState.Deleted;
+                var set = db.Set<MoneyItem>();
+                set.Remove(moneyItem);
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
