@@ -26,11 +26,13 @@ namespace MoneyNoteAPI.Services
                     returnList = db.MoneyItems
                         .Include(x => x.MainCategory)
                         .ThenInclude(main => main.SubCategories)
+                        .OrderByDescending(x => x.UpdatedTime)
                         .ToList();//.Include(y => y.SubCategory).ToList();
                 else
                     returnList = db.MoneyItems
                         .Include(x => x.MainCategory)
                         .ThenInclude(main => main.SubCategories)
+                        .OrderByDescending(x => x.UpdatedTime)
                         .Where(expression).ToList();
             }
             catch (Exception ex)
