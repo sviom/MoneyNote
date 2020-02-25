@@ -72,7 +72,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 하위 카테고리 목록 가져오기
             /// </summary>
-            GetSubCategories
+            GetSubCategories,
+            /// <summary>
+            /// 금액 내역 삭제
+            /// </summary>
+            DeleteMoney
         }
 
         /// <summary>

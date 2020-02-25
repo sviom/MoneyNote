@@ -345,6 +345,8 @@ namespace MoneyNoteLibrary.ViewModels
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
             PreMoneyItem.MainCategory = MainCategory;
             PreMoneyItem.SubCategory = SubCategory;
+            PreMoneyItem.CreatedTime = CreatedTime;
+            PreMoneyItem.UpdatedTime = DateTimeOffset.Now;
             PreMoneyItem.User = LoginedUser;
 
             var result = await MoneyApi.UpdateMoney.ApiLauncher<MoneyItem, MoneyItem>(PreMoneyItem);
@@ -353,6 +355,16 @@ namespace MoneyNoteLibrary.ViewModels
                 ErrorMessage = "에러가 발생했습니다.";
 
             return result.Result;
+        }
+
+        public async Task<bool> DeleteMoney()
+        {
+            PreMoneyItem.User = LoginedUser;
+            var result = await MoneyApi.DeleteMoney.ApiLauncher<MoneyItem, bool>(PreMoneyItem);
+            if (!result.Result)
+                ErrorMessage = "삭제 중 에러가 발생했습니다.";
+
+            return result.Content;
         }
 
         public async Task GetMainCategories()

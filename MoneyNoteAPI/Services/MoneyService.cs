@@ -26,11 +26,13 @@ namespace MoneyNoteAPI.Services
                     returnList = db.MoneyItems
                         .Include(x => x.MainCategory)
                         .ThenInclude(main => main.SubCategories)
+                        .OrderByDescending(x => x.CreatedTime)
                         .ToList();//.Include(y => y.SubCategory).ToList();
                 else
                     returnList = db.MoneyItems
                         .Include(x => x.MainCategory)
                         .ThenInclude(main => main.SubCategories)
+                        .OrderByDescending(x => x.CreatedTime)
                         .Where(expression).ToList();
             }
             catch (Exception ex)
@@ -77,6 +79,26 @@ namespace MoneyNoteAPI.Services
             }
 
             return null;
+        }
+
+        public bool DeleteMoney(MoneyItem moneyItem)
+        {
+            try
+            {
+                using var db = new MoneyContext();
+                db.Entry(moneyItem).State = EntityState.Deleted;
+                var set = db.Set<MoneyItem>();
+                set.Remove(moneyItem);
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -98,7 +98,7 @@ namespace MoneyNote.Views
                         SetMainCategoryCombobox(MoneyItem.MainCategory);
                         await ViewModel.GetSubCategories();
                     }
-                        
+
                     break;
                 case nameof(ViewModel.IsSubCategoryProgress):
                     if (!ViewModel.IsSubCategoryProgress)
@@ -144,6 +144,13 @@ namespace MoneyNote.Views
                         SubCategoryCombobox.SelectedItem = item;
                 }
             }
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await ViewModel.DeleteMoney();
+            if (result)
+                HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
         }
     }
 }

@@ -75,5 +75,25 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public ApiResult<bool> DeleteMoney([FromBody]ApiRequest<MoneyItem> item)
+        {
+            var result = new ApiResult<bool>();
+            try
+            {
+                var service = new MoneyService();
+                var updateResult = service.DeleteMoney(item.Content);
+
+                //var updateResult = SqlLauncher.Update(item.Content);
+                result.Content = updateResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
     }
 }
