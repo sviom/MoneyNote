@@ -30,10 +30,10 @@ namespace MoneyNoteLibrary.Models
 
         public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.Now;
 
-        public Guid UserId { get; set; }
-
         [Required]
         public User User { get; set; }
+
+        public Guid UserId { get; set; }
 
         [Required]
         public MainCategory MainCategory { get; set; }
@@ -41,5 +41,10 @@ namespace MoneyNoteLibrary.Models
         public Guid MainCategoryId { get; set; }
 
         public SubCategory SubCategory { get; set; }
+
+        [Required]
+        public BankBook BankBook { get; set; }
+
+        public Guid BankBookId { get; set; }
     }
 }

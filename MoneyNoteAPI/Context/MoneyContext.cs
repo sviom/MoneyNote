@@ -18,6 +18,8 @@ namespace MoneyNoteAPI.Context
 
         public DbSet<SubCategory> SubCategories { get; set; }
 
+        public DbSet<BankBook> BankBooks { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
@@ -27,35 +29,45 @@ namespace MoneyNoteAPI.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MoneyItem>()
-                .HasOne(x => x.MainCategory)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<MoneyItem>()
-                .HasOne(x => x.User)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<User>()
-                .HasMany(x => x.MoneyItems)
-                .WithOne(y => y.User)
-                .OnDelete(DeleteBehavior.Cascade);
+             .HasMany(x => x.MoneyItems)
+             .WithOne(y => y.User)
+             .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
                 .HasMany(x => x.MainCategories)
                 .WithOne(y => y.User)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<MainCategory>()
-                .HasOne(x => x.User)
-                .WithMany(y => y.MainCategories)
-                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+              .HasMany(x => x.BankBooks)
+              .WithOne(y => y.User)
+              .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<SubCategory>()
-            //    .HasOne(x => x.MainCategory)
-            //    .WithMany(y => y.SubCategories)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<MoneyItem>()
+                .HasOne(x => x.MainCategory)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<MoneyItem>()
+            //    .HasOne(x => x.User)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            //modelBuilder.Entity<MoneyItem>()
+            //    .HasOne(x => x.BankBook)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            //modelBuilder.Entity<MainCategory>()
+            //    .HasOne(x => x.User)
+            //    .WithMany(y => y.MainCategories)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<BankBook>()
+                .HasMany(x => x.MoneyItems)
+                .WithOne(y => y.BankBook)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }

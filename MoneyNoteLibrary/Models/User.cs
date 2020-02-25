@@ -27,6 +27,8 @@ namespace MoneyNoteLibrary.Models
 
         public List<MainCategory> MainCategories { get; set; }
 
+        public List<BankBook> BankBooks { get; set; }
+
         [Required]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
