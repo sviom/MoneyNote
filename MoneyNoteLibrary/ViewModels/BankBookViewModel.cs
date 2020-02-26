@@ -57,6 +57,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _Name = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
@@ -71,14 +72,21 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _AssetsText = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
-        public bool IsValidAssets => ValidCheck.IsValidNumber(AssetsText);
+        public bool IsValidAssets => Common.ValidCheck.IsValidNumber(AssetsText);
 
         public bool IsEnableSave => IsValidAssets && !string.IsNullOrEmpty(Name);
 
         public BankBookViewModel() { }
+
+        public void ValidCheck()
+        {
+            OnPropertyChanged(nameof(IsValidAssets));
+            OnPropertyChanged(nameof(IsEnableSave));
+        }
 
         public void ShowInputArea()
         {
