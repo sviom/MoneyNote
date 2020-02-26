@@ -21,10 +21,10 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new BankBookService();
-                var categoryList = service.GetBankBooks(x => x.UserId == user.Content.Id);
+                var bankbookList = service.GetBankBooks(x => x.UserId == user.Content.Id);
 
-                result.Content = categoryList;
-                result.Result = categoryList != null;
+                result.Content = bankbookList;
+                result.Result = bankbookList != null;
             }
             catch
             {
