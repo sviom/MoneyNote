@@ -34,8 +34,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
         <Button Grid.Row="2" Content="새로추가" 
-                Click="{x:Bind ViewModel.ShowInputArea}"
                 HorizontalAlignment="Right" VerticalAlignment="Top"
                 Style="{StaticResource CommonButtonStyle}"></Button>
 
@@ -55,7 +55,6 @@
 
                     <Button Content="저장" HorizontalAlignment="Stretch" 
                             IsEnabled="{x:Bind ViewModel.IsEnableSave}"
-                            Click="{x:Bind ViewModel.SaveBankBook}"
                             Margin="0,8,0,0"
                             Style="{StaticResource CommonButtonStyle}" />
                 </StackPanel>

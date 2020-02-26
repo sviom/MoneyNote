@@ -54,7 +54,7 @@ namespace MoneyNote.UserControls
 
         private void BankBookManage_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = new BankBookViewModel();
+            ViewModel = new BankBookViewModel(App.LogInedUser);
         }
 
         private void BankBookManage_Unloaded(object sender, RoutedEventArgs e)

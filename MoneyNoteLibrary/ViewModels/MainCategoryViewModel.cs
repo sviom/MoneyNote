@@ -12,7 +12,7 @@ using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteLibrary.ViewModels
 {
-    public class MainCategoryViewModel : INotifyPropertyChanged
+    public class MainCategoryViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -48,8 +48,6 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public User LoginedUser { get; set; }
 
         private string _AddCategoryButtonText = "새 분류 추가";
         public string AddCategoryButtonText

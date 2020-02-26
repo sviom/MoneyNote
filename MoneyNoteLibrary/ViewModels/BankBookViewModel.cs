@@ -9,7 +9,7 @@ using System.Text;
 
 namespace MoneyNoteLibrary.ViewModels
 {
-    public class BankBookViewModel : INotifyPropertyChanged
+    public class BankBookViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -80,7 +80,11 @@ namespace MoneyNoteLibrary.ViewModels
 
         public bool IsEnableSave => IsValidAssets && !string.IsNullOrEmpty(Name);
 
-        public BankBookViewModel() { Initialize(); }
+        public BankBookViewModel(User user)
+        {
+            LoginedUser = user;
+            Initialize();
+        }
 
         public void Initialize()
         {
