@@ -78,6 +78,10 @@ namespace MoneyNoteLibrary.Enums
             /// </summary>
             DeleteMoney,
             /// <summary>
+            /// 통장목록 가져오기
+            /// </summary>
+            GetBankBooks,
+            /// <summary>
             /// 통장 내용 저장
             /// </summary>
             SaveBankBook,

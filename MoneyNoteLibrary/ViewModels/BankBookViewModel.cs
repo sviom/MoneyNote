@@ -81,9 +81,21 @@ namespace MoneyNoteLibrary.ViewModels
             Initialize();
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
             BankBooks = new ObservableCollection<BankBook>();
+            var result = await MoneyApi.GetBankBooks.ApiLauncher<User, List<BankBook>>(LoginedUser, ControllerEnum.bankbook);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    BankBooks.Add(item);
+                }
+            }
+            else
+            {
+                ErrorMessage = "목록 가져오기에서 에러 발생했습니다.";
+            }
         }
 
         public void ValidCheck()

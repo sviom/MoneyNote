@@ -10,7 +10,7 @@ namespace MoneyNoteAPI.Services
 {
     public class BankBookService
     {
-        public List<BankBook> GetBankBookList(Expression<Func<BankBook, bool>> expression)
+        public List<BankBook> GetBankBooks(Expression<Func<BankBook, bool>> expression)
         {
             try
             {
