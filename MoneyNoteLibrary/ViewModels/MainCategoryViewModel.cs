@@ -12,15 +12,8 @@ using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteLibrary.ViewModels
 {
-    public class MainCategoryViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainCategoryViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private MoneyCategory _Division;
         public MoneyCategory Division
         {
@@ -62,7 +55,6 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         private string _SaveButtonText = "저장";
         public string SaveButtonText

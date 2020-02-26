@@ -25,6 +25,7 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="현재 통장 목록"
                    Style="{StaticResource SubtitleTextBlockStyle}"/>
         <ListView Grid.Column="0" Grid.Row="1"
+                  Margin="4"
                   ItemsSource="{x:Bind ViewModel.BankBooks}">
             <ListView.ItemTemplate>
                 <DataTemplate x:Name="BankBookItemTemplate" x:DataType="model:BankBook">
@@ -34,16 +35,17 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
+
         <Button Grid.Row="2" Content="새로추가" 
+                Click="{x:Bind ViewModel.ShowInputArea}"
                 HorizontalAlignment="Right" VerticalAlignment="Top"
-                Style="{StaticResource CommonButtonStyle}"></Button>
+                Style="{StaticResource CommonButtonStyle}" />
 
         <TextBlock Grid.Row="0" Grid.Column="1" Text="수정" 
                    Style="{StaticResource SubtitleTextBlockStyle}"
                    Visibility="{x:Bind ViewModel.IsShowInputArea}"/>
 
-        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Padding="4,0,4,0"
               Visibility="{x:Bind ViewModel.IsShowInputArea}">
             <ScrollViewer>
                 <StackPanel>
@@ -51,7 +53,7 @@
                     <TextBox  CornerRadius="4" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBlock Text="현재 금액" Margin="0,8,0,0"/>
-                    <TextBox CornerRadius="4" Template="{x:Bind ViewModel.AssetsText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox CornerRadius="4" Text="{x:Bind ViewModel.AssetsText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Button Content="저장" HorizontalAlignment="Stretch" 
                             IsEnabled="{x:Bind ViewModel.IsEnableSave}"

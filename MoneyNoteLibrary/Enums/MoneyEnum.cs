@@ -76,7 +76,19 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 금액 내역 삭제
             /// </summary>
-            DeleteMoney
+            DeleteMoney,
+            /// <summary>
+            /// 통장 내용 저장
+            /// </summary>
+            SaveBankBook,
+            /// <summary>
+            /// 통장 내용 수정
+            /// </summary>
+            ModifyBankBook,
+            /// <summary>
+            /// 통장 내용 삭제
+            /// </summary>
+            DeleteBankBook
         }
 
         /// <summary>
@@ -95,7 +107,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 카테고리관련
             /// </summary>
-            category
+            category,
+            /// <summary>
+            /// 자산(통장)관련
+            /// </summary>
+            bankbook
         }
     }
 }

@@ -6,18 +6,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
-    public class BankBookViewModel : ViewModelBase, INotifyPropertyChanged
+    public class BankBookViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private bool _IsShowInputArea;
         public bool IsShowInputArea
         {
@@ -102,8 +97,30 @@ namespace MoneyNoteLibrary.ViewModels
             IsShowInputArea = true;
         }
 
-        public void SaveBankBook()
+        public void HideInputArea()
         {
+            IsShowInputArea = false;
+        }
+
+        public async Task<bool> SaveBankBook()
+        {
+            double.TryParse(AssetsText, out double assets);
+
+            var newBankBook = new BankBook();
+            newBankBook.Name = Name;
+            newBankBook.Assets = assets;
+            newBankBook.User = LoginedUser;
+
+            var result = await MoneyApi.SaveBankBook.ApiLauncher<BankBook, BankBook>(newBankBook, ControllerEnum.bankbook);
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+            else
+            {
+                BankBooks.Add(result.Content);
+                HideInputArea();
+            }
+
+            return result.Result;
         }
     }
 }
