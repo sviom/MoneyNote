@@ -10,7 +10,7 @@ namespace MoneyNoteAPI.Services
 {
     public class CategoryService
     {
-        public List<MainCategory> GetMainCategories(Expression<Func<MainCategory, bool>> expression)//
+        public List<MainCategory> GetMainCategories(Expression<Func<MainCategory, bool>> expression)
         {
             try
             {
