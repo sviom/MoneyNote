@@ -80,7 +80,12 @@ namespace MoneyNoteLibrary.ViewModels
 
         public bool IsEnableSave => IsValidAssets && !string.IsNullOrEmpty(Name);
 
-        public BankBookViewModel() { }
+        public BankBookViewModel() { Initialize(); }
+
+        public void Initialize()
+        {
+            BankBooks = new ObservableCollection<BankBook>();
+        }
 
         public void ValidCheck()
         {
