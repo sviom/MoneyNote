@@ -1,7 +1,12 @@
-﻿using System;
+﻿using MoneyNoteLibrary.Models;
+using MoneyNoteLibrary.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -17,11 +22,43 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MoneyNote.UserControls
 {
-    public sealed partial class BankBookManage : UserControl
+    public sealed partial class BankBookManage : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private BankBookViewModel _ViewModel;
+        public BankBookViewModel ViewModel
+        {
+            get { return _ViewModel; }
+            set
+            {
+                if (_ViewModel == value)
+                    return;
+
+                _ViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
         public BankBookManage()
         {
             this.InitializeComponent();
+            this.Loaded += BankBookManage_Loaded;
+            this.Unloaded += BankBookManage_Unloaded;
+        }
+
+        private void BankBookManage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel = new BankBookViewModel();
+        }
+
+        private void BankBookManage_Unloaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

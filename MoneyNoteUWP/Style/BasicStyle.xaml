@@ -6,13 +6,13 @@
 
     <Style x:Key="BasicErrorMessage" TargetType="TextBlock">
         <Setter Property="Foreground" Value="Red"/>
-        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
     <Style x:Key="CommonButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="ForestGreen"></Setter>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="CornerRadius" Value="4"/>
     </Style>
 </ResourceDictionary>
