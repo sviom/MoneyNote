@@ -46,6 +46,20 @@ namespace MoneyNote.Views
             }
         }
 
+        private BankBookViewModel _BankBookViewModel;
+        public BankBookViewModel BankBookViewModel
+        {
+            get { return _BankBookViewModel; }
+            set
+            {
+                if (_BankBookViewModel == value)
+                    return;
+
+                _BankBookViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MoneyCreateView()
         {
             this.InitializeComponent();
@@ -57,6 +71,7 @@ namespace MoneyNote.Views
         {
             ViewModel = new MoneyHandleViewModel(App.LogInedUser);
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+            BankBookViewModel = new BankBookViewModel(App.LogInedUser);
         }
 
         private void MoneyCreateView_Unloaded(object sender, RoutedEventArgs e)

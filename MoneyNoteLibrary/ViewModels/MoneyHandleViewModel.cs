@@ -11,29 +11,8 @@ using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
-    public class MoneyHandleViewModel : INotifyPropertyChanged
+    public class MoneyHandleViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private bool _IsRunProgressRing;
-        public bool IsRunProgressRing
-        {
-            get { return _IsRunProgressRing; }
-            set
-            {
-                if (_IsRunProgressRing == value)
-                    return;
-
-                _IsRunProgressRing = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _IsMainCategoryProgress;
         public bool IsMainCategoryProgress
         {
@@ -76,8 +55,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        public User LoginedUser { get; set; }
-
         private ObservableCollection<MainCategory> _MainCategories;
         public ObservableCollection<MainCategory> MainCategories
         {
@@ -102,20 +79,6 @@ namespace MoneyNoteLibrary.ViewModels
                     return;
 
                 _SubCategories = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _ErrorMessage;
-        public string ErrorMessage
-        {
-            get { return _ErrorMessage; }
-            set
-            {
-                if (_ErrorMessage == value)
-                    return;
-
-                _ErrorMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -215,6 +178,24 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private BankBook _SelectedBankBook;
+        public BankBook SelectedBankBook
+        {
+            get { return _SelectedBankBook; }
+            set
+            {
+                if (_SelectedBankBook == value)
+                    return;
+
+                _SelectedBankBook = value;
+
+                if (_SelectedBankBook != null)
+                    _SelectedBankBook.User = LoginedUser;
+
+                OnPropertyChanged();
+            }
+        }
+
         private MainCategory _MainCategory;
         public MainCategory MainCategory
         {
@@ -225,6 +206,10 @@ namespace MoneyNoteLibrary.ViewModels
                     return;
 
                 _MainCategory = value;
+
+                if (_MainCategory != null)
+                    _MainCategory.User = LoginedUser;
+
                 OnPropertyChanged();
             }
         }
@@ -296,6 +281,8 @@ namespace MoneyNoteLibrary.ViewModels
                 default:
                     break;
             }
+
+            SelectedBankBook = item.BankBook;
             MainCategory = item.MainCategory;
             SubCategory = item.SubCategory;
         }
@@ -319,12 +306,13 @@ namespace MoneyNoteLibrary.ViewModels
                 Title = Title,
                 Description = Description,
                 Money = mo,
+                BankBook = SelectedBankBook,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
                 MainCategory = MainCategory,
                 SubCategory = SubCategory,
                 User = LoginedUser
             };
-            //SubCategory = SubCategory,
+
             var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
 
             if (!result.Result)
@@ -342,6 +330,7 @@ namespace MoneyNoteLibrary.ViewModels
             PreMoneyItem.Title = Title;
             PreMoneyItem.Description = Description;
             PreMoneyItem.Money = mo;
+            PreMoneyItem.BankBook = SelectedBankBook;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
             PreMoneyItem.MainCategory = MainCategory;
             PreMoneyItem.SubCategory = SubCategory;

@@ -187,10 +187,12 @@ namespace MoneyNoteLibrary.ViewModels
             IsRunProgressRing = true;
 
             double.TryParse(AssetsText, out double assets);
-            var newBankBook = new BankBook();
-            newBankBook.Name = Name;
-            newBankBook.Assets = assets;
-            newBankBook.User = LoginedUser;
+            var newBankBook = new BankBook
+            {
+                Name = Name,
+                Assets = assets,
+                User = LoginedUser
+            };
 
             var result = await MoneyApi.SaveBankBook.ApiLauncher<BankBook, BankBook>(newBankBook, ControllerEnum.bankbook);
             if (!result.Result)
@@ -238,8 +240,6 @@ namespace MoneyNoteLibrary.ViewModels
                 return false;
 
             IsRunProgressRing = true;
-
-            double.TryParse(AssetsText, out double assets);
 
             var result = await MoneyApi.DeleteBankBook.ApiLauncher<BankBook, bool>(SelectedItem, ControllerEnum.bankbook);
             if (!result.Result)
