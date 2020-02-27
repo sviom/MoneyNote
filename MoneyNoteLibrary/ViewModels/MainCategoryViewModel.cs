@@ -28,20 +28,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        private string _ErrorMessage;
-        public string ErrorMessage
-        {
-            get { return _ErrorMessage; }
-            set
-            {
-                if (_ErrorMessage == value)
-                    return;
-
-                _ErrorMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _AddCategoryButtonText = "새 분류 추가";
         public string AddCategoryButtonText
         {
