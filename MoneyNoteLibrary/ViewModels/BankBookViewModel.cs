@@ -13,19 +13,6 @@ namespace MoneyNoteLibrary.ViewModels
 {
     public class BankBookViewModel : ViewModelBase
     {
-        private bool _IsShowInputArea;
-        public bool IsShowInputArea
-        {
-            get { return _IsShowInputArea; }
-            set
-            {
-                if (_IsShowInputArea == value)
-                    return;
-
-                _IsShowInputArea = value;
-                OnPropertyChanged();
-            }
-        }
 
         private ObservableCollection<BankBook> _BankBooks;
         public ObservableCollection<BankBook> BankBooks
@@ -38,6 +25,22 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _BankBooks = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private BankBook _SelectedItem;
+        public BankBook SelectedItem
+        {
+            get { return _SelectedItem; }
+            set
+            {
+                if (_SelectedItem == value)
+                    return;
+
+                _SelectedItem = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsShowDeleteButton));
             }
         }
 
@@ -71,9 +74,39 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private string _InputAreaText = "새로 추가";
+        public string InputAreaText
+        {
+            get { return _InputAreaText; }
+            set
+            {
+                if (_InputAreaText == value)
+                    return;
+
+                _InputAreaText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _IsShowInputArea;
+        public bool IsShowInputArea
+        {
+            get { return _IsShowInputArea; }
+            set
+            {
+                if (_IsShowInputArea == value)
+                    return;
+
+                _IsShowInputArea = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsValidAssets => Common.ValidCheck.IsValidNumber(AssetsText);
 
         public bool IsEnableSave => IsValidAssets && !string.IsNullOrEmpty(Name);
+
+        public bool IsShowDeleteButton => SelectedItem != null;
 
         public BankBookViewModel(User user)
         {
@@ -83,6 +116,48 @@ namespace MoneyNoteLibrary.ViewModels
 
         public async void Initialize()
         {
+            await GetBankBooks();
+        }
+
+        public void ValidCheck()
+        {
+            OnPropertyChanged(nameof(IsValidAssets));
+            OnPropertyChanged(nameof(IsEnableSave));
+        }
+
+        public void SetSelectedItem(BankBook bankBook)
+        {
+            SelectedItem = bankBook;
+            if (SelectedItem != null)
+            {
+                Name = SelectedItem.Name;
+                AssetsText = SelectedItem.Assets.ToString();
+            }
+            ChangeInputArea();
+        }
+
+        public void ChangeInputArea()
+        {
+            IsShowInputArea = !IsShowInputArea;
+            if (IsShowInputArea)
+                InputAreaText = "내용 삭제";
+            else
+            {
+                InputAreaText = "새로 추가";
+                Clear();
+            }
+        }
+
+        public void Clear()
+        {
+            Name = string.Empty;
+            AssetsText = string.Empty;
+            SelectedItem = null;
+        }
+
+        public async Task GetBankBooks()
+        {
+            IsRunProgressRing = true;
             BankBooks = new ObservableCollection<BankBook>();
             var result = await MoneyApi.GetBankBooks.ApiLauncher<User, List<BankBook>>(LoginedUser, ControllerEnum.bankbook);
             if (result.Result)
@@ -96,28 +171,22 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 ErrorMessage = "목록 가져오기에서 에러 발생했습니다.";
             }
-        }
-
-        public void ValidCheck()
-        {
-            OnPropertyChanged(nameof(IsValidAssets));
-            OnPropertyChanged(nameof(IsEnableSave));
-        }
-
-        public void ShowInputArea()
-        {
-            IsShowInputArea = true;
-        }
-
-        public void HideInputArea()
-        {
-            IsShowInputArea = false;
+            IsRunProgressRing = false;
         }
 
         public async Task<bool> SaveBankBook()
         {
-            double.TryParse(AssetsText, out double assets);
+            if (SelectedItem != null)
+                return await ModifyBankBook();
+            else
+                return await SaveNewBankBook();
+        }
 
+        public async Task<bool> SaveNewBankBook()
+        {
+            IsRunProgressRing = true;
+
+            double.TryParse(AssetsText, out double assets);
             var newBankBook = new BankBook();
             newBankBook.Name = Name;
             newBankBook.Assets = assets;
@@ -129,9 +198,59 @@ namespace MoneyNoteLibrary.ViewModels
             else
             {
                 BankBooks.Add(result.Content);
-                HideInputArea();
+                ChangeInputArea();
             }
 
+
+            IsRunProgressRing = false;
+            return result.Result;
+        }
+
+        public async Task<bool> ModifyBankBook()
+        {
+            if (SelectedItem == null)
+                return false;
+
+            IsRunProgressRing = true;
+
+            double.TryParse(AssetsText, out double assets);
+
+            SelectedItem.Name = Name;
+            SelectedItem.Assets = assets;
+            SelectedItem.User = LoginedUser;
+
+            var result = await MoneyApi.ModifyBankBook.ApiLauncher<BankBook, BankBook>(SelectedItem, ControllerEnum.bankbook);
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+            else
+            {
+                await GetBankBooks();
+                ChangeInputArea();
+            }
+
+            IsRunProgressRing = false;
+            return result.Result;
+        }
+
+        public async Task<bool> DeleteBankBook()
+        {
+            if (SelectedItem == null)
+                return false;
+
+            IsRunProgressRing = true;
+
+            double.TryParse(AssetsText, out double assets);
+
+            var result = await MoneyApi.DeleteBankBook.ApiLauncher<BankBook, bool>(SelectedItem, ControllerEnum.bankbook);
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+            else
+            {
+                BankBooks.Remove(SelectedItem);
+                ChangeInputArea();
+            }
+
+            IsRunProgressRing = false;
             return result.Result;
         }
     }

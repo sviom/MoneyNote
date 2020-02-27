@@ -60,5 +60,14 @@ namespace MoneyNote.UserControls
         private void BankBookManage_Unloaded(object sender, RoutedEventArgs e)
         {
         }
+
+        private void BankBookListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var clickedItem = e.ClickedItem;
+            if (clickedItem is BankBook bankBook)
+            {
+                ViewModel.SetSelectedItem(bankBook);
+            }
+        }
     }
 }

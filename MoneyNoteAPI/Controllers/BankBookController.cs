@@ -51,14 +51,39 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public void ModifyBankBook()
+        public ApiResult<BankBook> ModifyBankBook([FromBody]ApiRequest<BankBook> item)
         {
+            var result = new ApiResult<BankBook>();
+            try
+            {
+                var insertResult = SqlLauncher.Update(item.Content);
+                result.Content = insertResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
 
         [HttpPost]
-        public void DeleteBankBook()
+        public ApiResult<bool> DeleteBankBook([FromBody]ApiRequest<BankBook> item)
         {
+            var result = new ApiResult<bool>();
+            try
+            {
+                var service = new BankBookService();
+                var updateResult = service.DeleteBankBook(item.Content);
 
+                result.Content = updateResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
         }
     }
 }

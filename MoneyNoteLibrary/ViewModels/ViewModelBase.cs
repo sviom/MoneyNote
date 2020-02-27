@@ -31,5 +31,20 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _IsRunProgressRing;
+        public bool IsRunProgressRing
+        {
+            get { return _IsRunProgressRing; }
+            set
+            {
+                if (_IsRunProgressRing == value)
+                    return;
+
+                _IsRunProgressRing = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

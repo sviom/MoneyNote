@@ -22,30 +22,42 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="현재 통장 목록"
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="현재 통장 목록" VerticalAlignment="Bottom"
+                   Margin="4,0,0,0"
                    Style="{StaticResource SubtitleTextBlockStyle}"/>
-        <ListView Grid.Column="0" Grid.Row="1"
-                  Margin="4"
-                  ItemsSource="{x:Bind ViewModel.BankBooks}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:Name="BankBookItemTemplate" x:DataType="model:BankBook">
-                    <StackPanel>
-                        <TextBlock Text="{x:Bind Name}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
-        <Button Grid.Row="2" Content="새로추가" 
-                Click="{x:Bind ViewModel.ShowInputArea}"
-                HorizontalAlignment="Right" VerticalAlignment="Top"
-                Style="{StaticResource CommonButtonStyle}" />
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+            <ListView Grid.Row="1"
+                      x:Name="BankBookListView"
+                      Margin="4,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4"
+                      ItemsSource="{x:Bind ViewModel.BankBooks}"
+                      SelectionMode="None"
+                      IsItemClickEnabled="True"
+                      ItemClick="BankBookListView_ItemClick"
+                      MinHeight="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:Name="BankBookItemTemplate" x:DataType="model:BankBook">
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Grid.Row="2" Content="{x:Bind ViewModel.InputAreaText}" 
+                    Click="{x:Bind ViewModel.ChangeInputArea}"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0"
+                    Style="{StaticResource CommonButtonStyle}" />
+
+        </StackPanel>
+
 
         <TextBlock Grid.Row="0" Grid.Column="1" Text="수정" 
+                   VerticalAlignment="Bottom" Margin="8,0,0,0"
                    Style="{StaticResource SubtitleTextBlockStyle}"
                    Visibility="{x:Bind ViewModel.IsShowInputArea}"/>
 
-        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Padding="4,0,4,0"
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Padding="8,0,4,0"
               Visibility="{x:Bind ViewModel.IsShowInputArea}">
             <ScrollViewer>
                 <StackPanel>
@@ -57,10 +69,23 @@
 
                     <Button Content="저장" HorizontalAlignment="Stretch" 
                             IsEnabled="{x:Bind ViewModel.IsEnableSave}"
+                            Click="{x:Bind ViewModel.SaveBankBook}"
                             Margin="0,8,0,0"
                             Style="{StaticResource CommonButtonStyle}" />
+
+                    <Button Content="삭제" HorizontalAlignment="Stretch" 
+                            Click="{x:Bind ViewModel.DeleteBankBook}"
+                            Visibility="{x:Bind ViewModel.IsShowDeleteButton}"
+                            Margin="0,8,0,0"
+                            Background="Red"
+                            Style="{StaticResource CommonButtonStyle}"/>
                 </StackPanel>
             </ScrollViewer>
+        </Grid>
+
+        <Grid Visibility="{x:Bind ViewModel.IsRunProgressRing}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2">
+            <Grid Background="White" Opacity="0.7"></Grid>
+            <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="{x:Bind ViewModel.IsRunProgressRing}"/>
         </Grid>
     </Grid>
 </UserControl>
