@@ -57,6 +57,7 @@
 
                     <Button Content="저장" HorizontalAlignment="Stretch" 
                             IsEnabled="{x:Bind ViewModel.IsEnableSave}"
+                            Click="{x:Bind ViewModel.SaveBankBook}"
                             Margin="0,8,0,0"
                             Style="{StaticResource CommonButtonStyle}" />
                 </StackPanel>
