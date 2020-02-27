@@ -27,10 +27,9 @@
                    Style="{StaticResource SubtitleTextBlockStyle}"/>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
-            <ListView Grid.Row="1"
-                      x:Name="BankBookListView"
-                      Margin="4,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4"
+            <ListView x:Name="BankBookListView"
                       ItemsSource="{x:Bind ViewModel.BankBooks}"
+                      Margin="4,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4"                      
                       SelectionMode="None"
                       IsItemClickEnabled="True"
                       ItemClick="BankBookListView_ItemClick"
@@ -44,10 +43,14 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button Grid.Row="2" Content="{x:Bind ViewModel.InputAreaText}" 
+            <Button Content="{x:Bind ViewModel.InputAreaText}" 
                     Click="{x:Bind ViewModel.ChangeInputArea}"
                     HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0"
                     Style="{StaticResource CommonButtonStyle}" />
+
+            <TextBlock Text="{x:Bind ViewModel.ErrorMessage}" 
+                       Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource StringNotNullToVisibilityConverter}}"
+                       Style="{StaticResource BasicErrorMessage}" />
 
         </StackPanel>
 
