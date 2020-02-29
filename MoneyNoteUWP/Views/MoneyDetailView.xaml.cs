@@ -88,6 +88,7 @@ namespace MoneyNote.Views
             ViewModel = new MoneyHandleViewModel(App.LogInedUser, MoneyItem);
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             BankBookViewModel = new BankBookViewModel(App.LogInedUser);
+            BankBookViewModel.PropertyChanged += BankBookViewModel_PropertyChanged;
         }
 
         private void MoneyDetailView_Unloaded(object sender, RoutedEventArgs e)
@@ -118,6 +119,21 @@ namespace MoneyNote.Views
                 case nameof(ViewModel.IsSubCategoryProgress):
                     if (!ViewModel.IsSubCategoryProgress)
                         SetSubCategoryCombobox(MoneyItem.SubCategory);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BankBookViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(BankBookViewModel.IsBankBooksProgress):
+                    if (!BankBookViewModel.IsBankBooksProgress)
+                    {
+                        SetBankBookCombobox(MoneyItem.BankBook);
+                    }
                     break;
                 default:
                     break;
@@ -157,6 +173,21 @@ namespace MoneyNote.Views
                 {
                     if (category.Id == subCategory.Id)
                         SubCategoryCombobox.SelectedItem = item;
+                }
+            }
+        }
+
+        public void SetBankBookCombobox(BankBook bankBook)
+        {
+            if (bankBook == null)
+                return;
+
+            foreach (var item in BankbookCombobox.Items)
+            {
+                if (item is BankBook book)
+                {
+                    if (book.Id == bankBook.Id)
+                        BankbookCombobox.SelectedItem = item;
                 }
             }
         }

@@ -13,7 +13,6 @@ namespace MoneyNoteLibrary.ViewModels
 {
     public class BankBookViewModel : ViewModelBase
     {
-
         private ObservableCollection<BankBook> _BankBooks;
         public ObservableCollection<BankBook> BankBooks
         {
@@ -27,6 +26,21 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _IsBankBooksProgress;
+        public bool IsBankBooksProgress
+        {
+            get { return _IsBankBooksProgress; }
+            set
+            {
+                if (_IsBankBooksProgress == value)
+                    return;
+
+                _IsBankBooksProgress = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private BankBook _SelectedItem;
         public BankBook SelectedItem
@@ -158,6 +172,7 @@ namespace MoneyNoteLibrary.ViewModels
         public async Task GetBankBooks()
         {
             IsRunProgressRing = true;
+            IsBankBooksProgress = true;
             BankBooks = new ObservableCollection<BankBook>();
             var result = await MoneyApi.GetBankBooks.ApiLauncher<User, List<BankBook>>(LoginedUser, ControllerEnum.bankbook);
             if (result.Result)
@@ -172,6 +187,7 @@ namespace MoneyNoteLibrary.ViewModels
                 ErrorMessage = "목록 가져오기에서 에러 발생했습니다.";
             }
             IsRunProgressRing = false;
+            IsBankBooksProgress = false;
         }
 
         public async Task<bool> SaveBankBook()
