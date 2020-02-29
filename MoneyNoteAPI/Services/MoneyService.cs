@@ -68,13 +68,9 @@ namespace MoneyNoteAPI.Services
             try
             {
                 using var db = new MoneyContext();
-                //db.Entry(moneyItem).State = EntityState.Modified;
-                //var set = db.Set<MoneyItem>();
-                //set.Update(moneyItem);
-
-                db.Entry(moneyItem).State = EntityState.Detached;
-                db.MoneyItems.Update(moneyItem);
-                //db.Update(moneyItem);
+                db.Entry(moneyItem).State = EntityState.Modified;
+                var set = db.Set<MoneyItem>();
+                set.Update(moneyItem);
 
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
