@@ -41,7 +41,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-
         private BankBook _SelectedItem;
         public BankBook SelectedItem
         {
