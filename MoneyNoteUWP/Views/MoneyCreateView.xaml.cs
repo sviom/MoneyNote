@@ -70,25 +70,11 @@ namespace MoneyNote.Views
         private void MoneyCreateView_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel = new MoneyHandleViewModel(App.LogInedUser);
-            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             BankBookViewModel = new BankBookViewModel(App.LogInedUser);
         }
 
         private void MoneyCreateView_Unloaded(object sender, RoutedEventArgs e)
         {
-        }
-
-        private async void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(ViewModel.MainCategory):
-                    if (ViewModel.MainCategory != null)
-                        await ViewModel.GetSubCategories();
-                    break;
-                default:
-                    break;
-            }
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)

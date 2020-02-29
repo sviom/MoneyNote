@@ -104,17 +104,13 @@ namespace MoneyNote.Views
             }
         }
 
-        private async void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(ViewModel.IsMainCategoryProgress):
                     if (!ViewModel.IsMainCategoryProgress)
-                    {
                         SetMainCategoryCombobox(MoneyItem.MainCategory);
-                        await ViewModel.GetSubCategories();
-                    }
-
                     break;
                 case nameof(ViewModel.IsSubCategoryProgress):
                     if (!ViewModel.IsSubCategoryProgress)

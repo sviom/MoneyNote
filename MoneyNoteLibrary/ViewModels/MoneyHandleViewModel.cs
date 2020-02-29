@@ -211,6 +211,7 @@ namespace MoneyNoteLibrary.ViewModels
                     _MainCategory.User = LoginedUser;
 
                 OnPropertyChanged();
+                GetSubCategories();
             }
         }
 
@@ -225,7 +226,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _SubCategory = value;
 
-                if (MainCategory != null)
+                if (MainCategory != null && _SubCategory != null)
                     _SubCategory.MainCategoryId = MainCategory.Id;
                 OnPropertyChanged();
             }
@@ -246,8 +247,6 @@ namespace MoneyNoteLibrary.ViewModels
         public MoneyHandleViewModel(User user, MoneyItem item)
         {
             LoginedUser = user;
-
-            CategoryInitialize();
             if (item != null)
                 SetViewModel(item);
         }
@@ -260,8 +259,13 @@ namespace MoneyNoteLibrary.ViewModels
             await GetMainCategories();
         }
 
-        public void SetViewModel(MoneyItem item)
+        public async void SetViewModel(MoneyItem item)
         {
+            MainCategories = new ObservableCollection<MainCategory>();
+            SubCategories = new ObservableCollection<SubCategory>();
+
+            await GetMainCategories();
+
             PreMoneyItem = item;
 
             Title = item.Title;
@@ -378,13 +382,15 @@ namespace MoneyNoteLibrary.ViewModels
             IsRunProgressRing = false;
         }
 
-        public async Task GetSubCategories()
+        public async void GetSubCategories()
         {
             if (MainCategory == null)
                 return;
 
             if (LoginedUser == null)
                 return;
+
+            SubCategories = new ObservableCollection<SubCategory>();
 
             IsSubCategoryProgress = true;
             IsRunProgressRing = true;
