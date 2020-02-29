@@ -54,20 +54,20 @@ namespace MoneyNoteAPI.Context
             //    .WithMany()
             //    .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<MoneyItem>()
-            //    .HasOne(x => x.BankBook)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<MoneyItem>()
+                .HasOne(x => x.BankBook)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
 
             //modelBuilder.Entity<MainCategory>()
             //    .HasOne(x => x.User)
             //    .WithMany(y => y.MainCategories)
             //    .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<BankBook>()
-                .HasMany(x => x.MoneyItems)
-                .WithOne(y => y.BankBook)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<BankBook>()
+            //    .HasMany(x => x.MoneyItems)
+            //    .WithOne(y => y.BankBook)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }
