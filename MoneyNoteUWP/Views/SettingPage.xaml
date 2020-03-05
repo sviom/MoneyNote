@@ -11,9 +11,6 @@
 
     <Grid>
         <Pivot>
-            <PivotItem Header="ddd">
-                <TextBlock Text="으음"/>
-            </PivotItem>
             <PivotItem Header="통장관리">
                 <custom:BankBookManage />
             </PivotItem>
