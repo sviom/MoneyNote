@@ -24,6 +24,13 @@
                     <custom:MainCategorySetting Division="Expense" />
                 </StackPanel>
             </PivotItem>
+            <PivotItem Header="초기화">
+                <Grid>
+                    <StackPanel>
+                        <Button x:Name="AllClearButton" Content="전체 초기화" />
+                    </StackPanel>
+                </Grid>
+            </PivotItem>
         </Pivot>
     </Grid>
 </Page>
