@@ -97,14 +97,17 @@
         </ListView>
 
         <StackPanel Grid.Column="1" Margin="10,0,0,0" >
-            <TextBlock Text="총합" Style="{StaticResource SubtitleTextBlockStyle}" />
-            <TextBlock Text="{x:Bind ViewModel.MoneySum, Converter={StaticResource MoneyDividerConverter}}" FontSize="30"/>
+            <TextBlock Text="현재 총 금액" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="{x:Bind BankBookViewModel.AllAssets, Converter={StaticResource MoneyDividerConverter}}" FontSize="24"/>
+
+            <TextBlock Text="지출/수입 총합" Margin="0,10,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="{x:Bind ViewModel.MoneySum, Converter={StaticResource MoneyDividerConverter}}" FontSize="24"/>
 
             <TextBlock  Text="지출" Margin="0,10,0,0" Style="{StaticResource SubtitleTextBlockStyle}"/>
-            <TextBlock Text="{x:Bind ViewModel.ExpenseSum, Converter={StaticResource MoneyDividerConverter}}" FontSize="25" Foreground="Red" />
+            <TextBlock Text="{x:Bind ViewModel.ExpenseSum, Converter={StaticResource MoneyDividerConverter}}" FontSize="24" Foreground="Red" />
 
             <TextBlock Text="수입" Margin="0,10,0,0" Style="{StaticResource SubtitleTextBlockStyle}"/>
-            <TextBlock Text="{x:Bind ViewModel.IncomeSum, Converter={StaticResource MoneyDividerConverter}}" FontSize="25" Foreground="Black"/>
+            <TextBlock Text="{x:Bind ViewModel.IncomeSum, Converter={StaticResource MoneyDividerConverter}}" FontSize="24" Foreground="Black"/>
         </StackPanel>
 
         <RelativePanel x:Name="CommonButtonPanel"

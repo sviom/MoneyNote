@@ -24,6 +24,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _BankBooks = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(AllAssets));                
             }
         }
 
@@ -121,6 +122,23 @@ namespace MoneyNoteLibrary.ViewModels
 
         public bool IsShowDeleteButton => SelectedItem != null;
 
+        public double AllAssets
+        {
+            get
+            {
+                if (BankBooks == null)
+                    return 0;
+
+                double returnValue = 0;
+                foreach (var item in BankBooks)
+                {
+                    returnValue += item.Assets;
+                }
+
+                return returnValue;
+            }
+        }
+
         public BankBookViewModel(User user)
         {
             LoginedUser = user;
@@ -187,6 +205,8 @@ namespace MoneyNoteLibrary.ViewModels
             }
             IsRunProgressRing = false;
             IsBankBooksProgress = false;
+
+            OnPropertyChanged(nameof(AllAssets));
         }
 
         public async Task<bool> SaveBankBook()

@@ -25,7 +25,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>2FCE2DF20595202B4678009CFB6DDC2CD5128DEF</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>EFE3504F4FB135E7E4F21493794971F5B9F9C683</PackageCertificateThumbprint>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -139,6 +139,9 @@
     <Compile Include="UserControls\MainCategorySetting.xaml.cs">
       <DependentUpon>MainCategorySetting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BankBooksPage.xaml.cs">
+      <DependentUpon>BankBooksPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -241,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MainCategorySetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BankBooksPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
