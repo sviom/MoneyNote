@@ -75,6 +75,7 @@ namespace MoneyNote.Views
 
         private void MoneyCreateView_Unloaded(object sender, RoutedEventArgs e)
         {
+            ViewModel = null;
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
