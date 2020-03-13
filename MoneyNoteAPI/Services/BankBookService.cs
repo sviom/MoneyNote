@@ -35,6 +35,30 @@ namespace MoneyNoteAPI.Services
             }
         }
 
+        public BankBook GetBankBook(Expression<Func<BankBook, bool>> expression)
+        {
+            try
+            {
+                if (expression == null)
+                    return null;
+
+                using var db = new MoneyContext();
+
+                var dbSet = db.Set<BankBook>();
+
+                if (expression != null)
+                {
+                    return dbSet.Where(expression).FirstOrDefault();
+                }
+                else
+                    return dbSet.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool DeleteBankBook(BankBook bankbook)
         {
             try
@@ -53,6 +77,57 @@ namespace MoneyNoteAPI.Services
             {
                 throw ex;
             }
+        }
+
+        public BankBook SaveBankBook(BankBook bankbook)
+        {
+            try
+            {
+                var insertResult = SqlLauncher.Insert(bankbook);
+                return insertResult;
+                //try
+                //{
+                //    using var db = new MoneyContext();
+                //    db.Entry(moneyItem).State = EntityState.Added;
+                //    var set = db.Set<MoneyItem>();
+                //    set.Add(moneyItem);
+                //    int saveResult = db.SaveChanges();
+                //    if (saveResult > 0)
+                //        return moneyItem;
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw ex;
+                //}
+                //return null;
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return null;
+        }
+
+        public BankBook UpdateBankBook(BankBook bankBook)
+        {
+            try
+            {
+                using var db = new MoneyContext();
+                db.Entry(bankBook).State = EntityState.Modified;
+                var set = db.Set<BankBook>();
+                set.Update(bankBook);
+
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    return bankBook;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return null;
         }
     }
 }

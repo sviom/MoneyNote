@@ -46,6 +46,9 @@ namespace MoneyNoteAPI.Services
 
         public MoneyItem SaveMoney(MoneyItem moneyItem)
         {
+            if (moneyItem == null)
+                return null;
+
             try
             {
                 using var db = new MoneyContext();
@@ -54,7 +57,21 @@ namespace MoneyNoteAPI.Services
                 set.Add(moneyItem);
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
+                {
+                    // 자산도 추가
+                    var bankService = new BankBookService();
+                    var nowBankBook = db.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
+                    if (nowBankBook != null)
+                    {
+                        if (moneyItem.Division == MoneyNoteLibrary.Enums.MoneyEnum.MoneyCategory.Expense)
+                            nowBankBook.Assets -= moneyItem.Money;
+                        else
+                            nowBankBook.Assets += moneyItem.Money;
+
+                        bankService.UpdateBankBook(nowBankBook);
+                    }
                     return moneyItem;
+                }
             }
             catch (Exception ex)
             {

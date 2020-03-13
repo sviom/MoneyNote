@@ -39,7 +39,9 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<BankBook>();
             try
             {
-                var insertResult = SqlLauncher.Insert(item.Content);
+                var service = new BankBookService();
+                var insertResult = service.SaveBankBook(item.Content);
+                //var insertResult = SqlLauncher.Insert(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
             }
@@ -56,7 +58,9 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<BankBook>();
             try
             {
-                var insertResult = SqlLauncher.Update(item.Content);
+                var service = new BankBookService();
+                var insertResult = service.UpdateBankBook(item.Content);
+                //var insertResult = SqlLauncher.Update(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
             }
