@@ -19,12 +19,18 @@
         <ListView ItemsSource="{x:Bind ViewModel.BankBooks}">
             <ListView.ItemTemplate>
                 <DataTemplate x:Name="BankBookItemTemplate" x:DataType="model:BankBook">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind Name}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Text="{x:Bind Name}" Grid.Column="0" />
 
-                        <TextBlock Text="남은 금액"/>
-                        <TextBlock Text="{x:Bind Assets, Converter={StaticResource MoneyDividerConverter}}" />
-                    </StackPanel>
+                        <TextBlock Text="남은 금액" Grid.Column="1" />
+                        <TextBlock Text="{x:Bind Assets, Converter={StaticResource MoneyDividerConverter}}" Grid.Column="2" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
