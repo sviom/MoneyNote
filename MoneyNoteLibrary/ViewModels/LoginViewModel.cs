@@ -20,7 +20,23 @@ namespace MoneyNoteLibrary.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public const string SavedIdTextFile = "MoneyNote_id_save.txt";
+
         public ControllerEnum Controller => ControllerEnum.user;
+
+        private bool _IsIdSaveChecked;
+        public bool IsIdSaveChecked
+        {
+            get { return _IsIdSaveChecked; }
+            set
+            {
+                if (_IsIdSaveChecked == value)
+                    return;
+
+                _IsIdSaveChecked = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _ErrorMessage;
         public string ErrorMessage
@@ -112,5 +128,13 @@ namespace MoneyNoteLibrary.ViewModels
             IsRunProgressRing = false;
             return new Tuple<bool, User>(result.Result, result.Content);
         }
+    }
+
+
+    public class SaveIdForm
+    {
+        public string Id { get; set; }
+
+        public bool IsSaveChecked { get; set; }
     }
 }
