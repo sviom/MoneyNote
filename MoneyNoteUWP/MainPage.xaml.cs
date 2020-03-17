@@ -118,6 +118,11 @@ namespace MoneyNote
         public async void GetSavedId()
         {
             var storageFolder = ApplicationData.Current.LocalFolder;
+            var isFileExist = await storageFolder.TryGetItemAsync(LoginViewModel.SavedIdTextFile);
+
+            if (isFileExist == null)
+                return;
+
             var sampleFile = await storageFolder.GetFileAsync(LoginViewModel.SavedIdTextFile);
             if (sampleFile != null)
             {
@@ -126,6 +131,7 @@ namespace MoneyNote
                 if (saveIdForm.IsSaveChecked)
                 {
                     IdTextBox.Text = saveIdForm.Id;
+                    if (ViewModel != null) ViewModel.IsIdSaveChecked = saveIdForm.IsSaveChecked;
                 }
             }
 
