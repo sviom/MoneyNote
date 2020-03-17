@@ -10,6 +10,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     x:DefaultBindMode="OneWay">
 
+    <UserControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -22,14 +28,14 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="100" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Text="{x:Bind Name}" Grid.Column="0" />
 
-                        <TextBlock Text="남은 금액" Grid.Column="1" />
-                        <TextBlock Text="{x:Bind Assets, Converter={StaticResource MoneyDividerConverter}}" Grid.Column="2" />
+                        <TextBlock Text="{x:Bind Name}" Grid.Column="0" Style="{StaticResource TextBlockStyle}" />
+
+                        <TextBlock Text="남은 금액" Grid.Column="1" Style="{StaticResource TextBlockStyle}"  />
+                        <TextBlock Text="{x:Bind Assets, Converter={StaticResource MoneyDividerConverter}}" Grid.Column="2" Style="{StaticResource TextBlockStyle}"  />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -44,6 +44,33 @@ namespace MoneyNoteAPI.Services
             return returnList;
         }
 
+        public MoneyItem GetMoney(Expression<Func<MoneyItem, bool>> expression = null)
+        {
+            if (expression == null)
+                return null;
+
+            MoneyItem returnItem = new MoneyItem();
+            try
+            {
+                using var db = new MoneyContext();
+
+                DbSet<MoneyItem> dbSet = db.Set<MoneyItem>();
+
+                returnItem = db.MoneyItems
+                          .Include(x => x.MainCategory)
+                          .ThenInclude(main => main.SubCategories)
+                          .Include(z => z.BankBook)
+                          .OrderByDescending(x => x.CreatedTime)
+                          .Where(expression).FirstOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnItem;
+        }
+
         public MoneyItem SaveMoney(MoneyItem moneyItem)
         {
             if (moneyItem == null)
@@ -68,16 +95,14 @@ namespace MoneyNoteAPI.Services
             return null;
         }
 
-        public MoneyItem UpdateMoney(MoneyItem moneyItem)
+        public MoneyItem UpdateMoney(MoneyItem oldMoneyItem, MoneyItem moneyItem)
         {
             try
             {
                 using var db = new MoneyContext();
                 db.Entry(moneyItem).State = EntityState.Modified;
                 var set = db.Set<MoneyItem>();
-                set.Update(moneyItem);
 
-                var oldMoneyItem = db.MoneyItems.Where(x => x.Id == moneyItem.Id).FirstOrDefault();
                 if (oldMoneyItem != null)
                 {
                     var money = oldMoneyItem.Money - moneyItem.Money;
@@ -91,6 +116,7 @@ namespace MoneyNoteAPI.Services
                     UpdateBankBookWithMoney(db, changeMoneyItem, false);
                 }
 
+                set.Update(moneyItem);
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     return moneyItem;
@@ -144,7 +170,7 @@ namespace MoneyNoteAPI.Services
                 }
                 else
                 {
-                    nowBankBook.Assets -= moneyItem.Money;
+                    nowBankBook.Assets += moneyItem.Money;
                 }
 
                 var result = bankService.UpdateBankBook(nowBankBook);
