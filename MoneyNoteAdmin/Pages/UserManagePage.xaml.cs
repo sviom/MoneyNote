@@ -71,5 +71,10 @@ namespace MoneyNoteAdmin.Pages
             if (result.Result)
                 AllUserList = result.Content;
         }
+
+        private void UserApproveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -24,9 +24,10 @@
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <TextBlock Text="승인여부" />
-                            <TextBlock Text="{x:Bind  CreatedTime}" />
+                            <TextBlock Text="{x:Bind  IsApproved}" />
 
-                            <Button Content="승인"></Button>
+                            <Button x:Name="UserApproveButton" Content="승인" IsEnabled="{x:Bind IsApproved, Converter={StaticResource BoolToOpposite}}"
+                                    Click="UserApproveButton_Click"></Button>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
