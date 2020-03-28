@@ -92,7 +92,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 통장 내용 삭제
             /// </summary>
-            DeleteBankBook
+            DeleteBankBook,
+            /// <summary>
+            /// 사용자 전체 목록 가져오기
+            /// </summary>
+            GetUsers
         }
 
         /// <summary>

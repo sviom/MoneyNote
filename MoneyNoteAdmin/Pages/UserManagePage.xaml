@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="MoneyNoteAdmin.Pages.UserManagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MoneyNoteAdmin.Pages"
+    xmlns:model="using:MoneyNoteLibrary.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:DefaultBindMode="OneWay"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <ListView ItemsSource="{x:Bind AllUserList}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:User">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="{x:Bind Name}" />
+
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <TextBlock Text="승인여부" />
+                            <TextBlock Text="{x:Bind  CreatedTime}" />
+
+                            <Button Content="승인"></Button>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

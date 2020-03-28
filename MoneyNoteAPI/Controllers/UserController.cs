@@ -53,5 +53,27 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public ApiResult<List<User>> GetUsers([FromBody]ApiRequest<User> item)
+        {
+            var result = new ApiResult<List<User>>();
+            try
+            {
+                var service = new UserService();
+
+                var userList = service.GetUserList();
+                if (userList != null)
+                {
+                    result.Content = userList;
+                    result.Result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+            }
+            return result;
+        }
     }
 }
