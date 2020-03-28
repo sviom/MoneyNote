@@ -55,7 +55,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<List<User>> GetUsers([FromBody]ApiRequest<User> item)
+        public ApiResult<List<User>> GetUsers([FromBody]ApiRequest<bool> item)
         {
             var result = new ApiResult<List<User>>();
             try

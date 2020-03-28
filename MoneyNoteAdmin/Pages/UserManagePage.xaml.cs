@@ -67,7 +67,7 @@ namespace MoneyNoteAdmin.Pages
 
         public async void GetUsers()
         {
-            var result = await MoneyApi.GetUsers.ApiLauncher<User, List<User>>(new User(), ControllerEnum.user);
+            var result = await MoneyApi.GetUsers.ApiLauncher<bool, List<User>>(true, ControllerEnum.user);
             if (result.Result)
                 AllUserList = result.Content;
         }
