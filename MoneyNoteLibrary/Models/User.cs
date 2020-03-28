@@ -33,5 +33,8 @@ namespace MoneyNoteLibrary.Models
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset UpdatedTime { get; set; }
+
+        [Required]
+        public bool IsApproved { get; set; } = false;
     }
 }
