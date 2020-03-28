@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteLibrary", "MoneyNo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNote", "MoneyNoteUWP\MoneyNote.csproj", "{D84BC64E-792D-40F1-819A-B472C9880DF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNoteUnitTest", "MoneyNoteUnitTest\MoneyNoteUnitTest.csproj", "{E301A2A3-2E33-4AA3-BB1B-DB3E7324E534}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteUnitTest", "MoneyNoteUnitTest\MoneyNoteUnitTest.csproj", "{E301A2A3-2E33-4AA3-BB1B-DB3E7324E534}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNoteAdmin", "MoneyNoteAdmin\MoneyNoteAdmin.csproj", "{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,26 @@ Global
 		{E301A2A3-2E33-4AA3-BB1B-DB3E7324E534}.Release|x64.Build.0 = Release|Any CPU
 		{E301A2A3-2E33-4AA3-BB1B-DB3E7324E534}.Release|x86.ActiveCfg = Release|Any CPU
 		{E301A2A3-2E33-4AA3-BB1B-DB3E7324E534}.Release|x86.Build.0 = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|ARM.Build.0 = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|x64.Build.0 = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Debug|x86.Build.0 = Debug|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|ARM.ActiveCfg = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|ARM.Build.0 = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|ARM64.Build.0 = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|x64.ActiveCfg = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|x64.Build.0 = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|x86.ActiveCfg = Release|Any CPU
+		{79499FBC-E270-4F54-A8E5-DCF9DEAF3C32}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
