@@ -46,7 +46,7 @@ namespace MoneyNote.Converter
             string result = string.Empty;
             if (value is double money)
             {
-                result = money.ToString("C1");
+                result = money.ToString("C0");
             }
 
             return result;
