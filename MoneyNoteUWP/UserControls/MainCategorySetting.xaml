@@ -11,134 +11,134 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <Style TargetType="ListView">            
+            <Setter Property="MaxHeight" Value="200" />
+        </Style>
+        
+        <Style x:Key="ListItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid Background="White">
-        <StackPanel Margin="10,10,10,10">
-            <TextBlock Text="주 분류"/>
-            <ListView x:Name="MainCategoryListView"
-                      SelectionChanged="MainCategoryListView_SelectionChanged"
-                      ItemsSource="{x:Bind ViewModel.MainCategories}"
-                      CornerRadius="5"
-                      HorizontalAlignment="Stretch">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:MainCategory">
-                        <Grid Margin="0,10,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{x:Bind Title, Mode=TwoWay}" 
-                                     CornerRadius="5"
-                                     Grid.Column="0"
-                                     HorizontalAlignment="Stretch"/>
-                            <Button x:Name="DeleteMainCategory"
-                                    Grid.Column="1"
-                                    CornerRadius="5"
-                                    Margin="5,0,0,0"
-                                    Background="DarkRed"
-                                    Foreground="White">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="삭제"/>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                            
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <TextBlock Text="하위 분류"
-                       Margin="0,10,0,0"
-                       Visibility="{x:Bind ViewModel.IsShowSubCategory}"/>
-            <ListView x:Name="SubCategoryListView"
-                      HorizontalAlignment="Stretch"
-                      ItemsSource="{x:Bind ViewModel.SubCategories}"
-                      Visibility="{x:Bind ViewModel.IsShowSubCategory}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:SubCategory">
-                        <Grid Margin="0,10,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{x:Bind Title, Mode=TwoWay}" 
-                                     CornerRadius="5"
-                                     Grid.Column="0"
-                                     HorizontalAlignment="Stretch"/>
-                            <Button x:Name="DeleteMainCategory"
-                                    Grid.Column="1"
-                                    CornerRadius="5"
-                                    Margin="5,0,0,0"
-                                    Background="DarkRed"
-                                    Foreground="White">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="삭제"/>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <ToggleButton x:Name="AddNewCategory" 
-                          Margin="0,10,0,0"
-                          HorizontalAlignment="Stretch"
+        <ScrollViewer>
+            <StackPanel Margin="10,10,10,10">
+                <TextBlock Text="주 분류"/>
+                <ListView x:Name="MainCategoryListView"
+                          SelectionChanged="MainCategoryListView_SelectionChanged"
+                          ItemsSource="{x:Bind ViewModel.MainCategories}"
                           CornerRadius="5"
-                          IsChecked="{x:Bind ViewModel.IsShowAddNewCategory, Mode=TwoWay}"
-                          Content="{x:Bind ViewModel.AddCategoryButtonText}"/>
+                          ItemContainerStyle="{StaticResource ListItemStyle}"
+                          HorizontalAlignment="Stretch">
 
-            <StackPanel Visibility="{x:Bind ViewModel.IsShowAddNewCategory}">
-                <TextBlock Text="새로운 카테고리"
-                           Margin="0,10,0,0"/>
-                <TextBox x:Name="NewCategoryText"
-                         Text="{x:Bind ViewModel.CategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         HorizontalAlignment="Stretch"
-                         CornerRadius="5" />
-                <TextBlock Text="주 분류가 선택되어 있으면 해당 분류의 하위 분류로 추가됩니다. 주 분류가 선택되어 있지 않으면 주 분류로 추가됩니다."
-                           TextWrapping="WrapWholeWords"
-                           FontSize="11"/>
-                <TextBlock TextWrapping="Wrap"
-                           FontSize="11">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:MainCategory">
+                            <Grid Margin="0,10,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{x:Bind Title, Mode=TwoWay}" 
+                                         CornerRadius="5"
+                                         Grid.Column="0"
+                                         HorizontalAlignment="Stretch"/>
+                                <Button x:Name="DeleteMainCategory"
+                                        Grid.Column="1"
+                                        CornerRadius="5"
+                                        Margin="5,0,0,0"
+                                        Background="DarkRed"
+                                        Foreground="White">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="삭제"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <TextBlock Text="하위 분류" Margin="0,10,0,0" Visibility="{x:Bind ViewModel.IsShowSubCategory}"/>
+                <ListView x:Name="SubCategoryListView"
+                          HorizontalAlignment="Stretch"
+                          ItemsSource="{x:Bind ViewModel.SubCategories}"
+                          ItemContainerStyle="{StaticResource ListItemStyle}"
+                          Visibility="{x:Bind ViewModel.IsShowSubCategory}">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:SubCategory">
+                            <Grid Margin="0,10,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{x:Bind Title, Mode=TwoWay}" 
+                                     CornerRadius="5"
+                                     Grid.Column="0"
+                                     HorizontalAlignment="Stretch"/>
+                                <Button x:Name="DeleteMainCategory"
+                                    Grid.Column="1"
+                                    CornerRadius="5"
+                                    Margin="5,0,0,0"
+                                    Background="DarkRed"
+                                    Foreground="White">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="삭제"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ToggleButton x:Name="AddNewCategory" 
+                              Margin="0,10,0,0"
+                              HorizontalAlignment="Stretch"
+                              CornerRadius="5"
+                              IsChecked="{x:Bind ViewModel.IsShowAddNewCategory, Mode=TwoWay}"
+                              Content="{x:Bind ViewModel.AddCategoryButtonText}"/>
+
+                <StackPanel Visibility="{x:Bind ViewModel.IsShowAddNewCategory}">
+                    <TextBlock Text="새로운 카테고리" Margin="0,10,0,0"/>
+                    <TextBox x:Name="NewCategoryText"
+                             Text="{x:Bind ViewModel.CategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             HorizontalAlignment="Stretch"
+                             CornerRadius="5" />
+                    <TextBlock Text="주 분류가 선택되어 있으면 해당 분류의 하위 분류로 추가됩니다. 주 분류가 선택되어 있지 않으면 주 분류로 추가됩니다."
+                               TextWrapping="WrapWholeWords"
+                               FontSize="11"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="11">
                     <Run Text="현재 선택됨 : " />
                     <Run Text="{x:Bind ViewModel.SelectedCategoryTitle}" />
-                </TextBlock>
-                <Button x:Name="CancelSelectedCategory"
-                        Click="CancelSelectedCategory_Click"
-                        Content="선택취소"
-                        Margin="0,5,0,0"
-                        CornerRadius="5"
-                        FontSize="10"
-                        Padding="3"
-                        HorizontalAlignment="Stretch">
-                </Button>
-            </StackPanel>
+                    </TextBlock>
+                    <Button x:Name="CancelSelectedCategory"
+                            Click="CancelSelectedCategory_Click"
+                            Content="선택취소"
+                            Margin="0,5,0,0"
+                            CornerRadius="5"
+                            FontSize="10"
+                            Padding="3"
+                            HorizontalAlignment="Stretch">
+                    </Button>
+                </StackPanel>
 
-            <Button x:Name="SaveCategory"
-                    Click="SaveCategory_Click"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Stretch"
-                    IsEnabled="{x:Bind ViewModel.IsSaveButtonEnabled}"
-                    Style="{StaticResource CommonButtonStyle}"
-                    Content="{x:Bind ViewModel.SaveButtonText}"
-                    CornerRadius="5"/>
-        </StackPanel>
+                <Button x:Name="SaveCategory"
+                        Click="SaveCategory_Click"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Stretch"
+                        IsEnabled="{x:Bind ViewModel.IsSaveButtonEnabled}"
+                        Style="{StaticResource CommonButtonStyle}"
+                        Content="{x:Bind ViewModel.SaveButtonText}"
+                        CornerRadius="5"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>
