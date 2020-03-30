@@ -1,5 +1,6 @@
 ﻿using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -58,6 +60,7 @@ namespace MoneyNote
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel = new LoginViewModel();
+            GetSavedId();
         }
 
         private void MainPage_Unloaded(object sender, RoutedEventArgs e)
@@ -87,10 +90,51 @@ namespace MoneyNote
             (var result, var user) = await ViewModel.LogIn();
             if (result)
             {
+                if (ViewModel.IsIdSaveChecked)
+                    await SaveId();
                 //AzureKeyVault.SaltPassword = await AzureKeyVault.OnGetAsync(KeyVaultName.SaltPassword.ToString());
                 App.LogInedUser = user;
                 Frame.Navigate(typeof(Views.HomePage));
             }
+        }
+
+        private async Task SaveId()
+        {
+            var idText = IdTextBox.Text;
+            if (string.IsNullOrEmpty(idText))
+                return;
+
+            var storageFolder = ApplicationData.Current.LocalFolder;
+            var sampleFile = await storageFolder.CreateFileAsync(LoginViewModel.SavedIdTextFile, CreationCollisionOption.ReplaceExisting);
+
+            var saveForm = new SaveIdForm();
+            saveForm.Id = idText;
+            saveForm.IsSaveChecked = ViewModel.IsIdSaveChecked;
+            var jsonText = JsonConvert.SerializeObject(saveForm);
+
+            await FileIO.WriteTextAsync(sampleFile, jsonText);
+        }
+
+        public async void GetSavedId()
+        {
+            var storageFolder = ApplicationData.Current.LocalFolder;
+            var isFileExist = await storageFolder.TryGetItemAsync(LoginViewModel.SavedIdTextFile);
+
+            if (isFileExist == null)
+                return;
+
+            var sampleFile = await storageFolder.GetFileAsync(LoginViewModel.SavedIdTextFile);
+            if (sampleFile != null)
+            {
+                string text = await FileIO.ReadTextAsync(sampleFile);
+                var saveIdForm = JsonConvert.DeserializeObject<SaveIdForm>(text);
+                if (saveIdForm.IsSaveChecked)
+                {
+                    IdTextBox.Text = saveIdForm.Id;
+                    if (ViewModel != null) ViewModel.IsIdSaveChecked = saveIdForm.IsSaveChecked;
+                }
+            }
+
         }
     }
 }

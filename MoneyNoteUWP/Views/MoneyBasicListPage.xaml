@@ -82,7 +82,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{x:Bind Title}"
                                        Grid.Column="0"
-                                       FontSize="20"
+                                       FontSize="16"
                                        FontWeight="Bold"/>
                             <TextBlock Text="{x:Bind Money, Converter={StaticResource MoneyDividerConverter}}" 
                                        Foreground="{x:Bind Division, Converter={StaticResource DivisionColorConverter}}"

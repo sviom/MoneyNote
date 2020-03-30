@@ -44,8 +44,6 @@ namespace MoneyNoteAPI.Controllers
             {
                 var service = new MoneyService();
                 var insertResult = service.SaveMoney(item.Content);
-
-                //var insertResult = SqlLauncher.Insert(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
             }
@@ -63,7 +61,9 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new MoneyService();
-                var updateResult = service.UpdateMoney(item.Content);
+
+                var oldMoneyItem = service.GetMoney(x => x.Id == item.Content.Id);
+                var updateResult = service.UpdateMoney(oldMoneyItem, item.Content);
 
                 //var updateResult = SqlLauncher.Update(item.Content);
                 result.Content = updateResult;

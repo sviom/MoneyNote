@@ -44,11 +44,37 @@ namespace MoneyNoteAPI.Services
             return returnList;
         }
 
+        public MoneyItem GetMoney(Expression<Func<MoneyItem, bool>> expression = null)
+        {
+            if (expression == null)
+                return null;
+
+            MoneyItem returnItem = new MoneyItem();
+            try
+            {
+                using var db = new MoneyContext();
+
+                DbSet<MoneyItem> dbSet = db.Set<MoneyItem>();
+
+                returnItem = db.MoneyItems
+                          .Include(x => x.MainCategory)
+                          .ThenInclude(main => main.SubCategories)
+                          .Include(z => z.BankBook)
+                          .OrderByDescending(x => x.CreatedTime)
+                          .Where(expression).FirstOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnItem;
+        }
+
         public MoneyItem SaveMoney(MoneyItem moneyItem)
         {
             if (moneyItem == null)
                 return null;
-
             try
             {
                 using var db = new MoneyContext();
@@ -58,18 +84,7 @@ namespace MoneyNoteAPI.Services
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                 {
-                    // 자산도 추가
-                    var bankService = new BankBookService();
-                    var nowBankBook = db.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
-                    if (nowBankBook != null)
-                    {
-                        if (moneyItem.Division == MoneyNoteLibrary.Enums.MoneyEnum.MoneyCategory.Expense)
-                            nowBankBook.Assets -= moneyItem.Money;
-                        else
-                            nowBankBook.Assets += moneyItem.Money;
-
-                        bankService.UpdateBankBook(nowBankBook);
-                    }
+                    UpdateBankBookWithMoney(db, moneyItem);
                     return moneyItem;
                 }
             }
@@ -80,15 +95,28 @@ namespace MoneyNoteAPI.Services
             return null;
         }
 
-        public MoneyItem UpdateMoney(MoneyItem moneyItem)
+        public MoneyItem UpdateMoney(MoneyItem oldMoneyItem, MoneyItem moneyItem)
         {
             try
             {
                 using var db = new MoneyContext();
                 db.Entry(moneyItem).State = EntityState.Modified;
                 var set = db.Set<MoneyItem>();
-                set.Update(moneyItem);
 
+                if (oldMoneyItem != null)
+                {
+                    var money = oldMoneyItem.Money - moneyItem.Money;
+                    var changeMoneyItem = new MoneyItem()
+                    {
+                        Money = money,
+                        BankBook = moneyItem.BankBook,
+                        BankBookId = moneyItem.BankBookId
+                    };
+
+                    UpdateBankBookWithMoney(db, changeMoneyItem, false);
+                }
+
+                set.Update(moneyItem);
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     return moneyItem;
@@ -110,6 +138,9 @@ namespace MoneyNoteAPI.Services
                 db.Entry(moneyItem).State = EntityState.Deleted;
                 var set = db.Set<MoneyItem>();
                 set.Remove(moneyItem);
+
+                UpdateBankBookWithMoney(db, moneyItem, false);
+
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     return true;
@@ -121,5 +152,34 @@ namespace MoneyNoteAPI.Services
                 throw ex;
             }
         }
+
+        #region MoneyItem과 연관된 내용의 설정
+
+        public bool UpdateBankBookWithMoney(MoneyContext context, MoneyItem moneyItem, bool isSave = true)
+        {
+            using var bankService = new BankBookService();
+            var nowBankBook = context.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
+            if (nowBankBook != null)
+            {
+                if (isSave)
+                {
+                    if (moneyItem.Division == MoneyNoteLibrary.Enums.MoneyEnum.MoneyCategory.Expense)
+                        nowBankBook.Assets -= moneyItem.Money;
+                    else
+                        nowBankBook.Assets += moneyItem.Money;
+                }
+                else
+                {
+                    nowBankBook.Assets += moneyItem.Money;
+                }
+
+                var result = bankService.UpdateBankBook(nowBankBook);
+                return result != null;
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }

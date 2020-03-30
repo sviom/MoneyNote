@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MoneyNoteAPI.Services
 {
-    public class BankBookService
+    public class BankBookService : IDisposable
     {
         public List<BankBook> GetBankBooks(Expression<Func<BankBook, bool>> expression)
         {
@@ -128,6 +128,10 @@ namespace MoneyNoteAPI.Services
             }
 
             return null;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

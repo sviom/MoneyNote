@@ -10,6 +10,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     x:DefaultBindMode="OneWay">
 
+    <UserControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -19,12 +25,18 @@
         <ListView ItemsSource="{x:Bind ViewModel.BankBooks}">
             <ListView.ItemTemplate>
                 <DataTemplate x:Name="BankBookItemTemplate" x:DataType="model:BankBook">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind Name}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="남은 금액"/>
-                        <TextBlock Text="{x:Bind Assets, Converter={StaticResource MoneyDividerConverter}}" />
-                    </StackPanel>
+                        <TextBlock Text="{x:Bind Name}" Grid.Column="0" Style="{StaticResource TextBlockStyle}" />
+
+                        <TextBlock Text="남은 금액" Grid.Column="1" Style="{StaticResource TextBlockStyle}"  />
+                        <TextBlock Text="{x:Bind Assets, Converter={StaticResource MoneyDividerConverter}}" Grid.Column="2" Style="{StaticResource TextBlockStyle}"  />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

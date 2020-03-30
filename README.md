@@ -10,3 +10,7 @@ MoneyNote
  - .Net Standard 2.0
  
 위를 기반으로 작성되었으며, 스토어에는 나중에 배포될 예정입니다.
+
+Trello Link : https://trello.com/b/HRoOE9R2/moneynote
+
+Store link : https://www.microsoft.com/store/apps/9WZDNCRDCPW1
