@@ -43,7 +43,7 @@ namespace MoneyNoteAPI.Controllers
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
                 var service = new UserService();
                 var user = item.Content;
-                (var userResult, var countResult) = service.LogIn(item.Content, x => x.Email == user.Email && x.Password == user.Password);
+                (var userResult, var countResult) = service.LogIn(item.Content, x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == true);
                 result.Content = userResult;
                 result.Result = countResult;
             }
@@ -70,6 +70,26 @@ namespace MoneyNoteAPI.Controllers
                 }
             }
             catch (Exception ex)
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public ApiResult<User> ApproveUser([FromBody]ApiRequest<User> item)
+        {
+            var result = new ApiResult<User>();
+            try
+            {
+                //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
+                var service = new UserService();
+                var user = item.Content;
+                var countResult = service.ApproveUser(user);
+                result.Content = user;
+                result.Result = countResult;
+            }
+            catch
             {
                 result.Result = false;
             }

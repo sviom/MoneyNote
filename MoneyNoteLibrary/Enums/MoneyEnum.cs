@@ -96,7 +96,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 사용자 전체 목록 가져오기
             /// </summary>
-            GetUsers
+            GetUsers,
+            /// <summary>
+            /// 사용자 승인
+            /// </summary>
+            ApproveUser
         }
 
         /// <summary>

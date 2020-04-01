@@ -38,6 +38,23 @@ namespace MoneyNoteAPI.Services
 
         }
 
+        public bool CheckExist(User user)
+        {
+            if (user == null)
+                return false;
+
+            try
+            {
+                using var db = new MoneyContext();
+                var userCount = db.Users.Count(x => x.Id == user.Id);
+                return userCount == 1;
+            }
+            catch
+            {
+            }
+            return false;
+        }
+
         public (User, bool) LogIn(User user, Expression<Func<User, bool>> expression)
         {
             try
@@ -70,6 +87,34 @@ namespace MoneyNoteAPI.Services
             {
                 return null;
             }
+        }
+
+        public bool ApproveUser(User item)
+        {
+            if (item == null)
+                return false;
+
+            try
+            {
+                if (CheckExist(item))
+                {
+                    using var db = new MoneyContext();
+                    if (item != null && !item.IsApproved)
+                    {
+                        item.IsApproved = true;
+
+                        db.Users.Update(item);
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return false;
         }
     }
 }
