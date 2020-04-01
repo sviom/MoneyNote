@@ -75,5 +75,25 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public ApiResult<User> ApproveUser([FromBody]ApiRequest<User> item)
+        {
+            var result = new ApiResult<User>();
+            try
+            {
+                //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
+                var service = new UserService();
+                var user = item.Content;
+                var countResult = service.ApproveUser(user);
+                result.Content = user;
+                result.Result = countResult;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
     }
 }
