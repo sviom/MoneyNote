@@ -72,9 +72,17 @@ namespace MoneyNoteAdmin.Pages
                 AllUserList = result.Content;
         }
 
-        private void UserApproveButton_Click(object sender, RoutedEventArgs e)
+        private async void UserApproveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var button = sender as Button;
+            if (button.Tag is User user)
+            {
+                var userResult = await MoneyApi.ApproveUser.ApiLauncher<User, User>(user, ControllerEnum.user);
+                if (userResult.Result)
+                {
+                    GetUsers();
+                }
+            }
         }
     }
 }
