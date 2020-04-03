@@ -127,7 +127,7 @@ namespace MoneyNoteLibrary.ViewModels
             }
             else
             {
-                ErrorMessage = "에러!!";
+                ErrorMessage = !string.IsNullOrEmpty(signUpResult.ResultMessage) ? signUpResult.ResultMessage : "에러!!";
             }
             return (result, signUpResult.Content);
         }

@@ -38,7 +38,7 @@ namespace MoneyNoteAPI.Services
 
         }
 
-        public bool CheckExist(User user)
+        public bool CheckExist(User user, Expression<Func<User, bool>> expression)
         {
             if (user == null)
                 return false;
@@ -46,7 +46,24 @@ namespace MoneyNoteAPI.Services
             try
             {
                 using var db = new MoneyContext();
-                var userCount = db.Users.Count(x => x.Id == user.Id);
+                var userCount = db.Users.Where(expression).Count();
+                return userCount == 1;
+            }
+            catch
+            {
+            }
+            return false;
+        }
+
+        public bool NeedApprovedUser(User user)
+        {
+            if (user == null)
+                return false;
+
+            try
+            {
+                using var db = new MoneyContext();
+                var userCount = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == false).Count();
                 return userCount == 1;
             }
             catch
@@ -96,7 +113,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                if (CheckExist(item))
+                if (CheckExist(item, x => x.Id == item.Id))
                 {
                     using var db = new MoneyContext();
                     if (item != null && !item.IsApproved)

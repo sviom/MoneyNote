@@ -123,7 +123,7 @@ namespace MoneyNoteLibrary.ViewModels
             var result = await MoneyApi.LogIn.ApiLauncher<User, User>(tempUser, Controller);
 
             if (!result.Result)
-                ErrorMessage = "에러가 발생했습니다.";
+                ErrorMessage = !string.IsNullOrEmpty(result.ResultMessage) ? result.ResultMessage : "에러가 발생했습니다.";
 
             IsRunProgressRing = false;
             return new Tuple<bool, User>(result.Result, result.Content);
