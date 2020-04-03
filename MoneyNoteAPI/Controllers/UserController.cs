@@ -37,7 +37,7 @@ namespace MoneyNoteAPI.Controllers
                 {
                     result.Content = item.Content;
                     result.ResultMessage = "중복된 이메일이 존재합니다.";
-                    result.Result = true;
+                    result.Result = false;
                 }
                 else
                 {
