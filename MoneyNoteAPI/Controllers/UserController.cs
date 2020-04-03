@@ -54,9 +54,28 @@ namespace MoneyNoteAPI.Controllers
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
                 var service = new UserService();
                 var user = item.Content;
+
+                if (service.NeedApprovedUser(user))
+                {
+                    result.ResultMessage = "승인을 대기중인 계정입니다.";
+                    result.Content = user;
+                    result.Result = false;
+                    return result;
+                }
+
                 (var userResult, var countResult) = service.LogIn(item.Content, x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == true);
-                result.Content = userResult;
-                result.Result = countResult;
+
+                if (countResult)
+                {
+                    result.Content = userResult;
+                    result.Result = countResult;
+                }
+                else
+                {
+                    result.Content = user;
+                    result.ResultMessage = "이메일 또는 패스워드가 잘못되었습니다.";
+                    result.Result = false;
+                }
             }
             catch
             {

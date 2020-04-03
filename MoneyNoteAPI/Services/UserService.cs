@@ -55,6 +55,23 @@ namespace MoneyNoteAPI.Services
             return false;
         }
 
+        public bool NeedApprovedUser(User user)
+        {
+            if (user == null)
+                return false;
+
+            try
+            {
+                using var db = new MoneyContext();
+                var userCount = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == false).Count();
+                return userCount == 1;
+            }
+            catch
+            {
+            }
+            return false;
+        }
+
         public (User, bool) LogIn(User user, Expression<Func<User, bool>> expression)
         {
             try
