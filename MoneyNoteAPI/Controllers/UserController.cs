@@ -23,7 +23,15 @@ namespace MoneyNoteAPI.Controllers
             {
                 var service = new UserService();
 
-                var duplicateCheck = service.CheckExist(item.Content);
+                if (item == null)
+                {
+                    result.Result = false;
+                    result.ResultMessage = "에러가 발생했습니다.";
+                    result.Content = item.Content;
+                    return result;
+                }
+
+                var duplicateCheck = service.CheckExist(item.Content, x => x.Email == item.Content.Email);
 
                 if (duplicateCheck)
                 {
@@ -41,6 +49,8 @@ namespace MoneyNoteAPI.Controllers
             catch
             {
                 result.Result = false;
+                result.ResultMessage = "에러가 발생했습니다.";
+                result.Content = item.Content;
             }
             return result;
         }
