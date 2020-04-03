@@ -22,10 +22,21 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new UserService();
-                var insertResult = service.SignUp(item.Content);
 
-                result.Content = insertResult;
-                result.Result = true;
+                var duplicateCheck = service.CheckExist(item.Content);
+
+                if (duplicateCheck)
+                {
+                    result.Content = item.Content;
+                    result.ResultMessage = "중복된 이메일이 존재합니다.";
+                    result.Result = true;
+                }
+                else
+                {
+                    var insertResult = service.SignUp(item.Content);
+                    result.Content = insertResult;
+                    result.Result = true;
+                }
             }
             catch
             {

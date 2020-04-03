@@ -13,5 +13,7 @@ namespace MoneyNoteLibrary.Models
         public T Content { get; set; }
 
         public bool Result { get; set; }
+
+        public string ResultMessage { get; set; }
     }
 }
