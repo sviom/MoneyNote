@@ -85,7 +85,7 @@ namespace MoneyNote.Views
                 var selectedItem = listView.SelectedItem;
                 if (selectedItem is MoneyItem item)
                 {
-                    HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyDetailView), item);
+                    //HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyDetailView), item);
                 }
             }
         }
