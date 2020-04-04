@@ -10,9 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
-
-        <Image Source="ms-appx:///Assets/Backgrounds/background_01.jpg" Stretch="UniformToFill" Opacity="0.2"></Image>
+        <Grid Background="#FF13c276" Opacity="0.2"></Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                     Background="White" Padding="30"
                     CornerRadius="5">
