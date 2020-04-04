@@ -29,7 +29,8 @@
 
         <ListView x:Name="MoneyListView" Grid.Column="0" Grid.Row="1"
                   ItemsSource="{x:Bind MoneyDateGroup.View}"
-                  SelectionChanged="MoneyListView_SelectionChanged">
+                  ItemClick="MoneyListView_ItemClick"
+                  IsItemClickEnabled="True">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
