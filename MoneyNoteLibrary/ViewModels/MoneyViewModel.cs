@@ -1,9 +1,11 @@
 ﻿using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,25 @@ using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
+    public class MoneyItemsGroup : IGrouping<DateTime, MoneyItem>
+    {
+        public List<MoneyItem> _MoneyItems { get; set; }
+
+        public MoneyItemsGroup(DateTime key, IEnumerable<MoneyItem> moneyItems)
+        {
+            Key = key;
+            _MoneyItems = moneyItems.ToList();
+        }
+
+        public DateTime Key { get; }
+
+        public string KeyHeader => Key.ToString("yyyy년 MM월 dd일");
+
+        public IEnumerator<MoneyItem> GetEnumerator() => _MoneyItems.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => _MoneyItems.GetEnumerator();
+    }
+
     public class MoneyViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,6 +69,20 @@ namespace MoneyNoteLibrary.ViewModels
                 _MoneyList = value;
                 OnPropertyChanged();
                 ReCalculate();
+            }
+        }
+
+        private List<MoneyItemsGroup> _MoneyGroupList;
+        public List<MoneyItemsGroup> MoneyGroupList
+        {
+            get { return _MoneyGroupList; }
+            set
+            {
+                if (_MoneyGroupList == value)
+                    return;
+
+                _MoneyGroupList = value;
+                OnPropertyChanged();
             }
         }
 
@@ -116,6 +151,9 @@ namespace MoneyNoteLibrary.ViewModels
                 {
                     MoneyList.Add(item);
                 }
+
+                MoneyGroupList = MoneyList.GroupBy(x => x.CreatedTime.Date, (key, itemList) => new MoneyItemsGroup(key, itemList)).ToList();
+
                 ReCalculate();
             }
 

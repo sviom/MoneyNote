@@ -12,23 +12,23 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
         <NavigationView IsBackEnabled="True" 
                         ItemInvoked="NavigationView_ItemInvoked"
                         BackRequested="NavigationView_BackRequested">
             <NavigationView.Header>
-                <StackPanel Orientation="Horizontal">
+                <Grid VerticalAlignment="Stretch" Margin="0,12,12,0">
                     <TextBlock Text="{x:Bind PageHeader}"/>
-                </StackPanel>
+                </Grid>
             </NavigationView.Header>
+            
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Name="BasicListView" Icon="List" Tag="MoneyBasicListPage" >목록보기</NavigationViewItem>
                 <NavigationViewItem x:Name="BankListView" Icon="Permissions" Tag="BankBooksPage" Content="자산 현황" />
-                <NavigationViewItem x:Name="MonthlyListView" Icon="CalendarDay">월별보기</NavigationViewItem>
-                <NavigationViewItem x:Name="CategoryView" Icon="Comment">카테고리</NavigationViewItem>
+                <!--<NavigationViewItem x:Name="MonthlyListView" Icon="CalendarDay">월별보기</NavigationViewItem>
+                <NavigationViewItem x:Name="CategoryView" Icon="Comment">카테고리</NavigationViewItem>-->
             </NavigationView.MenuItems>
             
-            <Frame x:Name="ContentFrame" Margin="12"></Frame>
+            <Frame x:Name="ContentFrame" Margin="12,0,12,12"></Frame>
         </NavigationView>
     </Grid>
 </Page>
