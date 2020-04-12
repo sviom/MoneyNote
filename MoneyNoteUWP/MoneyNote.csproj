@@ -140,6 +140,9 @@
     <Compile Include="UserControls\MainCategorySetting.xaml.cs">
       <DependentUpon>MainCategorySetting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MainSetting.xaml.cs">
+      <DependentUpon>MainSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BankBooksPage.xaml.cs">
       <DependentUpon>BankBooksPage.xaml</DependentUpon>
     </Compile>
@@ -245,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MainCategorySetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainSetting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
