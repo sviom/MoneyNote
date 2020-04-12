@@ -25,11 +25,7 @@
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="초기화">
-                <Grid>
-                    <StackPanel>
-                        <Button x:Name="AllClearButton" Content="전체 초기화" />
-                    </StackPanel>
-                </Grid>
+                <custom:MainSetting />
             </PivotItem>
         </Pivot>
     </Grid>
