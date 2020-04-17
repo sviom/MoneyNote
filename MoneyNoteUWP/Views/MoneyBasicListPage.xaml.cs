@@ -84,11 +84,10 @@ namespace MoneyNote.Views
         }
 
         private void MoneyListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
+        {            
             if (sender is ListView listView)
             {
-                var selectedItem = listView.SelectedItem;
-                if (selectedItem is MoneyItem item)
+                if (e.ClickedItem is MoneyItem item)
                 {
                     HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyDetailView), item);
                 }
