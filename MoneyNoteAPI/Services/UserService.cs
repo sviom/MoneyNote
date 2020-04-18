@@ -11,6 +11,14 @@ namespace MoneyNoteAPI.Services
 {
     public class UserService
     {
+        public UserService()
+        {
+        }
+
+        public UserService(string eee)
+        {
+        }
+
         public User SignUp(User user)
         {
             try

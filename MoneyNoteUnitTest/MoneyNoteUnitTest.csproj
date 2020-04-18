@@ -21,8 +21,4 @@
     <ProjectReference Include="..\MoneyNoteLibrary\MoneyNoteLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServiceTest\" />
-  </ItemGroup>
-
 </Project>
