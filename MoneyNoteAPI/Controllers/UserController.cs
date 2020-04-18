@@ -135,5 +135,12 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public ApiResult<bool> DeleteUser([FromBody]ApiRequest<User> request)
+        {
+            var result = new ApiResult<bool>();
+            return result;
+        }
     }
 }
