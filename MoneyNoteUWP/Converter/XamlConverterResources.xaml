@@ -8,4 +8,9 @@
     <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
     <local:StringNotNullToVisibilityConverter x:Key="StringNotNullToVisibilityConverter"/>
     <local:CountVisibilityConverter x:Key="CountVisibilityConverter" />
+    <local:NullToVisibility x:Key="NullToVisibility" />
+    <local:NotNullToVisibility x:Key="NotNullToVisibility" />
+
+    <local:NullToBoolean x:Key="NullToBoolean" />
+    <local:NotNullToBoolean x:Key="NotNullToBoolean" />
 </ResourceDictionary>

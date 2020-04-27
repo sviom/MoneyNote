@@ -274,8 +274,8 @@ namespace MoneyNoteLibrary.ViewModels
             AddCategoryButtonText = "하위 분류 추가";
             OnPropertyChanged(nameof(SaveButtonText));
         }
-
-        public void CancelSelectedCategory()
+             
+        public void ClearSelectedCategory()
         {
             SelectedCategory = null;
         }

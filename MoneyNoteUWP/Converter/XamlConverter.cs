@@ -76,6 +76,43 @@ namespace MoneyNote.Converter
         }
     }
 
+    public class NullToBoolean : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value == null)
+                return true;
+
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return false;
+        }
+    }
+
+    public class NotNullToBoolean : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value != null)
+                return true;
+
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return false;
+        }
+    }
+
+
+
+    #region Visibility 관련
+
+
     public class StringNotNullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -86,6 +123,38 @@ namespace MoneyNote.Converter
                 if (!string.IsNullOrEmpty(item))
                     result = Visibility.Visible;
             }
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return Visibility.Collapsed;
+        }
+    }
+
+    public class NullToVisibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var result = Visibility.Collapsed;
+            if (value == null)
+                result = Visibility.Visible;
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return Visibility.Collapsed;
+        }
+    }
+
+    public class NotNullToVisibility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var result = Visibility.Collapsed;
+            if (value != null)
+                result = Visibility.Visible;
             return result;
         }
 
@@ -112,4 +181,6 @@ namespace MoneyNote.Converter
             return Visibility.Collapsed;
         }
     }
+
+    #endregion
 }
