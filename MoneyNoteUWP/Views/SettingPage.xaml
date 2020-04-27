@@ -15,14 +15,14 @@
                 <custom:BankBookManage />
             </PivotItem>
             <PivotItem Header="수입분류">
-                <StackPanel>
+                <Grid>
                     <custom:MainCategorySetting Division="Income" />
-                </StackPanel>
+                </Grid>
             </PivotItem>
             <PivotItem Header="지출분류">
-                <StackPanel>
+                <Grid>
                     <custom:MainCategorySetting Division="Expense" />
-                </StackPanel>
+                </Grid>
             </PivotItem>
             <PivotItem Header="초기화">
                 <custom:MainSetting />

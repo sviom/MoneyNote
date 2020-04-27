@@ -21,11 +21,145 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="CornerRadius" Value="5"/>
         </Style>
+
+        <Style TargetType="GridViewItem" x:Key="GridViewItemRevealStyle">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Background" Value="{ThemeResource GridViewItemBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource GridViewItemForeground}" />
+            <Setter Property="TabNavigation" Value="Local" />
+            <Setter Property="IsHoldingEnabled" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,4,4" />
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
+            <Setter Property="AllowDrop" Value="False" />
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+            <Setter Property="FocusVisualMargin" Value="-2" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <ListViewItemPresenter ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                x:Name="Root"
+                                                Control.IsTemplateFocusTarget="True"
+                                                FocusVisualMargin="{TemplateBinding FocusVisualMargin}"
+                                                SelectionCheckMarkVisualEnabled="{ThemeResource GridViewItemSelectionCheckMarkVisualEnabled}"
+                                                CheckBrush="{ThemeResource GridViewItemCheckBrush}"
+                                                CheckBoxBrush="{ThemeResource GridViewItemCheckBoxBrush}"
+                                                DragBackground="{ThemeResource GridViewItemDragBackground}"
+                                                DragForeground="{ThemeResource GridViewItemDragForeground}"
+                                                FocusBorderBrush="{ThemeResource GridViewItemFocusBorderBrush}"
+                                                FocusSecondaryBorderBrush="{ThemeResource GridViewItemFocusSecondaryBorderBrush}"
+                                                PlaceholderBackground="{ThemeResource GridViewItemPlaceholderBackground}"
+                                                PointerOverBackground="{ThemeResource GridViewItemBackgroundPointerOver}"
+                                                PointerOverForeground="{ThemeResource GridViewItemForegroundPointerOver}"
+                                                SelectedBackground="{ThemeResource GridViewItemBackgroundSelected}"
+                                                SelectedForeground="{ThemeResource GridViewItemForegroundSelected}"
+                                                SelectedPointerOverBackground="{ThemeResource GridViewItemBackgroundSelectedPointerOver}"
+                                                PressedBackground="{ThemeResource GridViewItemBackgroundPressed}"
+                                                SelectedPressedBackground="{ThemeResource GridViewItemBackgroundSelectedPressed}"
+                                                DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                ContentMargin="{TemplateBinding Padding}"
+                                                CheckMode="{ThemeResource GridViewItemCheckMode}"
+                                                RevealBackground="{ThemeResource GridViewItemRevealBackground}"
+                                                RevealBorderThickness="{ThemeResource GridViewItemRevealBorderThemeThickness}"
+                                                RevealBorderBrush="{ThemeResource GridViewItemRevealBorderBrush}">
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Selected" />
+
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PointerOverSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="PointerOver" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOverPressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                    <VisualState x:Name="PressedSelected">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.(RevealBrush.State)" Value="Pressed" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                </VisualStateGroup>
+
+                                <VisualStateGroup x:Name="DisabledStates">
+                                    <VisualState x:Name="Enabled" />
+
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.RevealBorderThickness" Value="0" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                </VisualStateGroup>
+
+                            </VisualStateManager.VisualStateGroups>
+                        </ListViewItemPresenter>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </UserControl.Resources>
 
     <Grid Background="White">
-        <ScrollViewer>
-            <StackPanel Margin="10,10,10,10">
+        <GridView x:Name="MainCategoryGridView" ItemsSource="{x:Bind ViewModel.MainCategories}" SelectionChanged="MainCategoryGridView_SelectionChanged">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="MinWidth" Value="100" />
+                    <Setter Property="MinHeight" Value="100" />
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="model:MainCategory">
+                    <Grid Margin="0,10,0,10">
+                        <TextBlock Text="{x:Bind Title, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        
+                        <!--<Button x:Name="DeleteMainCategory"
+                                        Grid.Column="1"
+                                        CornerRadius="5"
+                                        Margin="5,0,0,0"
+                                        Background="DarkRed"
+                                        Foreground="White">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="삭제"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>-->
+
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        
+            <!--<StackPanel Margin="10,10,10,10">
                 <TextBlock Text="주 분류"/>
                 <ListView x:Name="MainCategoryListView"
                           SelectionChanged="MainCategoryListView_SelectionChanged"
@@ -138,7 +272,6 @@
                         Style="{StaticResource CommonButtonStyle}"
                         Content="{x:Bind ViewModel.SaveButtonText}"
                         CornerRadius="5"/>
-            </StackPanel>
-        </ScrollViewer>
+            </StackPanel>-->
     </Grid>
 </UserControl>

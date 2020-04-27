@@ -72,15 +72,15 @@ namespace MoneyNote.UserControls
 
         private async void MainCategoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainCategoryListView.SelectedItem != null)
-            {
-                ViewModel.IsShowSubCategory = true;
-                if (MainCategoryListView.SelectedItem is MainCategory category)
-                {
-                    ViewModel.SelectedCategory = category;
-                    await ViewModel.GetSubCategory(category);
-                }
-            }
+            //if (MainCategoryListView.SelectedItem != null)
+            //{
+            //    ViewModel.IsShowSubCategory = true;
+            //    if (MainCategoryListView.SelectedItem is MainCategory category)
+            //    {
+            //        ViewModel.SelectedCategory = category;
+            //        await ViewModel.GetSubCategory(category);
+            //    }
+            //}
         }
 
         private async void SaveCategory_Click(object sender, RoutedEventArgs e)
@@ -93,9 +93,14 @@ namespace MoneyNote.UserControls
 
         private void CancelSelectedCategory_Click(object sender, RoutedEventArgs e)
         {
-            MainCategoryListView.SelectedItem = null;
+            //MainCategoryListView.SelectedItem = null;
             ViewModel.SelectedCategory = null;
             ViewModel.SetNewSaveMode();
+        }
+
+        private void MainCategoryGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
