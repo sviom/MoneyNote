@@ -11,11 +11,13 @@ namespace MoneyNoteLibrary.Common
 {
     public static class HttpLauncher
     {
-#if DEBUG
-        public static string basic = "http://localhost:50456/api/";
-#else
+//#if DEBUG
+//        public static string basic = "http://localhost:50456/api/";
+//#else
+//        public static string basic = "https://moneynoteapi.azurewebsites.net/api/";
+//#endif
+
         public static string basic = "https://moneynoteapi.azurewebsites.net/api/";
-#endif
 
         public static async Task<ApiResult<U>> ApiLauncher<T, U>(this MoneyApi api, T item, ControllerEnum controllerEnum = ControllerEnum.money)
         {

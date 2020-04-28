@@ -30,7 +30,7 @@
 
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <GridView Grid.Row="0" x:Name="MainCategoryGridView" ItemsSource="{x:Bind ViewModel.MainCategories}" SelectionChanged="MainCategoryGridView_SelectionChanged"
@@ -51,30 +51,28 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="주 분류" Style="{StaticResource  SubtitleTextBlockStyle}"/>
-            <ScrollViewer Grid.Row="1" Margin="0,4,0,0">
-                <StackPanel>
-                    <TextBox Text="{x:Bind ViewModel.SelectedCategory.Title}" CornerRadius="4" TextWrapping="Wrap"
-                             Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}" />
-                    <TextBlock Text="선택된 주 분류가 없습니다." Foreground="Gray" VerticalAlignment="Center" Margin="0,0,8,0"
-                               Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NullToVisibility}}"/>
-                    
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
+            <StackPanel Grid.Row="1">
+                <TextBox Text="{x:Bind ViewModel.SelectedCategory.Title}" CornerRadius="4" TextWrapping="Wrap"
+                         Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}" />
+                <TextBlock Text="선택된 주 분류가 없습니다." Foreground="Gray" VerticalAlignment="Center" Margin="0,0,8,0"
+                           Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NullToVisibility}}"/>
 
-                        <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
 
-                        <Button Content="삭제" Style="{StaticResource CommonButtonStyle}" Background="Red" Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}" />
+                    <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}"/>
 
-                        <Button Content="선택취소" Style="{StaticResource CommonButtonStyle}" 
-                                Click="{x:Bind ViewModel.ClearSelectedCategory}"
-                                IsEnabled="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToBoolean}}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,4,0,0">
-                        
-               
-                    </StackPanel>
-                    
+                    <Button Content="삭제" Style="{StaticResource CommonButtonStyle}" Background="Red" Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}" />
+
+                    <Button Content="선택취소" Style="{StaticResource CommonButtonStyle}" 
+                            Click="{x:Bind ViewModel.ClearSelectedCategory}"
+                            IsEnabled="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToBoolean}}"/>
                 </StackPanel>
-            </ScrollViewer>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,4,0,0">
+
+
+                </StackPanel>
+
+            </StackPanel>
         </Grid>
 
         <!--<StackPanel Margin="10,10,10,10">

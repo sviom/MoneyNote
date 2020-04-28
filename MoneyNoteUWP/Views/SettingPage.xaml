@@ -20,9 +20,9 @@
                 </Grid>
             </PivotItem>
             <PivotItem Header="지출분류">
-                <Grid>
+                <ScrollViewer>
                     <custom:MainCategorySetting Division="Expense" />
-                </Grid>
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Header="초기화">
                 <custom:MainSetting />
