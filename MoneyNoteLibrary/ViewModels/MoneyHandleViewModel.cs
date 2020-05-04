@@ -309,6 +309,7 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 Title = Title,
                 Description = Description,
+                CreatedTime = CreatedTime,
                 Money = mo,
                 BankBook = SelectedBankBook,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
