@@ -9,10 +9,20 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
+    <UserControl.Resources>
+        <Style x:Key="SettingButton" TargetType="Button" BasedOn="{StaticResource CommonButtonStyle}">
+            <Setter Property="Background" Value="DarkSlateGray" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
-        <StackPanel>
-            <Button x:Name="AllClearButton" Content="전체 초기화" />
-            <Button x:Name="LeaveApp" Content="회원 탈퇴" />
+        <TextBlock Text="이 페이지의 내용은 주의깊게 생각하신 후 실행해주세요!" Foreground="Red" FontSize="12" Margin="0,8,0,0"/>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="AllClearButton" Content="전체 초기화" Style="{StaticResource SettingButton}" Click="AllClearButton_Click" />
+            <Button x:Name="LeaveApp" Content="회원 탈퇴" Style="{StaticResource SettingButton}" Margin="0,8,0,0" Click="LeaveApp_Click" />
+
         </StackPanel>
     </Grid>
 </UserControl>

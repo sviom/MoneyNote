@@ -1,4 +1,5 @@
-﻿using MoneyNoteAPI.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using MoneyNoteAPI.Context;
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,42 @@ namespace MoneyNoteAPI.Services
                 }
                 else
                     return dbSet.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeleteMainCategory(MainCategory mainCategory)
+        {
+            try
+            {
+                using var db = new MoneyContext();
+                db.MainCategories.Remove(mainCategory);
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    return true;
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeleteSubCategory(SubCategory subCategory)
+        {
+            try
+            {
+                using var db = new MoneyContext();
+                db.SubCategories.Remove(subCategory);
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    return true;
+
+                return false;
             }
             catch (Exception ex)
             {

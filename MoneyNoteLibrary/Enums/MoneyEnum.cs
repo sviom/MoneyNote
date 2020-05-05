@@ -100,7 +100,15 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 사용자 승인
             /// </summary>
-            ApproveUser
+            ApproveUser,
+            /// <summary>
+            /// 메인 카테고리 삭제
+            /// </summary>
+            DeleteMainCategory,
+            /// <summary>
+            /// 하위 카테고리 삭제
+            /// </summary>
+            DeleteSubCategory
         }
 
         /// <summary>

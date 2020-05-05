@@ -33,9 +33,25 @@ namespace MoneyNoteAPI.Services
             return null;
         }
 
-        public void DeleteUser(User user)
+        public bool DeleteUser(User user)
         {
+            var returnValue = false;
+            try
+            {
+                if (CheckExist(user, x => x.Id == user.Id))
+                {
+                    using var db = new MoneyContext();
+                    db.Users.Remove(user);
 
+                    db.SaveChanges();
+                    returnValue = true;
+                }
+            }
+            catch
+            {
+            }
+
+            return returnValue;
         }
 
         public bool CheckExist(User user, Expression<Func<User, bool>> expression)
