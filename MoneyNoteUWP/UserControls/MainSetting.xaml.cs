@@ -23,7 +23,7 @@ namespace MoneyNote.UserControls
         {
             this.InitializeComponent();
         }
-
+        
         private async void AllClearButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ContentDialog();

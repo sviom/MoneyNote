@@ -22,6 +22,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="AllClearButton" Content="전체 초기화" Style="{StaticResource SettingButton}" Click="AllClearButton_Click" />
             <Button x:Name="LeaveApp" Content="회원 탈퇴" Style="{StaticResource SettingButton}" Margin="0,8,0,0" Click="LeaveApp_Click" />
+
         </StackPanel>
     </Grid>
 </UserControl>
