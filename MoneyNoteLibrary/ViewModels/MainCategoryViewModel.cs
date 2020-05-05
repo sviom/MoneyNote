@@ -276,24 +276,18 @@ namespace MoneyNoteLibrary.ViewModels
 
             var mainCategory = SelectedCategory;
 
-            var category = new MainCategory()
-            {
-                Division = Division,
-                Title = CategoryText,
-                User = LoginedUser,
-            };
+            SelectedCategory.Title = CategoryText;
 
-            category.Id = SelectedCategory.Id;
-            var result = await MoneyApi.UpdateMainCategory.ApiLauncher<MainCategory, MainCategory>(category, ControllerEnum.category);
+            var result = await MoneyApi.UpdateMainCategory.ApiLauncher<MainCategory, MainCategory>(SelectedCategory, ControllerEnum.category);
 
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
             else
             {
-                SelectedCategory = null;
                 CategoryText = string.Empty;
                 MainCategories.Remove(mainCategory);
                 MainCategories.Add(result.Content);
+                ClearSelectedCategory();
             }
             return result.Result;
         }
@@ -352,6 +346,7 @@ namespace MoneyNoteLibrary.ViewModels
 
             CategoryText = string.Empty;
             MainCategories.Remove(SelectedCategory);
+            ClearSelectedCategory();
         }
 
         public async Task DeleteSubCategory()

@@ -94,8 +94,16 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var insertResult = SqlLauncher.Update(item.Content);
-                result.Content = insertResult;
-                result.Result = true;
+
+                if (insertResult == null)
+                {
+                    result.Result = false;
+                }
+                else
+                {
+                    result.Content = insertResult;
+                    result.Result = true;
+                }
             }
             catch
             {
