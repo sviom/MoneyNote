@@ -120,5 +120,45 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public ApiResult<bool> DeleteMainCategory([FromBody]ApiRequest<MainCategory> item)
+        {
+            var result = new ApiResult<bool>();
+
+            try
+            {
+                var service = new CategoryService();
+                var deleteResult = service.DeleteMainCategory(item.Content);
+
+                result.Content = true;
+                result.Result = deleteResult;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public ApiResult<bool> DeleteSubCategory([FromBody]ApiRequest<SubCategory> item)
+        {
+            var result = new ApiResult<bool>();
+
+            try
+            {
+                var service = new CategoryService();
+                var deleteResult = service.DeleteSubCategory(item.Content);
+
+                result.Content = deleteResult;
+                result.Result = deleteResult;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
     }
 }
