@@ -70,21 +70,6 @@ namespace MoneyNote.UserControls
         {
         }
 
-        private async void SaveCategory_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.SelectedCategory == null)
-                await ViewModel.SaveCategory();
-            else
-                await ViewModel.SaveSubCategory();
-        }
-
-        private void CancelSelectedCategory_Click(object sender, RoutedEventArgs e)
-        {
-            //MainCategoryListView.SelectedItem = null;
-            ViewModel.SelectedCategory = null;
-            ViewModel.SetNewSaveMode();
-        }
-
         private async void MainCategoryGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MainCategoryGridView.SelectedItem != null)

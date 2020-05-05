@@ -15,4 +15,12 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="CornerRadius" Value="4"/>
     </Style>
+
+    <Style x:Key="CommonErrorButtonStyle" TargetType="Button" BasedOn="{StaticResource CommonButtonStyle}">
+        <Setter Property="Background" Value="Red" />
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
 </ResourceDictionary>
