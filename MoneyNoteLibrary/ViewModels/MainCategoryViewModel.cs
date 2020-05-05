@@ -104,6 +104,21 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private string _SubCategoryText;
+        public string SubCategoryText
+        {
+            get { return _SubCategoryText; }
+            set
+            {
+                if (_SubCategoryText == value)
+                    return;
+
+                _SubCategoryText = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public string SelectedCategoryTitle => SelectedCategory != null ? SelectedCategory.Title : string.Empty;
 
         private MainCategory _SelectedCategory;
@@ -181,6 +196,7 @@ namespace MoneyNoteLibrary.ViewModels
 
         public async Task GetSubCategory(MainCategory selectedCategory)
         {
+            IsRunProgressRing = true;
             SubCategories = new ObservableCollection<SubCategory>();
             var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, List<SubCategory>>(selectedCategory, ControllerEnum.category);
             if (result.Result)
@@ -191,6 +207,7 @@ namespace MoneyNoteLibrary.ViewModels
                         SubCategories.Add(item);
                 }
             }
+            IsRunProgressRing = false;
         }
 
         public void ValidCheck()
@@ -278,6 +295,7 @@ namespace MoneyNoteLibrary.ViewModels
         public void ClearSelectedCategory()
         {
             SelectedCategory = null;
+            IsShowSubCategory = false;
         }
     }
 }
