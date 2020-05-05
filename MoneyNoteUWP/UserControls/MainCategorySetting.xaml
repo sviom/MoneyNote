@@ -26,6 +26,7 @@
         </Grid.RowDefinitions>
 
         <GridView Grid.Row="0" x:Name="MainCategoryGridView" ItemsSource="{x:Bind ViewModel.MainCategories}" SelectionChanged="MainCategoryGridView_SelectionChanged"
+                  Visibility="{x:Bind ViewModel.MainCategories.Count, Converter={StaticResource CountVisibilityConverter}}"
                   SelectedItem="{x:Bind ViewModel.SelectedCategory, Mode=TwoWay}" ItemContainerStyle="{StaticResource GridViewItemStyle}" >
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="model:MainCategory">
@@ -35,7 +36,7 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <TextBlock Grid.Row="0" Text="항목이 존재하지 않습니다." Visibility="{x:Bind ViewModel.MainCategories.Count, Converter={StaticResource CountVisibilityConverter}}" />
+        <TextBlock Grid.Row="0" Text="항목이 존재하지 않습니다." Margin="0,8,0,0" Style="{StaticResource SubtitleTextBlockStyle}" Visibility="{x:Bind ViewModel.MainCategories.Count, Converter={StaticResource CountVisibilityConverterReverse}}" />
 
         <StackPanel Grid.Row="1" Margin="0,8,0,0" Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToVisibility}}">
             <TextBlock Grid.Row="0" Text="주 분류" Style="{StaticResource SubtitleTextBlockStyle}"/>
@@ -47,8 +48,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
                 <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.SaveCategory}" />
                 <Button Content="삭제" Style="{StaticResource CommonErrorButtonStyle}" Margin="0,0,4,0" />
-                <Button Content="선택취소" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.ClearSelectedCategory}"
-                        IsEnabled="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NotNullToBoolean}}"/>
+                <Button Content="선택취소" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.ClearSelectedCategory}" />
             </StackPanel>
         </StackPanel>
 
@@ -57,7 +57,8 @@
             <TextBlock Grid.Row="0" Text="새로운 항목 추가" Style="{StaticResource SubtitleTextBlockStyle}" />
             <TextBox Text="{x:Bind ViewModel.CategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
-                <Button Content="추가" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.SaveCategory}" />
+                <Button Content="추가" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.SaveCategory}"
+                        IsEnabled="{x:Bind ViewModel.IsSaveButtonEnabled}"/>
             </StackPanel>
         </StackPanel>
 
@@ -71,6 +72,7 @@
             <TextBlock Grid.Row="0" Text="하위분류" Style="{StaticResource SubtitleTextBlockStyle}" />
 
             <GridView Grid.Row="1" x:Name="SubCategoryGridView" ItemsSource="{x:Bind ViewModel.SubCategories}" ItemContainerStyle="{StaticResource GridViewItemStyle}"
+                      Visibility="{x:Bind ViewModel.SubCategories.Count, Converter={StaticResource CountVisibilityConverter}}"
                       SelectedItem="{x:Bind ViewModel.SelectedSubCategory, Mode=TwoWay}">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="model:SubCategory">
@@ -80,22 +82,23 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
-            <TextBlock Grid.Row="1" Text="항목이 존재하지 않습니다." Visibility="{x:Bind ViewModel.SubCategories.Count, Converter={StaticResource CountVisibilityConverter}}" />
+            <TextBlock Grid.Row="1" Text="항목이 존재하지 않습니다." Margin="0,8,0,0" Visibility="{x:Bind ViewModel.SubCategories.Count, Converter={StaticResource CountVisibilityConverterReverse}}" />
 
-            <StackPanel Grid.Row="2" Visibility="{x:Bind ViewModel.SelectedSubCategory, Converter={StaticResource NotNullToVisibility}}">
+            <StackPanel Grid.Row="2" Margin="0,4,0,0" Visibility="{x:Bind ViewModel.SelectedSubCategory, Converter={StaticResource NotNullToVisibility}}">
                 <TextBox Text="{x:Bind ViewModel.SubCategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
                     <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.SaveSubCategory}" />
                     <Button Content="삭제" Style="{StaticResource CommonErrorButtonStyle}" Margin="0,0,4,0" />
                     <Button Content="선택 취소" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.ClearSelectedSubCategory}" />
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Visibility="{x:Bind ViewModel.SelectedSubCategory, Converter={StaticResource NullToVisibility}}">
+            <StackPanel Grid.Row="2" Margin="0,4,0,0" Visibility="{x:Bind ViewModel.SelectedSubCategory, Converter={StaticResource NullToVisibility}}">
                 <TextBlock Text="추가" />
                 <TextBox Text="{x:Bind ViewModel.SubCategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
-                    <Button Content="추가" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.SaveSubCategory}" />
+                    <Button Content="추가" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.SaveSubCategory}"
+                            IsEnabled="{x:Bind ViewModel.IsSubSaveButtonEnabled}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

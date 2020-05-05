@@ -69,6 +69,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _SubCategoryText = value;
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
@@ -87,6 +88,7 @@ namespace MoneyNoteLibrary.ViewModels
                 else CategoryText = string.Empty;
 
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
@@ -105,6 +107,7 @@ namespace MoneyNoteLibrary.ViewModels
                 else SubCategoryText = string.Empty;
 
                 OnPropertyChanged();
+                ValidCheck();
             }
         }
 
@@ -136,11 +139,9 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        public bool IsValidCategoryText => !string.IsNullOrEmpty(CategoryText);
+        public bool IsSaveButtonEnabled => !string.IsNullOrEmpty(CategoryText);
 
-        public bool IsChangedCategory => false;
-
-        public bool IsSaveButtonEnabled => IsValidCategoryText || IsChangedCategory;
+        public bool IsSubSaveButtonEnabled => !string.IsNullOrEmpty(SubCategoryText);
 
         public MainCategoryViewModel(User user, MoneyCategory div)
         {
@@ -186,8 +187,7 @@ namespace MoneyNoteLibrary.ViewModels
 
         public void ValidCheck()
         {
-            OnPropertyChanged(nameof(IsValidCategoryText));
-            OnPropertyChanged(nameof(IsChangedCategory));
+            OnPropertyChanged(nameof(IsSubSaveButtonEnabled));
             OnPropertyChanged(nameof(IsSaveButtonEnabled));
         }
 
