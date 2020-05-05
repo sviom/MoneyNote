@@ -219,19 +219,22 @@ namespace MoneyNoteLibrary.ViewModels
 
         public async Task<bool> SaveSubCategory()
         {
-            if (string.IsNullOrEmpty(CategoryText))
+            if (string.IsNullOrEmpty(SubCategoryText))
                 return false;
 
             if (LoginedUser == null)
                 return false;
 
             if (SelectedCategory == null)
+            {
+                ErrorMessage = "부모는 반드시 선택해주세요.";
                 return false;
+            }
 
             var category = new SubCategory()
             {
                 Division = Division,
-                Title = CategoryText,
+                Title = SubCategoryText,
                 MainCategoryId = SelectedCategory.Id
             };
 
@@ -240,7 +243,7 @@ namespace MoneyNoteLibrary.ViewModels
                 ErrorMessage = "에러가 발생했습니다.";
             else
             {
-                CategoryText = string.Empty;
+                SubCategoryText = string.Empty;
                 SubCategories.Add(result.Content);
             }
             return result.Result;
