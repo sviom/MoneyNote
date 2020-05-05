@@ -22,7 +22,7 @@ using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNote.UserControls
 {
-    public sealed partial class MainCategorySetting : UserControl, INotifyPropertyChanged
+    public sealed partial class CategorySetting : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,7 +46,7 @@ namespace MoneyNote.UserControls
         }
 
         public static readonly DependencyProperty DivisionProperty =
-            DependencyProperty.Register("Division", typeof(MoneyCategory), typeof(MainCategorySetting), new PropertyMetadata(default(MoneyCategory)));
+            DependencyProperty.Register("Division", typeof(MoneyCategory), typeof(CategorySetting), new PropertyMetadata(default(MoneyCategory)));
 
         public MoneyCategory Division
         {
@@ -54,7 +54,7 @@ namespace MoneyNote.UserControls
             set { SetValue(DivisionProperty, value); }
         }
 
-        public MainCategorySetting()
+        public CategorySetting()
         {
             this.InitializeComponent();
             this.Loaded += MainCategorySetting_Loaded;

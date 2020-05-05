@@ -16,16 +16,16 @@
             </PivotItem>
             <PivotItem Header="수입분류">
                 <Grid>
-                    <custom:MainCategorySetting Division="Income" />
+                    <custom:CategorySetting Division="Income" />
                 </Grid>
             </PivotItem>
             <PivotItem Header="지출분류">
                 <ScrollViewer>
-                    <custom:MainCategorySetting Division="Expense" />
+                    <custom:CategorySetting Division="Expense" />
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="초기화">
-                <custom:MainSetting />
+                <!--<custom:MainSetting />-->
             </PivotItem>
         </Pivot>
     </Grid>
