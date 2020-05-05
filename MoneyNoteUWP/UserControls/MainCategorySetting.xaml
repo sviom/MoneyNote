@@ -46,8 +46,8 @@
                        Visibility="{x:Bind ViewModel.SelectedCategory, Converter={StaticResource NullToVisibility}}"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
-                <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.SaveCategory}" />
-                <Button Content="삭제" Style="{StaticResource CommonErrorButtonStyle}" Margin="0,0,4,0" />
+                <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.UpdateCategory}" />
+                <Button Content="삭제" Style="{StaticResource CommonErrorButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.DeleteCategory}" />
                 <Button Content="선택취소" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.ClearSelectedCategory}" />
             </StackPanel>
         </StackPanel>
@@ -87,8 +87,8 @@
             <StackPanel Grid.Row="2" Margin="0,4,0,0" Visibility="{x:Bind ViewModel.SelectedSubCategory, Converter={StaticResource NotNullToVisibility}}">
                 <TextBox Text="{x:Bind ViewModel.SubCategoryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,0">
-                    <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.SaveSubCategory}" />
-                    <Button Content="삭제" Style="{StaticResource CommonErrorButtonStyle}" Margin="0,0,4,0" />
+                    <Button Content="수정" Style="{StaticResource CommonButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.UpdateSubCategory}" />
+                    <Button Content="삭제" Style="{StaticResource CommonErrorButtonStyle}" Margin="0,0,4,0" Click="{x:Bind ViewModel.DeleteSubCategory}" />
                     <Button Content="선택 취소" Style="{StaticResource CommonButtonStyle}" Click="{x:Bind ViewModel.ClearSelectedSubCategory}" />
                 </StackPanel>
             </StackPanel>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -207,6 +208,7 @@ namespace MoneyNoteLibrary.ViewModels
             };
 
             var result = await MoneyApi.SaveMainCategory.ApiLauncher<MainCategory, MainCategory>(category, ControllerEnum.category);
+
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
             else
@@ -239,6 +241,7 @@ namespace MoneyNoteLibrary.ViewModels
             };
 
             var result = await MoneyApi.SaveSubCategory.ApiLauncher<SubCategory, SubCategory>(category, ControllerEnum.category);
+
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
             else
@@ -258,6 +261,118 @@ namespace MoneyNoteLibrary.ViewModels
         public void ClearSelectedSubCategory()
         {
             SelectedSubCategory = null;
+        }
+
+        public async Task<bool> UpdateCategory()
+        {
+            if (string.IsNullOrEmpty(CategoryText))
+                return false;
+
+            if (LoginedUser == null)
+                return false;
+
+            if (SelectedCategory == null)
+                return false;
+
+            var mainCategory = SelectedCategory;
+
+            var category = new MainCategory()
+            {
+                Division = Division,
+                Title = CategoryText,
+                User = LoginedUser,
+            };
+
+            category.Id = SelectedCategory.Id;
+            var result = await MoneyApi.UpdateMainCategory.ApiLauncher<MainCategory, MainCategory>(category, ControllerEnum.category);
+
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+            else
+            {
+                SelectedCategory = null;
+                CategoryText = string.Empty;
+                MainCategories.Remove(mainCategory);
+                MainCategories.Add(result.Content);
+            }
+            return result.Result;
+        }
+
+        public async Task<bool> UpdateSubCategory()
+        {
+            if (string.IsNullOrEmpty(SubCategoryText))
+                return false;
+
+            if (LoginedUser == null)
+                return false;
+
+            if (SelectedCategory == null)
+            {
+                ErrorMessage = "부모는 반드시 선택해주세요.";
+                return false;
+            }
+
+            var category = new SubCategory()
+            {
+                Division = Division,
+                Title = SubCategoryText,
+                MainCategoryId = SelectedCategory.Id
+            };
+
+            category.Id = SelectedSubCategory.Id;
+            var result = await MoneyApi.UpdateSubCategory.ApiLauncher<SubCategory, SubCategory>(category, ControllerEnum.category);
+
+            if (!result.Result)
+                ErrorMessage = "에러가 발생했습니다.";
+            else
+            {
+                SubCategoryText = string.Empty;
+                SubCategories.Remove(SelectedSubCategory);
+                SubCategories.Add(result.Content);
+            }
+            return result.Result;
+        }
+
+        public async Task DeleteCategory()
+        {
+            if (LoginedUser == null)
+                return;
+
+            if (SelectedCategory == null)
+                return;
+
+            IsRunProgressRing = true;
+            var deleteResult = await MoneyApi.DeleteMainCategory.ApiLauncher<MainCategory, bool>(SelectedCategory, ControllerEnum.category);
+            IsRunProgressRing = false;
+            if (!deleteResult.Result)
+            {
+                ErrorMessage = "삭제 중 오류가 발생하였습니다.";
+                return;
+            }
+
+            CategoryText = string.Empty;
+            MainCategories.Remove(SelectedCategory);
+        }
+
+        public async Task DeleteSubCategory()
+        {
+            if (LoginedUser == null)
+                return;
+
+            if (SelectedSubCategory == null)
+                return;
+
+            IsRunProgressRing = true;
+            var deleteResult = await MoneyApi.DeleteSubCategory.ApiLauncher<SubCategory, bool>(SelectedSubCategory, ControllerEnum.category);
+            IsRunProgressRing = false;
+            if (!deleteResult.Result)
+            {
+                ErrorMessage = "삭제 중 오류가 발생하였습니다.";
+                return;
+            }
+
+            SubCategoryText = string.Empty;
+            SubCategories.Remove(SelectedSubCategory);
         }
     }
 }
