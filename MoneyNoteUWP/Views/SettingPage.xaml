@@ -25,7 +25,9 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="초기화">
-                <!--<custom:MainSetting />-->
+                <ScrollViewer>
+                    <custom:MainSetting />
+                </ScrollViewer>
             </PivotItem>
         </Pivot>
     </Grid>

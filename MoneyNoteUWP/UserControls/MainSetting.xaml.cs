@@ -1,7 +1,10 @@
-﻿using System;
+﻿using MoneyNoteLibrary.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -17,11 +20,43 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MoneyNote.UserControls
 {
-    public sealed partial class MainSetting : UserControl
+    public sealed partial class MainSetting : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private SettingViewModel _ViewModel;
+        public SettingViewModel ViewModel
+        {
+            get { return _ViewModel; }
+            set
+            {
+                if (_ViewModel == value)
+                    return;
+
+                _ViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainSetting()
         {
             this.InitializeComponent();
+            this.Loaded += MainSetting_Loaded;
+            this.Unloaded += MainSetting_Unloaded;
+        }
+
+        private void MainSetting_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel = new SettingViewModel();
+        }
+
+        private void MainSetting_Unloaded(object sender, RoutedEventArgs e)
+        {
         }
 
         private async void AllClearButton_Click(object sender, RoutedEventArgs e)
@@ -48,8 +83,14 @@ namespace MoneyNote.UserControls
             await dialog.ShowAsync();
         }
 
-        private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            var result = await ViewModel.LeaveApp(App.LogInedUser);
+
+            if(result)
+            {
+                // 앱 종료
+            }
         }
     }
 }
