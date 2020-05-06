@@ -58,7 +58,7 @@ namespace MoneyNote.UserControls
         private void MainSetting_Unloaded(object sender, RoutedEventArgs e)
         {
         }
-
+        
         private async void AllClearButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ContentDialog();
