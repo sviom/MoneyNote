@@ -58,7 +58,7 @@ namespace MoneyNote.UserControls
         private void MainSetting_Unloaded(object sender, RoutedEventArgs e)
         {
         }
-        
+
         private async void AllClearButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ContentDialog();
@@ -87,38 +87,10 @@ namespace MoneyNote.UserControls
         {
             var result = await ViewModel.LeaveApp(App.LogInedUser);
 
-            if(result)
+            if (result)
             {
                 // 앱 종료
             }
-        }
-        
-        private async void AllClearButton_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new ContentDialog();
-            dialog.DefaultButton = ContentDialogButton.Close;
-            dialog.Title = "전체 초기화를 진행하시겠습니까?";
-            dialog.PrimaryButtonText = "예";
-            dialog.CloseButtonText = "아니오";
-            dialog.Content = "사용자의 금액 내역, 카테고리 등 모든 정보가 초기화됩니다.";
-            await dialog.ShowAsync();
-        }
-
-        private async void LeaveApp_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new ContentDialog();
-            dialog.DefaultButton = ContentDialogButton.Close;
-
-            dialog.Title = "정말 탈퇴하시겠습니까? ";
-            dialog.PrimaryButtonText = "예";
-            dialog.CloseButtonText = "아니오";
-            dialog.Content = "사용자의 기록 정보 등 모든 정보가 삭제되며, 복구할 수 없습니다. ";
-            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-            await dialog.ShowAsync();
-        }
-
-        private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
         }
     }
 }
