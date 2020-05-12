@@ -102,6 +102,10 @@ namespace MoneyNoteLibrary.Enums
             /// </summary>
             ApproveUser,
             /// <summary>
+            /// 사용자 삭제
+            /// </summary>
+            DeleteUser,
+            /// <summary>
             /// 메인 카테고리 삭제
             /// </summary>
             DeleteMainCategory,

@@ -12,7 +12,9 @@
     <Grid>
         <Pivot>
             <PivotItem Header="통장관리">
-                <custom:BankBookManage />
+                <ScrollViewer>
+                    <custom:BankBookManage />
+                </ScrollViewer>                
             </PivotItem>
             <PivotItem Header="수입분류">
                 <Grid>
@@ -25,7 +27,9 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="초기화">
-                <!--<custom:MainSetting />-->
+                <ScrollViewer>
+                    <custom:MainSetting />
+                </ScrollViewer>
             </PivotItem>
         </Pivot>
     </Grid>
