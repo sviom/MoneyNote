@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    x:DefaultBindMode="OneWay"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
@@ -15,7 +16,7 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
         <TextBlock Text="이 페이지의 내용은 주의깊게 생각하신 후 실행해주세요!" Foreground="Red" FontSize="12" Margin="0,8,0,0"/>
 
@@ -25,10 +26,13 @@
 
         </StackPanel>
 
-        <Grid>
+        <Grid Visibility="{x:Bind ViewModel.IsShowEndPage}">
             <Grid Background="White" Opacity="0.9" />
-            <TextBlock Text="앱을 사용해 주셔서 감사했습니다. 안녕히가세요." VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"
-                       Style="{StaticResource TitleTextBlockStyle}" />
-        </Grid>-->
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <TextBlock Text="탈퇴를 진행중입니다. 앱을 사용해 주셔서 감사했습니다. 안녕히가세요." TextWrapping="WrapWholeWords"
+                           Style="{StaticResource TitleTextBlockStyle}" />
+            </StackPanel>
+
+        </Grid>
     </Grid>
 </UserControl>
