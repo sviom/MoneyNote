@@ -12,20 +12,24 @@
     <Grid>
         <Pivot>
             <PivotItem Header="통장관리">
-                <custom:BankBookManage />
+                <ScrollViewer>
+                    <custom:BankBookManage />
+                </ScrollViewer>                
             </PivotItem>
             <PivotItem Header="수입분류">
-                <StackPanel>
-                    <custom:MainCategorySetting Division="Income" />
-                </StackPanel>
+                <Grid>
+                    <custom:CategorySetting Division="Income" />
+                </Grid>
             </PivotItem>
             <PivotItem Header="지출분류">
-                <StackPanel>
-                    <custom:MainCategorySetting Division="Expense" />
-                </StackPanel>
+                <ScrollViewer>
+                    <custom:CategorySetting Division="Expense" />
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Header="초기화">
-                <custom:MainSetting />
+                <ScrollViewer>
+                    <custom:MainSetting />
+                </ScrollViewer>
             </PivotItem>
         </Pivot>
     </Grid>

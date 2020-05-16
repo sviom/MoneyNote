@@ -309,6 +309,7 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 Title = Title,
                 Description = Description,
+                CreatedTime = CreatedTime,
                 Money = mo,
                 BankBook = SelectedBankBook,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
@@ -335,8 +336,10 @@ namespace MoneyNoteLibrary.ViewModels
             PreMoneyItem.Description = Description;
             PreMoneyItem.Money = mo;
             PreMoneyItem.BankBook = SelectedBankBook;
+            PreMoneyItem.BankBookId = SelectedBankBook.Id;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
             PreMoneyItem.MainCategory = MainCategory;
+            PreMoneyItem.MainCategoryId = MainCategory.Id;
             PreMoneyItem.SubCategory = SubCategory;
             PreMoneyItem.CreatedTime = CreatedTime;
             PreMoneyItem.UpdatedTime = DateTimeOffset.Now;

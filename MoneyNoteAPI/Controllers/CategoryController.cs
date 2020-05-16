@@ -94,8 +94,16 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var insertResult = SqlLauncher.Update(item.Content);
-                result.Content = insertResult;
-                result.Result = true;
+
+                if (insertResult == null)
+                {
+                    result.Result = false;
+                }
+                else
+                {
+                    result.Content = insertResult;
+                    result.Result = true;
+                }
             }
             catch
             {
@@ -113,6 +121,46 @@ namespace MoneyNoteAPI.Controllers
                 var insertResult = SqlLauncher.Update(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public ApiResult<bool> DeleteMainCategory([FromBody]ApiRequest<MainCategory> item)
+        {
+            var result = new ApiResult<bool>();
+
+            try
+            {
+                var service = new CategoryService();
+                var deleteResult = service.DeleteMainCategory(item.Content);
+
+                result.Content = true;
+                result.Result = deleteResult;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public ApiResult<bool> DeleteSubCategory([FromBody]ApiRequest<SubCategory> item)
+        {
+            var result = new ApiResult<bool>();
+
+            try
+            {
+                var service = new CategoryService();
+                var deleteResult = service.DeleteSubCategory(item.Content);
+
+                result.Content = deleteResult;
+                result.Result = deleteResult;
             }
             catch
             {

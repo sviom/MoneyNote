@@ -7,5 +7,13 @@
     <local:MoneyDividerConverter x:Key="MoneyDividerConverter"/>
     <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
     <local:StringNotNullToVisibilityConverter x:Key="StringNotNullToVisibilityConverter"/>
+    
     <local:CountVisibilityConverter x:Key="CountVisibilityConverter" />
+    <local:CountVisibilityConverterReverse x:Key="CountVisibilityConverterReverse" />
+
+    <local:NullToVisibility x:Key="NullToVisibility" />
+    <local:NotNullToVisibility x:Key="NotNullToVisibility" />
+
+    <local:NullToBoolean x:Key="NullToBoolean" />
+    <local:NotNullToBoolean x:Key="NotNullToBoolean" />
 </ResourceDictionary>

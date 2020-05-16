@@ -22,7 +22,7 @@ using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNote.UserControls
 {
-    public sealed partial class MainCategorySetting : UserControl, INotifyPropertyChanged
+    public sealed partial class CategorySetting : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,7 +46,7 @@ namespace MoneyNote.UserControls
         }
 
         public static readonly DependencyProperty DivisionProperty =
-            DependencyProperty.Register("Division", typeof(MoneyCategory), typeof(MainCategorySetting), new PropertyMetadata(default(MoneyCategory)));
+            DependencyProperty.Register("Division", typeof(MoneyCategory), typeof(CategorySetting), new PropertyMetadata(default(MoneyCategory)));
 
         public MoneyCategory Division
         {
@@ -54,7 +54,7 @@ namespace MoneyNote.UserControls
             set { SetValue(DivisionProperty, value); }
         }
 
-        public MainCategorySetting()
+        public CategorySetting()
         {
             this.InitializeComponent();
             this.Loaded += MainCategorySetting_Loaded;
@@ -70,32 +70,17 @@ namespace MoneyNote.UserControls
         {
         }
 
-        private async void MainCategoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void MainCategoryGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainCategoryListView.SelectedItem != null)
+            if (MainCategoryGridView.SelectedItem != null)
             {
                 ViewModel.IsShowSubCategory = true;
-                if (MainCategoryListView.SelectedItem is MainCategory category)
+                if (MainCategoryGridView.SelectedItem is MainCategory category)
                 {
                     ViewModel.SelectedCategory = category;
                     await ViewModel.GetSubCategory(category);
                 }
             }
-        }
-
-        private async void SaveCategory_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.SelectedCategory == null)
-                await ViewModel.SaveCategory();
-            else
-                await ViewModel.SaveSubCategory();
-        }
-
-        private void CancelSelectedCategory_Click(object sender, RoutedEventArgs e)
-        {
-            MainCategoryListView.SelectedItem = null;
-            ViewModel.SelectedCategory = null;
-            ViewModel.SetNewSaveMode();
         }
     }
 }

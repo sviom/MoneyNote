@@ -140,6 +140,20 @@ namespace MoneyNoteAPI.Controllers
         public ApiResult<bool> DeleteUser([FromBody]ApiRequest<User> request)
         {
             var result = new ApiResult<bool>();
+
+            try
+            {
+                var service = new UserService();
+                var deleteResult = service.DeleteUser(request.Content);
+                if (deleteResult)
+                {
+                    result.Content = true;
+                    result.Result = true;
+                }
+            }
+            catch
+            {
+            }
             return result;
         }
     }
