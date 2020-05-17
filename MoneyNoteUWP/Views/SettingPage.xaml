@@ -14,12 +14,12 @@
             <PivotItem Header="통장관리">
                 <ScrollViewer>
                     <custom:BankBookManage />
-                </ScrollViewer>                
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Header="수입분류">
-                <Grid>
+                <ScrollViewer>
                     <custom:CategorySetting Division="Income" />
-                </Grid>
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Header="지출분류">
                 <ScrollViewer>
