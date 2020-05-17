@@ -58,7 +58,7 @@ namespace MoneyNote.UserControls
         private void MainSetting_Unloaded(object sender, RoutedEventArgs e)
         {
         }
-        
+
         private async void AllClearButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ContentDialog();
@@ -87,10 +87,10 @@ namespace MoneyNote.UserControls
         {
             var result = await ViewModel.LeaveApp(App.LogInedUser);
 
-            if(result)
+            if (result)
             {
                 // 앱 종료
             }
-        }        
+        }
     }
 }
