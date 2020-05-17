@@ -23,8 +23,7 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
+        
         public async Task<bool> LeaveApp(User signinedUser)
         {
             if (signinedUser == null)
