@@ -15,6 +15,10 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class MoneyController : ControllerBase
     {
+        private readonly MoneyContext _context;
+
+        public MoneyController(MoneyContext context) => _context = context;
+
         [HttpPost]
         public ApiResult<List<MoneyItem>> GetAllMoney([FromBody]ApiRequest<string> user)
         {

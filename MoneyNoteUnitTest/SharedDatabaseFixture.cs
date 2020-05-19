@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyNoteLibrary;
+using MoneyNoteLibrary.Common;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -15,7 +16,9 @@ namespace MoneyNoteUnitTest
 
         public SharedDatabaseFixture()
         {
-            Connection = new SqlConnection(@"Server=(localdb)\mssqllocaldb;Database=EFTestSample;ConnectRetryCount=0");
+            var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+
+            Connection = new SqlConnection(connectionString);
 
             //Seed();
 
