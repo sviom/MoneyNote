@@ -23,7 +23,7 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        
         public async Task<bool> LeaveApp(User signinedUser)
         {
             if (signinedUser == null)
@@ -38,6 +38,7 @@ namespace MoneyNoteLibrary.ViewModels
             if (result.Result)
                 return true;
 
+            ErrorMessage = "탈퇴 과정에 오류가 발생했습니다.";
             return false;
         }
     }
