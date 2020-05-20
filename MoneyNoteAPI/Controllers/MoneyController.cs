@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 

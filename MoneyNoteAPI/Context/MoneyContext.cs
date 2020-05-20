@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MoneyNoteAPI.Context
+namespace MoneyNoteAPI.Context.Old
 {
-    public class MoneyContext : DbContext
+    public class MoneyContextOld : DbContext
     {
         public DbSet<MoneyItem> MoneyItems { get; set; }
 

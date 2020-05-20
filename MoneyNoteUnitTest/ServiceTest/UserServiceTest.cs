@@ -4,6 +4,7 @@ using System.Text;
 using MoneyNoteAPI.Controllers;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoneyNoteAPI.Services;
+using MoneyNoteLibrary.Models;
 using Xunit;
 
 namespace MoneyNoteUnitTest.ServiceTest
@@ -21,9 +22,10 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             using (var context = Fixture.CreateContext())
             {
-                //var controller = new MoneyController(context);
-
-                //var items = controller.GetAllMoney();
+                var rff = new ApiRequest<string>();
+                var sss = new User();
+                var controller = new MoneyController(context);
+                var items = controller.GetAllMoney(rff);
 
                 //Assert.Equal(3, items.Count);
                 //Assert.Equal("ItemOne", items[0].Name);

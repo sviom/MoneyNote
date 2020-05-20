@@ -10,6 +10,8 @@ namespace MoneyNoteLibrary
 {
     public class MoneyContext : DbContext
     {
+        public MoneyContext() { }
+
         public MoneyContext(DbContextOptions options) : base(options)
         {
         }

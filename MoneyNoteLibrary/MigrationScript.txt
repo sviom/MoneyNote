@@ -1,0 +1,3 @@
+﻿Enable-Migrations MyMigration -Project DB-ContextProjectNameThatIsStandartLib -StartupProject CallerExecutableProjectName_LikeMVCWebProjectOrConsole
+
+Add-Migration MyMigration -Project DB-ContextProjectNameThatIsStandartLib -StartupProject CallerExecutableProjectName_LikeMVCWebProjectOrConsole
