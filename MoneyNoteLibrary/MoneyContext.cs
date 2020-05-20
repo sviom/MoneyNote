@@ -10,10 +10,16 @@ namespace MoneyNoteLibrary
 {
     public class MoneyContext : DbContext
     {
+        public string ConnectionString { get; set; }
+
         public MoneyContext() { }
 
-        public MoneyContext(DbContextOptions options) : base(options)
+        public MoneyContext(DbContextOptions options, string connectionString = "") : base(options)
         {
+            if (string.IsNullOrEmpty(connectionString))
+                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+            else
+                ConnectionString = connectionString;
         }
 
         public DbSet<MoneyItem> MoneyItems { get; set; }
@@ -29,8 +35,9 @@ namespace MoneyNoteLibrary
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-            optionsBuilder.UseSqlServer(connectionString);
+            if (string.IsNullOrEmpty(ConnectionString))
+                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+            optionsBuilder.UseSqlServer(ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
