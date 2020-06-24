@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MoneyNoteNew.Converter">
+
+    <local:DivisionColorConverter x:Key="DivisionColorConverter"/>
+    <local:MoneyDividerConverter x:Key="MoneyDividerConverter"/>
+    <local:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+    <local:StringNotNullToVisibilityConverter x:Key="StringNotNullToVisibilityConverter"/>
+
+    <local:CountVisibilityConverter x:Key="CountVisibilityConverter" />
+    <local:CountVisibilityConverterReverse x:Key="CountVisibilityConverterReverse" />
+
+    <local:NullToVisibility x:Key="NullToVisibility" />
+    <local:NotNullToVisibility x:Key="NotNullToVisibility" />
+
+    <local:NullToBoolean x:Key="NullToBoolean" />
+    <local:NotNullToBoolean x:Key="NotNullToBoolean" />
+</ResourceDictionary>
