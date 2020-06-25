@@ -8,10 +8,10 @@
 
   <Identity
     Name="55954sViom.MoneyNote"
-    Publisher="CN=kanghanbyul"
-    Version="1.0.55.0" />
+    Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
+    Version="1.0.57.0" />
 
-  <mp:PhoneIdentity PhoneProductId="fec5d51c-8dc9-4534-820c-2313f02bf7aa" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="19591fea-d83b-47f7-b430-a91bd06e5959" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>MoneyNote</DisplayName>
