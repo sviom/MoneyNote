@@ -8,8 +8,8 @@
 
   <Identity
     Name="55954sViom.MoneyNote"
-    Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
-    Version="1.0.50.0" />
+    Publisher="CN=kanghanbyul"
+    Version="1.0.55.0" />
 
   <mp:PhoneIdentity PhoneProductId="fec5d51c-8dc9-4534-820c-2313f02bf7aa" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -30,7 +30,7 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MoneyNote.App">
+      EntryPoint="MoneyNoteNew.App">
       <uap:VisualElements
         DisplayName="MoneyNote"
         Square150x150Logo="Assets\Square150x150Logo.png"
