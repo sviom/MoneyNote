@@ -46,36 +46,26 @@
                                   Padding="0,0,0,4"
                                   BorderBrush="LightGray" BorderThickness="0,0,0,0"
                                   HorizontalAlignment="Stretch">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
 
-                                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                    <TextBlock Text="{x:Bind CreatedTime, Converter={StaticResource DateTimeToStringConverter}}"
-                                       VerticalAlignment="Center"/>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="/" Margin="5,0,5,0" VerticalAlignment="Center"/>
-
-                                    <TextBlock Text="{x:Bind MainCategory.Title}"
-                                       VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" >
+                                    <TextBlock Text="{x:Bind MainCategory.Title}" VerticalAlignment="Bottom" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />                                    
                                 </StackPanel>
 
-                                <Grid HorizontalAlignment="Stretch" Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5*" />
-                                        <ColumnDefinition Width="5*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{x:Bind Title}"
-                                               Grid.Column="0"
-                                               FontSize="16"
-                                               FontWeight="Bold"/>
-                                    <TextBlock Text="{x:Bind Money, Converter={StaticResource MoneyDividerConverter}}" 
-                                               Foreground="{x:Bind Division, Converter={StaticResource DivisionColorConverter}}"
-                                               HorizontalAlignment="Right"
-                                               Grid.Column="1"
-                                               FontSize="20" FontWeight="Normal"></TextBlock>
-                                </Grid>
+                                <TextBlock Grid.Column="1" Text="{x:Bind Title}" FontSize="18" Margin="0,0,0,0" TextTrimming="CharacterEllipsis"  />
+
+                                <TextBlock Grid.Column="2" Text="{x:Bind BankBook.Name}" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                                           TextWrapping="Wrap" TextTrimming="WordEllipsis" FontSize="12" Foreground="Gray" Margin="4,0,0,0"/>
+
+                                <TextBlock Grid.Column="3" Text="{x:Bind Money, Converter={StaticResource MoneyDividerConverter}}" 
+                                           Foreground="{x:Bind Division, Converter={StaticResource DivisionColorConverter}}"
+                                           HorizontalAlignment="Right" FontSize="18" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
