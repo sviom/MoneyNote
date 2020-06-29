@@ -12,11 +12,11 @@ namespace MoneyNoteAPI.Services
 {
     public class UserService
     {
-        public UserService()
-        {
-        }
+        private readonly MoneyContext _context;
 
-        public UserService(string eee)
+        public UserService(MoneyContext context) => _context = context;
+
+        public UserService()
         {
         }
 
@@ -24,7 +24,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
+                using var db = _context ?? new MoneyContext();
                 db.Entry(user).State = EntityState.Added;
                 var set = db.Set<User>();
                 set.Add(user);

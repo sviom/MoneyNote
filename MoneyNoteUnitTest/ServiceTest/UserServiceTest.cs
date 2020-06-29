@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MoneyNoteAPI.Controllers;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MoneyNoteAPI.Controllers;
 using MoneyNoteAPI.Services;
 using MoneyNoteLibrary.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Xunit;
 
 namespace MoneyNoteUnitTest.ServiceTest
@@ -22,10 +23,20 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             using (var context = Fixture.CreateContext())
             {
-                var rff = new ApiRequest<string>();
-                var sss = new User();
-                var controller = new MoneyController(context);
-                var items = controller.GetAllMoney(rff);
+                //var rff = new ApiRequest<string>();
+                var newUser = new User()
+                {
+                    Email = $"{Guid.NewGuid()}@raincome.net",
+                    Password = Guid.NewGuid().ToString()
+                };
+
+                var userService = new UserService(context);
+                //var controller = new MoneyController(context);
+                //var items = controller.GetAllMoney(rff);
+
+                var signUpedUser = userService.SignUp(newUser);
+
+                Assert.NotNull(signUpedUser);
 
                 //Assert.Equal(3, items.Count);
                 //Assert.Equal("ItemOne", items[0].Name);
