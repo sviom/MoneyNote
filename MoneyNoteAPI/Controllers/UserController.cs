@@ -16,7 +16,7 @@ namespace MoneyNoteAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public ApiResult<User> SignUp([FromBody]ApiRequest<User> item)
+        public ApiResult<User> SignUp([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
@@ -56,7 +56,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<User> LogIn([FromBody]ApiRequest<User> item)
+        public ApiResult<User> LogIn([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
@@ -95,14 +95,14 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<List<User>> GetUsers([FromBody]ApiRequest<bool> item)
+        public ApiResult<List<User>> GetUsers([FromBody] ApiRequest<bool> item)
         {
             var result = new ApiResult<List<User>>();
             try
             {
                 var service = new UserService();
 
-                var userList = service.GetUserList();
+                var userList = service.GetUserList(item.Content);
                 if (userList != null)
                 {
                     result.Content = userList;
@@ -117,7 +117,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<User> ApproveUser([FromBody]ApiRequest<User> item)
+        public ApiResult<User> ApproveUser([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
@@ -137,7 +137,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<bool> DeleteUser([FromBody]ApiRequest<User> request)
+        public ApiResult<bool> DeleteUser([FromBody] ApiRequest<User> request)
         {
             var result = new ApiResult<bool>();
 
