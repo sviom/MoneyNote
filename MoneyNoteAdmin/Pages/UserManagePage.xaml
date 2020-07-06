@@ -10,42 +10,63 @@
     x:DefaultBindMode="OneWay"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Style TargetType="ListViewItem" x:Key="ApprovedUserContainerStyle">
+            <Style.Setters>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0,4,0,0" />
+            </Style.Setters>
+        </Style>
+        
+        <DataTemplate x:DataType="model:User" x:Key="ApproveUserDateTemplate">
+            <Grid BorderBrush="LightGray" BorderThickness="0,0,0,1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{x:Bind Name}" Margin="0,0,4,0" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Text="{x:Bind Email}" Margin="0,0,4,0"/>
+                    <TextBlock Grid.Column="2" Text="{x:Bind CreatedTime}" Margin="0,0,4,0"/>
+                    <TextBlock Grid.Column="3" Text="{x:Bind Id}" Margin="0,0,4,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                </Grid>
+
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4,0,4">
+                    <TextBlock Text="승인여부" Margin="0,0,4,0" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Bind  IsApproved}" Margin="0,0,4,0" VerticalAlignment="Center" />
+
+                    <Button x:Name="UserApproveButton" Content="승인" VerticalAlignment="Center"
+                            IsEnabled="{x:Bind IsApproved, Converter={StaticResource BoolToOpposite}}"
+                            Tag="{x:Bind }" Click="UserApproveButton_Click" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid Padding="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="사용자 목록" Style="{StaticResource HeaderTextBlockStyle}" />
+        <TextBlock Grid.Row="0" Text="미승인 사용자 목록" Style="{StaticResource HeaderTextBlockStyle}" />
 
-        <ListView Grid.Row="1" ItemsSource="{x:Bind AllUserList}" Margin="0,8,0,0">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:User">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+        <ListView Grid.Row="1" ItemsSource="{x:Bind NotApprovedUserList}" Margin="0,8,0,0" ItemTemplate="{StaticResource ApproveUserDateTemplate}"
+                  ItemContainerStyle="{StaticResource ApprovedUserContainerStyle}"/>
 
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="4">
-                            <TextBlock Text="{x:Bind Name}" Margin="0,0,4,0"/>
-                            <TextBlock Text="{x:Bind Email}" Margin="0,0,4,0"/>
-                            <TextBlock Text="{x:Bind CreatedTime}" Margin="0,0,4,0"/>
-                            <TextBlock Text="{x:Bind Id}" Margin="0,0,4,0"/>
-                        </StackPanel>
-                        
+        <TextBlock Grid.Row="2" Text="승인 사용자 목록" Style="{StaticResource HeaderTextBlockStyle}" />
 
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4,0,4">
-                            <TextBlock Text="승인여부" Margin="0,0,4,0" />
-                            <TextBlock Text="{x:Bind  IsApproved}" Margin="0,0,4,0" />
-
-                            <Button x:Name="UserApproveButton" Content="승인"
-                                    IsEnabled="{x:Bind IsApproved, Converter={StaticResource BoolToOpposite}}"
-                                    Tag="{x:Bind }" Click="UserApproveButton_Click" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ListView Grid.Row="3" ItemsSource="{x:Bind ApprovedUserList}" Margin="0,8,0,0" ItemTemplate="{StaticResource ApproveUserDateTemplate}" 
+                  ItemContainerStyle="{StaticResource ApprovedUserContainerStyle}" />
     </Grid>
 </Page>

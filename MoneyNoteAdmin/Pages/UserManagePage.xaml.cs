@@ -29,21 +29,35 @@ namespace MoneyNoteAdmin.Pages
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private List<User> _AllUserList;
-        public List<User> AllUserList
+        private List<User> _NotApprovedUserList;
+        public List<User> NotApprovedUserList
         {
-            get { return _AllUserList; }
+            get { return _NotApprovedUserList; }
             set
             {
-                if (_AllUserList == value)
+                if (_NotApprovedUserList == value)
                     return;
 
-                _AllUserList = value;
+                _NotApprovedUserList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<User> _ApprovedUserList;
+        public List<User> ApprovedUserList
+        {
+            get { return _ApprovedUserList; }
+            set
+            {
+                if (_ApprovedUserList == value)
+                    return;
+
+                _ApprovedUserList = value;
                 OnPropertyChanged();
             }
         }
@@ -57,7 +71,8 @@ namespace MoneyNoteAdmin.Pages
 
         private void UserManagePage_Loaded(object sender, RoutedEventArgs e)
         {
-            AllUserList = new List<User>();
+            NotApprovedUserList = new List<User>();
+            ApprovedUserList = new List<User>();
             GetUsers();
         }
 
@@ -67,9 +82,13 @@ namespace MoneyNoteAdmin.Pages
 
         public async void GetUsers()
         {
-            var result = await MoneyApi.GetUsers.ApiLauncher<bool, List<User>>(true, ControllerEnum.user);
+            var result = await MoneyApi.GetUsers.ApiLauncher<bool, List<User>>(false, ControllerEnum.user);
             if (result.Result)
-                AllUserList = result.Content;
+                NotApprovedUserList = result.Content;
+
+            var approvedResult = await MoneyApi.GetUsers.ApiLauncher<bool, List<User>>(true, ControllerEnum.user);
+            if (approvedResult.Result)
+                ApprovedUserList = approvedResult.Content;
         }
 
         private async void UserApproveButton_Click(object sender, RoutedEventArgs e)
