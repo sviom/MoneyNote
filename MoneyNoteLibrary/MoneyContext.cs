@@ -37,7 +37,9 @@ namespace MoneyNoteLibrary
             //base.OnConfiguring(optionsBuilder);
             if (string.IsNullOrEmpty(ConnectionString))
                 ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-            optionsBuilder.UseSqlServer(ConnectionString);
+
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer(ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -16,7 +16,7 @@ namespace MoneyNoteUnitTest
 
         public SharedDatabaseFixture()
         {
-            var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+            var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
 
             Connection = new SqlConnection(connectionString);
 
