@@ -12,9 +12,9 @@ namespace MoneyNoteAPI.Services
 {
     public class UserService
     {
-        private readonly MoneyContext _context;
+        private readonly MoneyContext context;
 
-        public UserService(MoneyContext context) => _context = context;
+        public UserService(MoneyContext _context) => this.context = _context;
 
         public UserService()
         {
@@ -22,18 +22,18 @@ namespace MoneyNoteAPI.Services
 
         public User SignUp(User user)
         {
+            if (context == null)
+                return null;
+
             try
             {
-                using var db = _context ?? new MoneyContext();
+                using var db = context;
                 db.Entry(user).State = EntityState.Added;
                 var set = db.Set<User>();
                 set.Add(user);
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     return user;
-
-                //var result = SqlLauncher.Insert(user);
-                //return result;
             }
             catch (Exception ex)
             {
