@@ -108,13 +108,15 @@ namespace MoneyNoteAPI.Services
             return (null, false);
         }
 
-        public List<User> GetUserList()
+        public List<User> GetUserList(bool isApproved = false)
         {
             try
             {
                 using var db = new MoneyContext();
 
-                return db.Users.ToList();
+                var isNotApprovedUsers = db.Users.Where(x => x.IsApproved == isApproved);
+
+                return isNotApprovedUsers.ToList();
             }
             catch
             {
