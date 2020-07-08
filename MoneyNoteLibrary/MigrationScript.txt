@@ -1,3 +1,5 @@
-﻿Enable-Migrations MyMigration -Project DB-ContextProjectNameThatIsStandartLib -StartupProject CallerExecutableProjectName_LikeMVCWebProjectOrConsole
+﻿Enable-Migrations [Migration Name] -Project [ProjectName] -StartupProject [StartUp ProjectName]
+Add-Migration [Migration Name] -Project [ProjectName] -StartupProject [StartUp ProjectName]
+Add-Migration TestInitialMigraion -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
 
-Add-Migration MyMigration -Project DB-ContextProjectNameThatIsStandartLib -StartupProject CallerExecutableProjectName_LikeMVCWebProjectOrConsole
+Update-Database -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
