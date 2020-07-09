@@ -1,6 +1,7 @@
 ﻿using MoneyNoteAPI.Controllers;
 using MoneyNoteAPI.Services;
 using MoneyNoteLibrary.Models;
+using MoneyNoteUnitTest.Helper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,32 +20,41 @@ namespace MoneyNoteUnitTest.ServiceTest
         [Fact]
         public void SignUpUser()
         {
-            // DB에서 조회            
-
             using (var context = Fixture.CreateContext())
             {
-                //var rff = new ApiRequest<string>();
+                var email = $"{Guid.NewGuid()}@raincome.net";
+                var password = Guid.NewGuid().ToString();
+
                 var newUser = new User()
                 {
-                    Email = $"{Guid.NewGuid()}@raincome.net",
-                    Password = Guid.NewGuid().ToString()
+                    Email = email,
+                    Password = password
                 };
 
                 var userService = new UserService(context);
-                //var controller = new MoneyController(context);
-                //var items = controller.GetAllMoney(rff);
 
                 var signUpedUser = userService.SignUp(newUser);
 
                 Assert.NotNull(signUpedUser);
-
-                //Assert.Equal(3, items.Count);
-                //Assert.Equal("ItemOne", items[0].Name);
-                //Assert.Equal("ItemThree", items[1].Name);
-                //Assert.Equal("ItemTwo", items[2].Name);
+                Assert.Equal(email, signUpedUser.Email);
+                Assert.Equal(password, signUpedUser.Password);
+                Assert.False(signUpedUser.IsApproved);
             }
-
         }
 
+        [Fact]
+        public void ApproveUser()
+        {
+            using (var context = Fixture.CreateContext())
+            {
+                var testUser = TestHelper.CreateTestAccount(context);
+                var userService = new UserService(context);
+
+                var approveResult = userService.ApproveUser(testUser);
+
+                Assert.True(approveResult);
+                Assert.True(testUser.IsApproved);
+            }
+        }
     }
 }

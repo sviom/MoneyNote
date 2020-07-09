@@ -16,10 +16,6 @@ namespace MoneyNoteAPI.Services
 
         public UserService(MoneyContext _context) => this.context = _context;
 
-        public UserService()
-        {
-        }
-
         public User SignUp(User user)
         {
             if (context == null)
@@ -27,7 +23,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                using var db = context;
+                var db = context;
                 db.Entry(user).State = EntityState.Added;
                 var set = db.Set<User>();
                 set.Add(user);
@@ -49,7 +45,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(user, x => x.Id == user.Id))
                 {
-                    using var db = new MoneyContext();
+                    using var db = context;
                     db.Users.Remove(user);
 
                     db.SaveChanges();
@@ -70,12 +66,12 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                using var db = new MoneyContext();
-                var userCount = db.Users.Where(expression).Count();
+                var userCount = context.Users.Where(expression).Count();
                 return userCount == 1;
             }
-            catch
+            catch (Exception ex)
             {
+                throw;
             }
             return false;
         }
@@ -87,7 +83,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                using var db = new MoneyContext();
+                using var db = context;
                 var userCount = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == false).Count();
                 return userCount == 1;
             }
@@ -101,7 +97,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
+                using var db = context;
                 var dbSet = db.Set<User>();
                 if (expression != null)
                 {
@@ -121,7 +117,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
+                using var db = context;
 
                 return db.Users.ToList();
             }
@@ -140,18 +136,17 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(item, x => x.Id == item.Id))
                 {
-                    using var db = new MoneyContext();
                     if (item != null && !item.IsApproved)
                     {
                         item.IsApproved = true;
 
-                        db.Users.Update(item);
-                        db.SaveChanges();
+                        context.Users.Update(item);
+                        context.SaveChanges();
                         return true;
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }

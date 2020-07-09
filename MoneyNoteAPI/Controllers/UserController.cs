@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 
@@ -15,13 +16,17 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private MoneyContext Context;
+
+        public UserController(MoneyContext context) => Context = context;
+
         [HttpPost]
         public ApiResult<User> SignUp([FromBody]ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
             {
-                var service = new UserService();
+                var service = new UserService(Context);
 
                 if (item == null)
                 {
@@ -62,7 +67,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-                var service = new UserService();
+                var service = new UserService(Context);
                 var user = item.Content;
 
                 if (service.NeedApprovedUser(user))
@@ -100,7 +105,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<List<User>>();
             try
             {
-                var service = new UserService();
+                var service = new UserService(Context);
 
                 var userList = service.GetUserList();
                 if (userList != null)
@@ -123,7 +128,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-                var service = new UserService();
+                var service = new UserService(Context);
                 var user = item.Content;
                 var countResult = service.ApproveUser(user);
                 result.Content = user;
@@ -143,7 +148,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new UserService();
+                var service = new UserService(Context);
                 var deleteResult = service.DeleteUser(request.Content);
                 if (deleteResult)
                 {

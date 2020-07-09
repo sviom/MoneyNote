@@ -11,17 +11,12 @@ namespace MoneyNoteUnitTest
 {
     public class SharedDatabaseFixture : IDisposable
     {
-        private static readonly object _lock = new object();
-        private static bool _databaseInitialized;
+        private string ConnectionSting { get; set; }
 
         public SharedDatabaseFixture()
         {
-            var connectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
-
-            Connection = new SqlConnection(connectionString);
-
-            //Seed();
-
+            ConnectionSting = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
+            Connection = new SqlConnection(ConnectionSting);
             Connection.Open();
         }
 
@@ -29,7 +24,7 @@ namespace MoneyNoteUnitTest
 
         public MoneyContext CreateContext(DbTransaction transaction = null)
         {
-            var context = new MoneyContext(new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options);
+            var context = new MoneyContext(new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options, ConnectionSting);
 
             if (transaction != null)
             {
@@ -38,41 +33,6 @@ namespace MoneyNoteUnitTest
 
             return context;
         }
-
-        //private void Seed()
-        //{
-        //    lock (_lock)
-        //    {
-        //        if (!_databaseInitialized)
-        //        {
-        //            using (var context = CreateContext())
-        //            {
-        //                context.Database.EnsureDeleted();
-        //                context.Database.EnsureCreated();
-
-        //                var one = new Item("ItemOne");
-        //                one.AddTag("Tag11");
-        //                one.AddTag("Tag12");
-        //                one.AddTag("Tag13");
-
-        //                var two = new Item("ItemTwo");
-
-        //                var three = new Item("ItemThree");
-        //                three.AddTag("Tag31");
-        //                three.AddTag("Tag31");
-        //                three.AddTag("Tag31");
-        //                three.AddTag("Tag32");
-        //                three.AddTag("Tag32");
-
-        //                context.AddRange(one, two, three);
-
-        //                context.SaveChanges();
-        //            }
-
-        //            _databaseInitialized = true;
-        //        }
-        //    }
-        //}
 
         public void Dispose() => Connection.Dispose();
     }
