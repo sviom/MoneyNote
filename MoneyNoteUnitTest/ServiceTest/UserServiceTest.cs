@@ -72,5 +72,23 @@ namespace MoneyNoteUnitTest.ServiceTest
                 Assert.NotNull(user);
             }
         }
+
+        [Fact]
+        public void LogInWithApproved()
+        {
+            using (var context = Fixture.CreateContext())
+            {
+                var testUser = TestHelper.CreateTestAccount(context);
+                var userService = new UserService(context);
+
+                var approveResult = userService.ApproveUser(testUser);
+
+                (var user, var result, var isApproved) = userService.LogIn(testUser);
+
+                Assert.True(result);
+                Assert.True(isApproved);
+                Assert.NotNull(user);
+            }
+        }
     }
 }
