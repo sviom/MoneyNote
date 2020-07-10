@@ -70,20 +70,19 @@ namespace MoneyNoteAPI.Controllers
                 var service = new UserService(Context);
                 var user = item.Content;
 
-                if (service.NeedApprovedUser(user))
+                (var userResult, var logInResult, var isApproved) = service.LogIn(user);
+
+                if (logInResult && isApproved)
+                {
+                    result.Content = userResult;
+                    result.Result = logInResult;
+                }
+                else if (logInResult && !isApproved)
                 {
                     result.ResultMessage = "승인을 대기중인 계정입니다.";
                     result.Content = user;
                     result.Result = false;
                     return result;
-                }
-
-                (var userResult, var countResult) = service.LogIn(item.Content, x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == true);
-
-                if (countResult)
-                {
-                    result.Content = userResult;
-                    result.Result = countResult;
                 }
                 else
                 {

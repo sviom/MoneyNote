@@ -45,7 +45,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(user, x => x.Id == user.Id))
                 {
-                    using var db = context;
+                    var db = context;
                     db.Users.Remove(user);
 
                     db.SaveChanges();
@@ -76,48 +76,26 @@ namespace MoneyNoteAPI.Services
             return false;
         }
 
-        public bool NeedApprovedUser(User user)
-        {
-            if (user == null)
-                return false;
-
-            try
-            {
-                using var db = context;
-                var userCount = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == false).Count();
-                return userCount == 1;
-            }
-            catch
-            {
-            }
-            return false;
-        }
-
-        public (User, bool) LogIn(User user, Expression<Func<User, bool>> expression)
+        public (User user, bool result, bool isApproved) LogIn(User user)
         {
             try
             {
-                using var db = context;
-                var dbSet = db.Set<User>();
-                if (expression != null)
-                {
-                    var userResult = dbSet.Where(expression).FirstOrDefault();
-                    if (userResult != null)
-                        return (userResult, true);
-                }
+                var userResult = context.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+                if (userResult != null)
+                    return (userResult, true, userResult.IsApproved);
             }
             catch (Exception ex)
             {
                 //throw ex;
             }
-            return (null, false);
+            return (null, false, false);
         }
 
         public List<User> GetUserList()
         {
             try
             {
-                using var db = context;
+                var db = context;
 
                 return db.Users.ToList();
             }
