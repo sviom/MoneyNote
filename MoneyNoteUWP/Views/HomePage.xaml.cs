@@ -90,6 +90,10 @@ namespace MoneyNote.Views
                         PageHeader = "자산보기";
                         ContentFrame.Navigate(typeof(BankBooksPage));
                         break;
+                    case "UpdateHistory":
+                        PageHeader = "업데이트 기록";
+                        ContentFrame.Navigate(typeof(BankBooksPage));
+                        break;
                     default:
                         break;
                 }
