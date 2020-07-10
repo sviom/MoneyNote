@@ -29,7 +29,7 @@ namespace MoneyNoteAPI.Controllers
             {
                 var baseId = user.Content;
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-                var service = new MoneyService();
+                var service = new MoneyService(_context);
                 var moneyList = service.GetMoneyList(x => x.UserId.ToString() == baseId);
                 result.Content = moneyList;
                 result.Result = true;
@@ -47,7 +47,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MoneyItem>();
             try
             {
-                var service = new MoneyService();
+                var service = new MoneyService(_context);
                 var insertResult = service.SaveMoney(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
@@ -65,7 +65,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MoneyItem>();
             try
             {
-                var service = new MoneyService();
+                var service = new MoneyService(_context);
 
                 var oldMoneyItem = service.GetMoney(x => x.Id == item.Content.Id);
                 var updateResult = service.UpdateMoney(oldMoneyItem, item.Content);
@@ -87,7 +87,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<bool>();
             try
             {
-                var service = new MoneyService();
+                var service = new MoneyService(_context);
                 var updateResult = service.DeleteMoney(item.Content);
 
                 //var updateResult = SqlLauncher.Update(item.Content);
