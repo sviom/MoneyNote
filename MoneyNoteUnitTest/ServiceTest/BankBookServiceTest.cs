@@ -17,7 +17,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         public SharedDatabaseFixture Fixture { get; }
 
         [Fact]
-        public void SaveBankBookTest()
+        public void SaveBankBook()
         {
             using var context = Fixture.CreateContext();
             var testAccount = TestHelper.CreateTestAccount(context);
@@ -39,6 +39,31 @@ namespace MoneyNoteUnitTest.ServiceTest
             Assert.NotNull(getResult);
             Assert.Equal(result.Name, getResult.Name);
             Assert.Equal(result.Id, getResult.Id);
+        }
+
+        [Fact]
+        public void DeleteBankBook()
+        {
+            using var context = Fixture.CreateContext();
+            var testAccount = TestHelper.CreateTestAccount(context);
+
+            var service = new BankBookService(context);
+
+            var testTitle = Guid.NewGuid().ToString();
+            var newItem = new BankBook
+            {
+                Name = testTitle,
+                User = testAccount,
+                UserId = testAccount.Id
+            };
+
+            var saveResult = service.SaveBankBook(newItem);
+
+            var deleteResult = service.DeleteBankBook(saveResult);
+            var getResult = context.BankBooks.Where(x => x.Name == testTitle).FirstOrDefault();
+
+            Assert.Null(getResult);
+            Assert.True(deleteResult);
         }
     }
 }
