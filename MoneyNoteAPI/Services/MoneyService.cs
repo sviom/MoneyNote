@@ -48,7 +48,7 @@ namespace MoneyNoteAPI.Services
             if (expression == null)
                 return null;
 
-            MoneyItem returnItem = new MoneyItem();
+            var returnItem = new MoneyItem();
             try
             {
                 returnItem = context.MoneyItems
