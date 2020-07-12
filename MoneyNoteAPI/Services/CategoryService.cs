@@ -12,6 +12,10 @@ namespace MoneyNoteAPI.Services
 {
     public class CategoryService
     {
+        private readonly MoneyContext context;
+
+        public CategoryService(MoneyContext _context) => this.context = _context;
+
         public List<MainCategory> GetMainCategories(Expression<Func<MainCategory, bool>> expression)
         {
             try
@@ -94,6 +98,34 @@ namespace MoneyNoteAPI.Services
             {
                 throw ex;
             }
+        }
+
+        public ICategory SaveCategory(ICategory inputObject)
+        {
+            try
+            {
+                ICategory returnValue;
+                switch (inputObject)
+                {
+                    case MainCategory mainCategory:
+                        context.MainCategories.Add(mainCategory);
+                        break;
+                    case SubCategory subCategory:
+                        context.SubCategories.Add(subCategory);
+                        break;
+                    default:
+                        return default;
+                }
+
+                int saveResult = context.SaveChanges();
+                if (saveResult > 0)
+                    return inputObject;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return default;
         }
     }
 }

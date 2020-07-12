@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Models;
 
 namespace MoneyNoteAPI.Controllers
@@ -14,6 +15,10 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        private readonly MoneyContext _context;
+
+        public CategoryController(MoneyContext context) => _context = context;
+
         [HttpPost]
         public ApiResult<List<MainCategory>> GetMainCategories([FromBody]ApiRequest<User> user)
         {
@@ -21,7 +26,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new CategoryService();
+                var service = new CategoryService(_context);
                 var categoryList = service.GetMainCategories(x => x.UserId == user.Content.Id);
 
                 result.Content = categoryList;
@@ -40,7 +45,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<List<SubCategory>>();
             try
             {
-                var service = new CategoryService();
+                var service = new CategoryService(_context);
                 var categoryList = service.GetSubCategories(x => x.MainCategoryId == mainCategory.Content.Id);
 
                 result.Content = categoryList;
@@ -59,8 +64,12 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MainCategory>();
             try
             {
-                var insertResult = SqlLauncher.Insert(item.Content);
-                result.Content = insertResult;
+                //var insertResult = SqlLauncher.Insert(item.Content);
+                var service = new CategoryService(_context);
+
+                var saveResult = service.SaveCategory(item.Content);
+
+                result.Content = (MainCategory)saveResult;
                 result.Result = true;
             }
             catch
@@ -76,8 +85,12 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<SubCategory>();
             try
             {
-                var insertResult = SqlLauncher.Insert(item.Content);
-                result.Content = insertResult;
+                //var insertResult = SqlLauncher.Insert(item.Content);
+                var service = new CategoryService(_context);
+
+                var saveResult = service.SaveCategory(item.Content);
+
+                result.Content = (SubCategory)saveResult;
                 result.Result = true;
             }
             catch
@@ -136,7 +149,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new CategoryService();
+                var service = new CategoryService(_context);
                 var deleteResult = service.DeleteMainCategory(item.Content);
 
                 result.Content = true;
@@ -156,7 +169,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new CategoryService();
+                var service = new CategoryService(_context);
                 var deleteResult = service.DeleteSubCategory(item.Content);
 
                 result.Content = deleteResult;
