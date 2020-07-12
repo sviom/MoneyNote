@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MoneyNoteAPI.Context;
 using MoneyNoteLibrary;
 using MoneyNoteLibrary.Models;
@@ -6,53 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace MoneyNoteAPI.Services
 {
-    public class BankBookService : IDisposable
+    public class BankBookService
     {
-        public List<BankBook> GetBankBooks(Expression<Func<BankBook, bool>> expression)
+        private readonly MoneyContext context;
+
+        public BankBookService(MoneyContext _context) => this.context = _context;
+
+        public List<BankBook> GetBankBooks(User user)
         {
             try
             {
-                if (expression == null)
-                    return null;
-
-                using var db = new MoneyContext();
-
-                var dbSet = db.Set<BankBook>();
-
-                if (expression != null)
-                {
-                    return dbSet.Where(expression).ToList();
-                }
-                else
-                    return dbSet.ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public BankBook GetBankBook(Expression<Func<BankBook, bool>> expression)
-        {
-            try
-            {
-                if (expression == null)
-                    return null;
-
-                using var db = new MoneyContext();
-
-                var dbSet = db.Set<BankBook>();
-
-                if (expression != null)
-                {
-                    return dbSet.Where(expression).FirstOrDefault();
-                }
-                else
-                    return dbSet.FirstOrDefault();
+                return context.BankBooks.Where(x => x.UserId == user.Id).ToList();
             }
             catch (Exception ex)
             {
@@ -62,13 +32,13 @@ namespace MoneyNoteAPI.Services
 
         public bool DeleteBankBook(BankBook bankbook)
         {
+            if (bankbook == null)
+                return false;
+
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(bankbook).State = EntityState.Deleted;
-                var set = db.Set<BankBook>();
-                set.Remove(bankbook);
-                int saveResult = db.SaveChanges();
+                context.BankBooks.Remove(bankbook);
+                int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return true;
 
@@ -82,46 +52,35 @@ namespace MoneyNoteAPI.Services
 
         public BankBook SaveBankBook(BankBook bankbook)
         {
+            if (bankbook == null)
+                return null;
+
             try
             {
-                var insertResult = SqlLauncher.Insert(bankbook);
-                return insertResult;
-                //try
-                //{
-                //    using var db = new MoneyContext();
-                //    db.Entry(moneyItem).State = EntityState.Added;
-                //    var set = db.Set<MoneyItem>();
-                //    set.Add(moneyItem);
-                //    int saveResult = db.SaveChanges();
-                //    if (saveResult > 0)
-                //        return moneyItem;
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw ex;
-                //}
-                //return null;
+                context.BankBooks.Add(bankbook);
+                int saveResult = context.SaveChanges();
 
+                if (saveResult > 0)
+                    return bankbook;
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             return null;
         }
 
         public BankBook UpdateBankBook(BankBook bankBook)
         {
+            if (bankBook == null)
+                return null;
+
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(bankBook).State = EntityState.Modified;
-                var set = db.Set<BankBook>();
-                set.Update(bankBook);
-
-                int saveResult = db.SaveChanges();
+                context.BankBooks.Update(bankBook);
+                int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return bankBook;
-
             }
             catch (Exception ex)
             {
@@ -129,10 +88,6 @@ namespace MoneyNoteAPI.Services
             }
 
             return null;
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

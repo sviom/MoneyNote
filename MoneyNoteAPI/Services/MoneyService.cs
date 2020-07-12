@@ -143,7 +143,7 @@ namespace MoneyNoteAPI.Services
 
         public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem, bool isSave = true)
         {
-            using var bankService = new BankBookService();
+            var bankService = new BankBookService(context);
             var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
             if (nowBankBook != null)
             {

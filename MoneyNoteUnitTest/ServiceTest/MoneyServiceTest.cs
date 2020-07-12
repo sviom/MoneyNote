@@ -29,7 +29,7 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             var resultItem = service.GetMoney(x => x.Id == savedItem.Id);
 
-            Assert.NotNull(resultItem):
+            Assert.NotNull(resultItem);
         }
     }
 }
