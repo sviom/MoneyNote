@@ -5,6 +5,7 @@ using MoneyNoteUnitTest.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using Xunit;
 
@@ -64,6 +65,34 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             Assert.Null(getResult);
             Assert.True(deleteResult);
+        }
+
+        [Fact]
+        public void UpdateBankBook()
+        {
+            using var context = Fixture.CreateContext();
+            var testAccount = TestHelper.CreateTestAccount(context);
+
+            var service = new BankBookService(context);
+
+            var testTitle = Guid.NewGuid().ToString();
+            var newItem = new BankBook
+            {
+                Name = testTitle,
+                User = testAccount,
+                UserId = testAccount.Id
+            };
+
+            var saveResult = service.SaveBankBook(newItem);
+
+            var newName = Guid.NewGuid().ToString();
+            saveResult.Name = newName;
+
+            var updateResult = service.UpdateBankBook(saveResult);
+            var getResult = context.BankBooks.Where(x => x.Name == newName).FirstOrDefault();
+
+            Assert.NotNull(getResult);
+            Assert.Equal(updateResult.Name, newName);
         }
     }
 }
