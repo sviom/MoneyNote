@@ -20,14 +20,14 @@ namespace MoneyNoteAPI.Controllers
         public CategoryController(MoneyContext context) => _context = context;
 
         [HttpPost]
-        public ApiResult<List<MainCategory>> GetMainCategories([FromBody]ApiRequest<User> user)
+        public ApiResult<List<MainCategory>> GetMainCategories([FromBody] ApiRequest<User> user)
         {
             var result = new ApiResult<List<MainCategory>>();
 
             try
             {
                 var service = new CategoryService(_context);
-                var categoryList = service.GetMainCategories(x => x.UserId == user.Content.Id);
+                var categoryList = service.GetCategories(x => x.UserId == user.Content.Id);
 
                 result.Content = categoryList;
                 result.Result = categoryList != null;
@@ -40,7 +40,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<List<SubCategory>> GetSubCategories([FromBody]ApiRequest<MainCategory> mainCategory)
+        public ApiResult<List<SubCategory>> GetSubCategories([FromBody] ApiRequest<MainCategory> mainCategory)
         {
             var result = new ApiResult<List<SubCategory>>();
             try
@@ -59,12 +59,11 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<MainCategory> SaveMainCategory([FromBody]ApiRequest<MainCategory> item)
+        public ApiResult<MainCategory> SaveMainCategory([FromBody] ApiRequest<MainCategory> item)
         {
             var result = new ApiResult<MainCategory>();
             try
             {
-                //var insertResult = SqlLauncher.Insert(item.Content);
                 var service = new CategoryService(_context);
 
                 var saveResult = service.SaveCategory(item.Content);
@@ -80,12 +79,11 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<SubCategory> SaveSubCategory([FromBody]ApiRequest<SubCategory> item)
+        public ApiResult<SubCategory> SaveSubCategory([FromBody] ApiRequest<SubCategory> item)
         {
             var result = new ApiResult<SubCategory>();
             try
             {
-                //var insertResult = SqlLauncher.Insert(item.Content);
                 var service = new CategoryService(_context);
 
                 var saveResult = service.SaveCategory(item.Content);
@@ -101,20 +99,17 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<MainCategory> UpdateMainCategory([FromBody]ApiRequest<MainCategory> item)
+        public ApiResult<MainCategory> UpdateMainCategory([FromBody] ApiRequest<MainCategory> item)
         {
             var result = new ApiResult<MainCategory>();
             try
             {
-                var insertResult = SqlLauncher.Update(item.Content);
+                var service = new CategoryService(_context);
+                var insertResult = service.UpdateCategory(item.Content);
 
-                if (insertResult == null)
+                if (insertResult is MainCategory mainCategory)
                 {
-                    result.Result = false;
-                }
-                else
-                {
-                    result.Content = insertResult;
+                    result.Content = mainCategory;
                     result.Result = true;
                 }
             }
@@ -126,14 +121,19 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<SubCategory> UpdateSubCategory([FromBody]ApiRequest<SubCategory> item)
+        public ApiResult<SubCategory> UpdateSubCategory([FromBody] ApiRequest<SubCategory> item)
         {
             var result = new ApiResult<SubCategory>();
             try
             {
-                var insertResult = SqlLauncher.Update(item.Content);
-                result.Content = insertResult;
-                result.Result = true;
+                var service = new CategoryService(_context);
+                var insertResult = service.UpdateCategory(item.Content);
+
+                if (insertResult is SubCategory subCategory)
+                {
+                    result.Content = subCategory;
+                    result.Result = true;
+                }
             }
             catch
             {
@@ -143,14 +143,14 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<bool> DeleteMainCategory([FromBody]ApiRequest<MainCategory> item)
+        public ApiResult<bool> DeleteMainCategory([FromBody] ApiRequest<MainCategory> item)
         {
             var result = new ApiResult<bool>();
 
             try
             {
                 var service = new CategoryService(_context);
-                var deleteResult = service.DeleteMainCategory(item.Content);
+                var deleteResult = service.DeleteCategory(item.Content);
 
                 result.Content = true;
                 result.Result = deleteResult;
@@ -163,14 +163,14 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<bool> DeleteSubCategory([FromBody]ApiRequest<SubCategory> item)
+        public ApiResult<bool> DeleteSubCategory([FromBody] ApiRequest<SubCategory> item)
         {
             var result = new ApiResult<bool>();
 
             try
             {
                 var service = new CategoryService(_context);
-                var deleteResult = service.DeleteSubCategory(item.Content);
+                var deleteResult = service.DeleteCategory(item.Content);
 
                 result.Content = deleteResult;
                 result.Result = deleteResult;
