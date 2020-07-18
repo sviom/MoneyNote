@@ -43,5 +43,38 @@ namespace MoneyNoteUnitTest.ServiceTest
             Assert.Equal(testTitle, resultItem.Title);
             Assert.Equal(-testMoney, resultBank.Assets);
         }
+
+        [Fact]
+        public void UpdateMoney()
+        {
+            using var context = Fixture.CreateContext();
+            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context);
+            var service = new MoneyService(context);
+
+            var testMoney = 100000;
+            var testTitle = Guid.NewGuid().ToString();
+            var newItem = new MoneyItem();
+            newItem.Money = testMoney;
+            newItem.Title = testTitle;
+            newItem.UserId = testAccount.Id;
+            newItem.User = testAccount;
+            newItem.MainCategory = category;
+            newItem.BankBook = bankbook;
+
+            var savedItem = service.SaveMoney(newItem);
+
+            var newMoney = 200000;
+            var updateItem = savedItem;
+            updateItem.Money = newMoney;
+
+            var updatedItem = service.UpdateMoney(savedItem, updateItem);
+
+            var resultBank = context.BankBooks.Where(x => x.Id == bankbook.Id).FirstOrDefault();
+
+            Assert.NotNull(updatedItem);
+            Assert.Equal(newMoney, updatedItem.Money);
+            Assert.Equal(testTitle, updatedItem.Title);
+            Assert.Equal(-newMoney, resultBank.Assets);
+        }
     }
 }
