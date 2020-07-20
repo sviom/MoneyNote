@@ -47,7 +47,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         [Fact]
         public void UpdateMoney()
         {
-            using var context = Fixture.CreateContext();
+            var context = Fixture.CreateContext();
             (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context);
             var service = new MoneyService(context);
 
@@ -63,13 +63,20 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             var savedItem = service.SaveMoney(newItem);
 
+            context.Dispose();
+            context = Fixture.CreateContext();
+            service = new MoneyService(context);
+
+            var money = savedItem.Money;
             var newMoney = 200000;
-            var updateItem = savedItem;
+            var updateItem = savedItem;//.ShallowCopy();
             updateItem.Money = newMoney;
 
-            var updatedItem = service.UpdateMoney(savedItem, updateItem);
+            var updatedItem = service.UpdateMoney(money, updateItem);
 
             var resultBank = context.BankBooks.Where(x => x.Id == bankbook.Id).FirstOrDefault();
+
+            context.Dispose();
 
             Assert.NotNull(updatedItem);
             Assert.Equal(newMoney, updatedItem.Money);

@@ -68,7 +68,7 @@ namespace MoneyNoteAPI.Controllers
                 var service = new MoneyService(_context);
 
                 var oldMoneyItem = service.GetMoney(x => x.Id == item.Content.Id);
-                var updateResult = service.UpdateMoney(oldMoneyItem, item.Content);
+                var updateResult = service.UpdateMoney(oldMoneyItem.Money, item.Content);
 
                 //var updateResult = SqlLauncher.Update(item.Content);
                 result.Content = updateResult;

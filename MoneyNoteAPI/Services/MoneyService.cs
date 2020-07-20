@@ -88,27 +88,28 @@ namespace MoneyNoteAPI.Services
             return null;
         }
 
-        public MoneyItem UpdateMoney(MoneyItem oldMoneyItem, MoneyItem moneyItem)
+        public MoneyItem UpdateMoney(double oldMoney, MoneyItem moneyItem)
         {
             try
             {
-                if (oldMoneyItem != null)
+                var money = oldMoney - moneyItem.Money;
+                var changeMoneyItem = new MoneyItem()
                 {
-                    var money = oldMoneyItem.Money - moneyItem.Money;
-                    var changeMoneyItem = new MoneyItem()
-                    {
-                        Money = money,
-                        BankBook = moneyItem.BankBook,
-                        BankBookId = moneyItem.BankBookId
-                    };
-
-                    UpdateBankBookWithMoney(context, changeMoneyItem, false);
-                }
+                    Money = money,
+                    BankBook = moneyItem.BankBook,
+                    BankBookId = moneyItem.BankBookId
+                };
 
                 context.MoneyItems.Update(moneyItem);
                 int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return moneyItem;
+                if (saveResult <= 0)
+                    return null;
+
+                var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem, false);
+                if (!bankBookResult)
+                    return null;
+
+                return moneyItem;
 
             }
             catch (Exception ex)
@@ -143,7 +144,7 @@ namespace MoneyNoteAPI.Services
 
         public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem, bool isSave = true)
         {
-            var bankService = new BankBookService(context);
+            var bankService = new BankBookService(refContext);
             var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
             if (nowBankBook != null)
             {
@@ -159,8 +160,10 @@ namespace MoneyNoteAPI.Services
                     nowBankBook.Assets += moneyItem.Money;
                 }
 
-                var result = bankService.UpdateBankBook(nowBankBook);
-                return result != null;
+                refContext.BankBooks.Update(nowBankBook);
+                return true;
+                //var result = bankService.UpdateBankBook(nowBankBook);
+                //return result != null;
             }
 
             return false;
