@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
+using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteUnitTest.ServiceTest
 {
@@ -44,14 +45,16 @@ namespace MoneyNoteUnitTest.ServiceTest
             Assert.Equal(-testMoney, resultBank.Assets);
         }
 
-        [Fact]
-        public void UpdateMoney()
+        [Theory]
+        [InlineData(500, 400, 100, MoneyCategory.Expense)]
+        [InlineData(500, 300, 800, MoneyCategory.Income)]
+        public void UpdateMoney(double defaultAssets, double newMoney, double expectedAssets, MoneyCategory moneyCategory)
         {
             var context = Fixture.CreateContext();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context);
+            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context, defaultAssets);
             var service = new MoneyService(context);
 
-            var testMoney = 100000;
+            var testMoney = 100;
             var testTitle = Guid.NewGuid().ToString();
             var newItem = new MoneyItem();
             newItem.Money = testMoney;
@@ -60,6 +63,7 @@ namespace MoneyNoteUnitTest.ServiceTest
             newItem.User = testAccount;
             newItem.MainCategory = category;
             newItem.BankBook = bankbook;
+            newItem.Division = moneyCategory;
 
             var savedItem = service.SaveMoney(newItem);
 
@@ -68,7 +72,7 @@ namespace MoneyNoteUnitTest.ServiceTest
             service = new MoneyService(context);
 
             var money = savedItem.Money;
-            var newMoney = 200000;
+            //var newMoney = 200000;
             var updateItem = savedItem;//.ShallowCopy();
             updateItem.Money = newMoney;
 
@@ -81,7 +85,7 @@ namespace MoneyNoteUnitTest.ServiceTest
             Assert.NotNull(updatedItem);
             Assert.Equal(newMoney, updatedItem.Money);
             Assert.Equal(testTitle, updatedItem.Title);
-            Assert.Equal(-newMoney, resultBank.Assets);
+            Assert.Equal(expectedAssets, resultBank.Assets);
         }
     }
 }

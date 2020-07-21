@@ -27,7 +27,7 @@ namespace MoneyNoteUnitTest.Helper
             return user;
         }
 
-        public static BankBook CreateBankBook(MoneyContext context, User user)
+        public static BankBook CreateBankBook(MoneyContext context, User user, double defaultAssets = 0)
         {
             var service = new BankBookService(context);
 
@@ -36,7 +36,8 @@ namespace MoneyNoteUnitTest.Helper
             {
                 Name = testTitle,
                 User = user,
-                UserId = user.Id
+                UserId = user.Id,
+                Assets = defaultAssets
             };
 
             var result = service.SaveBankBook(newItem);
@@ -58,12 +59,12 @@ namespace MoneyNoteUnitTest.Helper
             return (MainCategory)saveResult;
         }
 
-        public static (User user, BankBook bankbook, MainCategory category) CreateSeed(MoneyContext context)
+        public static (User user, BankBook bankbook, MainCategory category) CreateSeed(MoneyContext context, double defaultAssets = 0)
         {
             // user
             var user = CreateTestAccount(context);
             // bankbook
-            var bankbook = CreateBankBook(context, user);
+            var bankbook = CreateBankBook(context, user, defaultAssets);
             // category
             var category = CreateCategory(context, user);
 

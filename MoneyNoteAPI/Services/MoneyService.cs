@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteAPI.Services
 {
@@ -95,9 +96,10 @@ namespace MoneyNoteAPI.Services
                 var money = oldMoney - moneyItem.Money;
                 var changeMoneyItem = new MoneyItem()
                 {
-                    Money = money,
+                    Money = Math.Abs(money),
                     BankBook = moneyItem.BankBook,
-                    BankBookId = moneyItem.BankBookId
+                    BankBookId = moneyItem.BankBookId,
+                    Division = moneyItem.Division
                 };
 
                 context.MoneyItems.Update(moneyItem);
@@ -105,7 +107,7 @@ namespace MoneyNoteAPI.Services
                 if (saveResult <= 0)
                     return null;
 
-                var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem, false);
+                var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem);
                 if (!bankBookResult)
                     return null;
 
@@ -126,7 +128,7 @@ namespace MoneyNoteAPI.Services
             {
                 context.MoneyItems.Remove(moneyItem);
 
-                UpdateBankBookWithMoney(context, moneyItem, false);
+                UpdateBankBookWithMoney(context, moneyItem, isForceMinus: true);
 
                 int saveResult = context.SaveChanges();
                 if (saveResult > 0)
@@ -142,31 +144,20 @@ namespace MoneyNoteAPI.Services
 
         #region MoneyItem과 연관된 내용의 설정
 
-        public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem, bool isSave = true)
+        public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem, bool isForceMinus = false)
         {
             var bankService = new BankBookService(refContext);
             var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
-            if (nowBankBook != null)
-            {
-                if (isSave)
-                {
-                    if (moneyItem.Division == MoneyNoteLibrary.Enums.MoneyEnum.MoneyCategory.Expense)
-                        nowBankBook.Assets -= moneyItem.Money;
-                    else
-                        nowBankBook.Assets += moneyItem.Money;
-                }
-                else
-                {
-                    nowBankBook.Assets += moneyItem.Money;
-                }
+            if (nowBankBook == null)
+                return false;
 
-                refContext.BankBooks.Update(nowBankBook);
-                return true;
-                //var result = bankService.UpdateBankBook(nowBankBook);
-                //return result != null;
-            }
+            if (moneyItem.Division == MoneyCategory.Expense || isForceMinus)
+                nowBankBook.Assets -= moneyItem.Money;
+            else
+                nowBankBook.Assets += moneyItem.Money;
 
-            return false;
+            refContext.BankBooks.Update(nowBankBook);
+            return true;
         }
 
         #endregion
