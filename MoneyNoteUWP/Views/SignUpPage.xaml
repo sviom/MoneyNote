@@ -70,5 +70,10 @@
             <HyperlinkButton Content="홈페이지" NavigateUri="https://viomshop.tistory.com/category/MoneyNote" />
             <TextBlock Text="에 댓글을 비밀글로 남겨주세요." />
         </StackPanel>
+
+        <Grid Visibility="{x:Bind ViewModel.IsRunProgressRing}">
+            <Grid Background="White" Opacity="0.4"></Grid>
+            <ProgressRing IsActive="{x:Bind ViewModel.IsRunProgressRing}" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </Page>
