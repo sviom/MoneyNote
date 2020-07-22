@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyNoteAPI.Context;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,24 @@ namespace MoneyNoteAPI.Services
 {
     public class UserService
     {
+        private readonly MoneyContext context;
+
+        public UserService(MoneyContext _context) => this.context = _context;
+
         public User SignUp(User user)
         {
+            if (context == null)
+                return null;
+
             try
             {
-                using var db = new MoneyContext();
+                var db = context;
                 db.Entry(user).State = EntityState.Added;
                 var set = db.Set<User>();
                 set.Add(user);
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     return user;
-
-                //var result = SqlLauncher.Insert(user);
-                //return result;
             }
             catch (Exception ex)
             {
@@ -40,7 +45,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(user, x => x.Id == user.Id))
                 {
-                    using var db = new MoneyContext();
+                    var db = context;
                     db.Users.Remove(user);
 
                     db.SaveChanges();
@@ -61,58 +66,36 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                using var db = new MoneyContext();
-                var userCount = db.Users.Where(expression).Count();
+                var userCount = context.Users.Where(expression).Count();
                 return userCount == 1;
             }
-            catch
+            catch (Exception ex)
             {
+                throw;
             }
             return false;
         }
 
-        public bool NeedApprovedUser(User user)
-        {
-            if (user == null)
-                return false;
-
-            try
-            {
-                using var db = new MoneyContext();
-                var userCount = db.Users.Where(x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == false).Count();
-                return userCount == 1;
-            }
-            catch
-            {
-            }
-            return false;
-        }
-
-        public (User, bool) LogIn(User user, Expression<Func<User, bool>> expression)
+        public (User user, bool result, bool isApproved) LogIn(User user)
         {
             try
             {
-                using var db = new MoneyContext();
-                var dbSet = db.Set<User>();
-                if (expression != null)
-                {
-                    var userResult = dbSet.Where(expression).FirstOrDefault();
-                    if (userResult != null)
-                        return (userResult, true);
-                }
+                var userResult = context.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+                if (userResult != null)
+                    return (userResult, true, userResult.IsApproved);
             }
             catch (Exception ex)
             {
                 //throw ex;
             }
-            return (null, false);
+            return (null, false, false);
         }
 
         public List<User> GetUserList(bool isApproved = false)
         {
             try
             {
-                using var db = new MoneyContext();
+                var db = context;
 
                 var isNotApprovedUsers = db.Users.Where(x => x.IsApproved == isApproved);
 
@@ -133,18 +116,17 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(item, x => x.Id == item.Id))
                 {
-                    using var db = new MoneyContext();
                     if (item != null && !item.IsApproved)
                     {
                         item.IsApproved = true;
 
-                        db.Users.Update(item);
-                        db.SaveChanges();
+                        context.Users.Update(item);
+                        context.SaveChanges();
                         return true;
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }

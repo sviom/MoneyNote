@@ -35,6 +35,7 @@ namespace MoneyNoteLibrary.Common
     public enum KeyVaultName
     {
         MoneyNoteConnectionString,
-        SaltPassword
+        SaltPassword,
+        MoneyNoteTestConnection
     }
 }

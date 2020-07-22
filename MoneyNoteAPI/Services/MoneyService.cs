@@ -1,36 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyNoteAPI.Context;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using static MoneyNoteLibrary.Enums.MoneyEnum;
 
 namespace MoneyNoteAPI.Services
 {
     public class MoneyService
     {
-        public static MoneyContext context = new MoneyContext();
+        private readonly MoneyContext context;
+
+        public MoneyService(MoneyContext _context) => this.context = _context;
 
         public List<MoneyItem> GetMoneyList(Expression<Func<MoneyItem, bool>> expression = null)
         {
             List<MoneyItem> returnList = new List<MoneyItem>();
             try
             {
-                using var db = new MoneyContext();
-
-                DbSet<MoneyItem> dbSet = db.Set<MoneyItem>();
-
                 if (expression == null)
-                    returnList = db.MoneyItems
+                    returnList = context.MoneyItems
                         .Include(x => x.MainCategory)
                         .ThenInclude(main => main.SubCategories)
                         .Include(z => z.BankBook)
                         .OrderByDescending(x => x.CreatedTime)
                         .ToList();//.Include(y => y.SubCategory).ToList();
                 else
-                    returnList = db.MoneyItems
+                    returnList = context.MoneyItems
                         .Include(x => x.MainCategory)
                         .ThenInclude(main => main.SubCategories)
                         .Include(z => z.BankBook)
@@ -49,14 +49,10 @@ namespace MoneyNoteAPI.Services
             if (expression == null)
                 return null;
 
-            MoneyItem returnItem = new MoneyItem();
+            var returnItem = new MoneyItem();
             try
             {
-                using var db = new MoneyContext();
-
-                DbSet<MoneyItem> dbSet = db.Set<MoneyItem>();
-
-                returnItem = db.MoneyItems
+                returnItem = context.MoneyItems
                           .Include(x => x.MainCategory)
                           .ThenInclude(main => main.SubCategories)
                           .Include(z => z.BankBook)
@@ -77,14 +73,12 @@ namespace MoneyNoteAPI.Services
                 return null;
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(moneyItem).State = EntityState.Added;
-                var set = db.Set<MoneyItem>();
-                set.Add(moneyItem);
-                int saveResult = db.SaveChanges();
+                context.MoneyItems.Add(moneyItem);
+
+                int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                 {
-                    UpdateBankBookWithMoney(db, moneyItem);
+                    UpdateBankBookWithMoney(context, moneyItem);
                     return moneyItem;
                 }
             }
@@ -95,31 +89,29 @@ namespace MoneyNoteAPI.Services
             return null;
         }
 
-        public MoneyItem UpdateMoney(MoneyItem oldMoneyItem, MoneyItem moneyItem)
+        public MoneyItem UpdateMoney(double oldMoney, MoneyItem moneyItem)
         {
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(moneyItem).State = EntityState.Modified;
-                var set = db.Set<MoneyItem>();
-
-                if (oldMoneyItem != null)
+                var money = oldMoney - moneyItem.Money;
+                var changeMoneyItem = new MoneyItem()
                 {
-                    var money = oldMoneyItem.Money - moneyItem.Money;
-                    var changeMoneyItem = new MoneyItem()
-                    {
-                        Money = money,
-                        BankBook = moneyItem.BankBook,
-                        BankBookId = moneyItem.BankBookId
-                    };
+                    Money = Math.Abs(money),
+                    BankBook = moneyItem.BankBook,
+                    BankBookId = moneyItem.BankBookId,
+                    Division = moneyItem.Division
+                };
 
-                    UpdateBankBookWithMoney(db, changeMoneyItem, false);
-                }
+                context.MoneyItems.Update(moneyItem);
+                int saveResult = context.SaveChanges();
+                if (saveResult <= 0)
+                    return null;
 
-                set.Update(moneyItem);
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                    return moneyItem;
+                var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem);
+                if (!bankBookResult)
+                    return null;
+
+                return moneyItem;
 
             }
             catch (Exception ex)
@@ -134,14 +126,13 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(moneyItem).State = EntityState.Deleted;
-                var set = db.Set<MoneyItem>();
-                set.Remove(moneyItem);
+                context.MoneyItems.Remove(moneyItem);
 
-                UpdateBankBookWithMoney(db, moneyItem, false);
+                moneyItem.Money = -moneyItem.Money;
 
-                int saveResult = db.SaveChanges();
+                UpdateBankBookWithMoney(context, moneyItem);
+
+                int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return true;
 
@@ -155,29 +146,20 @@ namespace MoneyNoteAPI.Services
 
         #region MoneyItem과 연관된 내용의 설정
 
-        public bool UpdateBankBookWithMoney(MoneyContext context, MoneyItem moneyItem, bool isSave = true)
+        public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem)
         {
-            using var bankService = new BankBookService();
-            var nowBankBook = context.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
-            if (nowBankBook != null)
-            {
-                if (isSave)
-                {
-                    if (moneyItem.Division == MoneyNoteLibrary.Enums.MoneyEnum.MoneyCategory.Expense)
-                        nowBankBook.Assets -= moneyItem.Money;
-                    else
-                        nowBankBook.Assets += moneyItem.Money;
-                }
-                else
-                {
-                    nowBankBook.Assets += moneyItem.Money;
-                }
+            var bankService = new BankBookService(refContext);
+            var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
+            if (nowBankBook == null)
+                return false;
 
-                var result = bankService.UpdateBankBook(nowBankBook);
-                return result != null;
-            }
+            if (moneyItem.Division == MoneyCategory.Expense)
+                nowBankBook.Assets -= moneyItem.Money;
+            else
+                nowBankBook.Assets += moneyItem.Money;
 
-            return false;
+            refContext.BankBooks.Update(nowBankBook);
+            return true;
         }
 
         #endregion

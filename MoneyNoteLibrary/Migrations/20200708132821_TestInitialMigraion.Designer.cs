@@ -5,20 +5,19 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MoneyNoteAPI.Context;
 using MoneyNoteLibrary;
 
-namespace MoneyNoteAPI.Migrations
+namespace MoneyNoteLibrary.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    [Migration("20200226150248_BankBookColumnAdd_Assets")]
-    partial class BankBookColumnAdd_Assets
+    [Migration("20200708132821_TestInitialMigraion")]
+    partial class TestInitialMigraion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -175,6 +174,9 @@ namespace MoneyNoteAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -211,7 +213,7 @@ namespace MoneyNoteAPI.Migrations
             modelBuilder.Entity("MoneyNoteLibrary.Models.MoneyItem", b =>
                 {
                     b.HasOne("MoneyNoteLibrary.Models.BankBook", "BankBook")
-                        .WithMany("MoneyItems")
+                        .WithMany()
                         .HasForeignKey("BankBookId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();

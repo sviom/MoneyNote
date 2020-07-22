@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyNoteAPI.Context;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Models;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,18 @@ namespace MoneyNoteAPI.Services
 {
     public class CategoryService
     {
-        public List<MainCategory> GetMainCategories(Expression<Func<MainCategory, bool>> expression)
+        private readonly MoneyContext context;
+
+        public CategoryService(MoneyContext _context) => this.context = _context;
+
+        public List<MainCategory> GetCategories(Expression<Func<MainCategory, bool>> expression)
         {
             try
             {
                 if (expression == null)
                     return null;
 
-                using var db = new MoneyContext();
-
-                var dbSet = db.Set<MainCategory>();
-
-                if (expression != null)
-                {
-                    return dbSet.Where(expression).ToList();
-                }
-                else
-                    return dbSet.ToList();
+                return context.MainCategories.Where(expression).ToList();
             }
             catch (Exception ex)
             {
@@ -42,30 +38,31 @@ namespace MoneyNoteAPI.Services
                 if (expression == null)
                     return null;
 
-                using var db = new MoneyContext();
+                return context.SubCategories.Where(expression).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-                var dbSet = db.Set<SubCategory>();
-
-                if (expression != null)
+        public bool DeleteCategory(ICategory categoryItem)
+        {
+            try
+            {
+                switch (categoryItem)
                 {
-                    return dbSet.Where(expression).ToList();
+                    case MainCategory mainCategory:
+                        context.MainCategories.Remove(mainCategory);
+                        break;
+                    case SubCategory subCategory:
+                        context.SubCategories.Remove(subCategory);
+                        break;
+                    default:
+                        return default;
                 }
-                else
-                    return dbSet.ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
-        public bool DeleteMainCategory(MainCategory mainCategory)
-        {
-            try
-            {
-                using var db = new MoneyContext();
-                db.MainCategories.Remove(mainCategory);
-                int saveResult = db.SaveChanges();
+                int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return true;
 
@@ -77,22 +74,59 @@ namespace MoneyNoteAPI.Services
             }
         }
 
-        public bool DeleteSubCategory(SubCategory subCategory)
+        public ICategory SaveCategory(ICategory inputObject)
         {
             try
             {
-                using var db = new MoneyContext();
-                db.SubCategories.Remove(subCategory);
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                    return true;
+                switch (inputObject)
+                {
+                    case MainCategory mainCategory:
+                        context.MainCategories.Add(mainCategory);
+                        break;
+                    case SubCategory subCategory:
+                        context.SubCategories.Add(subCategory);
+                        break;
+                    default:
+                        return default;
+                }
 
-                return false;
+                int saveResult = context.SaveChanges();
+                if (saveResult > 0)
+                    return inputObject;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
+            return default;
         }
+
+        public ICategory UpdateCategory(ICategory inputObject)
+        {
+            try
+            {
+                switch (inputObject)
+                {
+                    case MainCategory mainCategory:
+                        context.MainCategories.Update(mainCategory);
+                        break;
+                    case SubCategory subCategory:
+                        context.SubCategories.Update(subCategory);
+                        break;
+                    default:
+                        return default;
+                }
+
+                int saveResult = context.SaveChanges();
+                if (saveResult > 0)
+                    return inputObject;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return default;
+        }
+
     }
 }
