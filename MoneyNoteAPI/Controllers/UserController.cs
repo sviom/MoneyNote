@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
+using MoneyNoteLibrary;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 
@@ -15,13 +16,17 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private MoneyContext Context;
+
+        public UserController(MoneyContext context) => Context = context;
+
         [HttpPost]
         public ApiResult<User> SignUp([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
             {
-                var service = new UserService();
+                var service = new UserService(Context);
 
                 if (item == null)
                 {
@@ -62,23 +67,22 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-                var service = new UserService();
+                var service = new UserService(Context);
                 var user = item.Content;
 
-                if (service.NeedApprovedUser(user))
+                (var userResult, var logInResult, var isApproved) = service.LogIn(user);
+
+                if (logInResult && isApproved)
+                {
+                    result.Content = userResult;
+                    result.Result = logInResult;
+                }
+                else if (logInResult && !isApproved)
                 {
                     result.ResultMessage = "승인을 대기중인 계정입니다.";
                     result.Content = user;
                     result.Result = false;
                     return result;
-                }
-
-                (var userResult, var countResult) = service.LogIn(item.Content, x => x.Email == user.Email && x.Password == user.Password && x.IsApproved == true);
-
-                if (countResult)
-                {
-                    result.Content = userResult;
-                    result.Result = countResult;
                 }
                 else
                 {
@@ -100,7 +104,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<List<User>>();
             try
             {
-                var service = new UserService();
+                var service = new UserService(Context);
 
                 var userList = service.GetUserList(item.Content);
                 if (userList != null)
@@ -123,7 +127,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-                var service = new UserService();
+                var service = new UserService(Context);
                 var user = item.Content;
                 var countResult = service.ApproveUser(user);
                 result.Content = user;
@@ -143,7 +147,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new UserService();
+                var service = new UserService(Context);
                 var deleteResult = service.DeleteUser(request.Content);
                 if (deleteResult)
                 {

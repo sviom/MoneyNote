@@ -46,5 +46,10 @@ namespace MoneyNoteLibrary.Models
         public BankBook BankBook { get; set; }
 
         public Guid BankBookId { get; set; }
+
+        public MoneyItem ShallowCopy()
+        {
+            return (MoneyItem)this.MemberwiseClone();
+        }
     }
 }
