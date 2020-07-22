@@ -87,5 +87,45 @@ namespace MoneyNoteUnitTest.ServiceTest
             Assert.Equal(testTitle, updatedItem.Title);
             Assert.Equal(expectedAssets, resultBank.Assets);
         }
+
+        [Theory]
+        [InlineData(500, 500, MoneyCategory.Expense)]
+        [InlineData(500, 500, MoneyCategory.Income)]
+        public void DeleteMoney(double defaultAssets, double expectedAssets, MoneyCategory moneyCategory)
+        {
+            var context = Fixture.CreateContext();
+            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context, defaultAssets);
+            var service = new MoneyService(context);
+
+            var testMoney = 100;
+            var testTitle = Guid.NewGuid().ToString();
+            var newItem = new MoneyItem();
+            newItem.Money = testMoney;
+            newItem.Title = testTitle;
+            newItem.UserId = testAccount.Id;
+            newItem.User = testAccount;
+            newItem.MainCategory = category;
+            newItem.BankBook = bankbook;
+            newItem.Division = moneyCategory;
+
+            var savedItem = service.SaveMoney(newItem);
+
+            context.Dispose();
+            context = Fixture.CreateContext();
+            service = new MoneyService(context);
+
+            var deleteItem = savedItem;//.ShallowCopy();
+
+            var deleteResult = service.DeleteMoney(deleteItem);
+
+            var deletedItem = context.MoneyItems.Where(x => x.Id == deleteItem.Id).FirstOrDefault();
+            var resultBank = context.BankBooks.Where(x => x.Id == bankbook.Id).FirstOrDefault();
+
+            context.Dispose();
+
+            Assert.Null(deletedItem);
+            Assert.True(deleteResult);
+            Assert.Equal(expectedAssets, resultBank.Assets);
+        }
     }
 }

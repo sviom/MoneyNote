@@ -128,7 +128,9 @@ namespace MoneyNoteAPI.Services
             {
                 context.MoneyItems.Remove(moneyItem);
 
-                UpdateBankBookWithMoney(context, moneyItem, isForceMinus: true);
+                moneyItem.Money = -moneyItem.Money;
+
+                UpdateBankBookWithMoney(context, moneyItem);
 
                 int saveResult = context.SaveChanges();
                 if (saveResult > 0)
@@ -144,14 +146,14 @@ namespace MoneyNoteAPI.Services
 
         #region MoneyItem과 연관된 내용의 설정
 
-        public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem, bool isForceMinus = false)
+        public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem)
         {
             var bankService = new BankBookService(refContext);
             var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
             if (nowBankBook == null)
                 return false;
 
-            if (moneyItem.Division == MoneyCategory.Expense || isForceMinus)
+            if (moneyItem.Division == MoneyCategory.Expense)
                 nowBankBook.Assets -= moneyItem.Money;
             else
                 nowBankBook.Assets += moneyItem.Money;
