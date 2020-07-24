@@ -31,7 +31,7 @@ namespace MoneyNoteUnitTest.ServiceTest
                     Password = password
                 };
 
-                var userService = new UserService(context);
+                var userService = new UserService();
 
                 var signUpedUser = userService.SignUp(newUser);
 
@@ -47,8 +47,8 @@ namespace MoneyNoteUnitTest.ServiceTest
         {
             using (var context = Fixture.CreateContext())
             {
-                var testUser = TestHelper.CreateTestAccount(context);
-                var userService = new UserService(context);
+                var testUser = TestHelper.CreateTestAccount();
+                var userService = new UserService();
 
                 var approveResult = userService.ApproveUser(testUser);
 
@@ -62,8 +62,8 @@ namespace MoneyNoteUnitTest.ServiceTest
         {
             using (var context = Fixture.CreateContext())
             {
-                var testUser = TestHelper.CreateTestAccount(context);
-                var userService = new UserService(context);
+                var testUser = TestHelper.CreateTestAccount();
+                var userService = new UserService();
 
                 (var user, var result, var isApproved) = userService.LogIn(testUser);
 
@@ -78,8 +78,8 @@ namespace MoneyNoteUnitTest.ServiceTest
         {
             using (var context = Fixture.CreateContext())
             {
-                var testUser = TestHelper.CreateTestAccount(context);
-                var userService = new UserService(context);
+                var testUser = TestHelper.CreateTestAccount();
+                var userService = new UserService();
 
                 var approveResult = userService.ApproveUser(testUser);
 

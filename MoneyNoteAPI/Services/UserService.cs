@@ -12,17 +12,11 @@ namespace MoneyNoteAPI.Services
 {
     public class UserService
     {
-        private readonly MoneyContext context;
-
-        public UserService(MoneyContext _context) => this.context = _context;
-
         public User SignUp(User user)
         {
-            if (context == null)
-                return null;
-
             try
             {
+                using var context = new MoneyContext();
                 var db = context;
                 db.Entry(user).State = EntityState.Added;
                 var set = db.Set<User>();
@@ -45,6 +39,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(user, x => x.Id == user.Id))
                 {
+                    using var context = new MoneyContext();
                     var db = context;
                     db.Users.Remove(user);
 
@@ -66,6 +61,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                using var context = new MoneyContext();
                 var userCount = context.Users.Where(expression).Count();
                 return userCount == 1;
             }
@@ -80,6 +76,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
                 var userResult = context.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
                 if (userResult != null)
                     return (userResult, true, userResult.IsApproved);
@@ -95,6 +92,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
                 var db = context;
 
                 var isNotApprovedUsers = db.Users.Where(x => x.IsApproved == isApproved);
@@ -116,6 +114,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(item, x => x.Id == item.Id))
                 {
+                    using var context = new MoneyContext();
                     if (item != null && !item.IsApproved)
                     {
                         item.IsApproved = true;

@@ -13,15 +13,12 @@ using System.Threading.Tasks;
 namespace MoneyNoteAPI.Services
 {
     public class BankBookService
-    {
-        private readonly MoneyContext context;
-
-        public BankBookService(MoneyContext _context) => this.context = _context;
-
+    {        
         public List<BankBook> GetBankBooks(User user)
         {
             try
             {
+                using var context = new MoneyContext();
                 return context.BankBooks.Where(x => x.UserId == user.Id).ToList();
             }
             catch (Exception ex)
@@ -37,6 +34,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                using var context = new MoneyContext();
                 context.BankBooks.Remove(bankbook);
                 int saveResult = context.SaveChanges();
                 if (saveResult > 0)
@@ -57,6 +55,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                using var context = new MoneyContext();
                 context.BankBooks.Add(bankbook);
                 int saveResult = context.SaveChanges();
 
@@ -77,6 +76,7 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                using var context = new MoneyContext();
                 context.BankBooks.Update(bankBook);
                 int saveResult = context.SaveChanges();
                 if (saveResult > 0)

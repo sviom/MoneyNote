@@ -21,9 +21,9 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void SaveBankBook()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = TestHelper.CreateTestAccount();
 
-            var service = new BankBookService(context);
+            var service = new BankBookService();
 
             var testTitle = Guid.NewGuid().ToString();
             var newItem = new BankBook
@@ -46,9 +46,9 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void DeleteBankBook()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = TestHelper.CreateTestAccount();
 
-            var service = new BankBookService(context);
+            var service = new BankBookService();
 
             var testTitle = Guid.NewGuid().ToString();
             var newItem = new BankBook
@@ -71,9 +71,9 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void UpdateBankBook()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = TestHelper.CreateTestAccount();
 
-            var service = new BankBookService(context);
+            var service = new BankBookService();
 
             var testTitle = Guid.NewGuid().ToString();
             var newItem = new BankBook

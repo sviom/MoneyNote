@@ -15,10 +15,6 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly MoneyContext _context;
-
-        public CategoryController(MoneyContext context) => _context = context;
-
         [HttpPost]
         public ApiResult<List<MainCategory>> GetMainCategories([FromBody] ApiRequest<User> user)
         {
@@ -26,7 +22,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
                 var categoryList = service.GetCategories(x => x.UserId == user.Content.Id);
 
                 result.Content = categoryList;
@@ -45,7 +41,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<List<SubCategory>>();
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
                 var categoryList = service.GetSubCategories(x => x.MainCategoryId == mainCategory.Content.Id);
 
                 result.Content = categoryList;
@@ -64,7 +60,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MainCategory>();
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
 
                 var saveResult = service.SaveCategory(item.Content);
 
@@ -84,7 +80,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<SubCategory>();
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
 
                 var saveResult = service.SaveCategory(item.Content);
 
@@ -104,7 +100,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<MainCategory>();
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
                 var insertResult = service.UpdateCategory(item.Content);
 
                 if (insertResult is MainCategory mainCategory)
@@ -126,7 +122,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<SubCategory>();
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
                 var insertResult = service.UpdateCategory(item.Content);
 
                 if (insertResult is SubCategory subCategory)
@@ -149,7 +145,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
                 var deleteResult = service.DeleteCategory(item.Content);
 
                 result.Content = true;
@@ -169,7 +165,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new CategoryService(_context);
+                var service = new CategoryService();
                 var deleteResult = service.DeleteCategory(item.Content);
 
                 result.Content = deleteResult;

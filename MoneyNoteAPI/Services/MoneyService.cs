@@ -13,15 +13,13 @@ namespace MoneyNoteAPI.Services
 {
     public class MoneyService
     {
-        private readonly MoneyContext context;
-
-        public MoneyService(MoneyContext _context) => this.context = _context;
-
         public List<MoneyItem> GetMoneyList(Expression<Func<MoneyItem, bool>> expression = null)
         {
             List<MoneyItem> returnList = new List<MoneyItem>();
             try
             {
+                using var context = new MoneyContext();
+
                 if (expression == null)
                     returnList = context.MoneyItems
                         .Include(x => x.MainCategory)
@@ -52,6 +50,8 @@ namespace MoneyNoteAPI.Services
             var returnItem = new MoneyItem();
             try
             {
+                using var context = new MoneyContext();
+
                 returnItem = context.MoneyItems
                           .Include(x => x.MainCategory)
                           .ThenInclude(main => main.SubCategories)
@@ -73,6 +73,8 @@ namespace MoneyNoteAPI.Services
                 return null;
             try
             {
+                using var context = new MoneyContext();
+
                 context.MoneyItems.Add(moneyItem);
 
                 int saveResult = context.SaveChanges();
@@ -93,6 +95,8 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
+
                 var money = oldMoney - moneyItem.Money;
                 var changeMoneyItem = new MoneyItem()
                 {
@@ -126,6 +130,8 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
+
                 context.MoneyItems.Remove(moneyItem);
 
                 moneyItem.Money = -moneyItem.Money;
@@ -148,7 +154,7 @@ namespace MoneyNoteAPI.Services
 
         public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem)
         {
-            var bankService = new BankBookService(refContext);
+            var bankService = new BankBookService();
             var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
             if (nowBankBook == null)
                 return false;

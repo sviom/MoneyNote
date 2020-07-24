@@ -12,17 +12,13 @@ namespace MoneyNoteAPI.Services
 {
     public class CategoryService
     {
-        private readonly MoneyContext context;
-
-        public CategoryService(MoneyContext _context) => this.context = _context;
-
         public List<MainCategory> GetCategories(Expression<Func<MainCategory, bool>> expression)
         {
             try
             {
                 if (expression == null)
                     return null;
-
+                using var context = new MoneyContext();
                 return context.MainCategories.Where(expression).ToList();
             }
             catch (Exception ex)
@@ -37,7 +33,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (expression == null)
                     return null;
-
+                using var context = new MoneyContext();
                 return context.SubCategories.Where(expression).ToList();
             }
             catch (Exception ex)
@@ -50,6 +46,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
                 switch (categoryItem)
                 {
                     case MainCategory mainCategory:
@@ -78,6 +75,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
                 switch (inputObject)
                 {
                     case MainCategory mainCategory:
@@ -105,6 +103,7 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
+                using var context = new MoneyContext();
                 switch (inputObject)
                 {
                     case MainCategory mainCategory:

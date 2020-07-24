@@ -9,7 +9,7 @@ namespace MoneyNoteUnitTest.Helper
 {
     public class TestHelper
     {
-        public static User CreateTestAccount(MoneyContext context)
+        public static User CreateTestAccount()
         {
             User user;
             var email = $"{Guid.NewGuid()}@raincome.net";
@@ -21,15 +21,15 @@ namespace MoneyNoteUnitTest.Helper
                 Password = password
             };
 
-            var userService = new UserService(context);
+            var userService = new UserService();
 
             user = userService.SignUp(newUser);
             return user;
         }
 
-        public static BankBook CreateBankBook(MoneyContext context, User user, double defaultAssets = 0)
+        public static BankBook CreateBankBook(User user, double defaultAssets = 0)
         {
-            var service = new BankBookService(context);
+            var service = new BankBookService();
 
             var testTitle = Guid.NewGuid().ToString();
             var newItem = new BankBook
@@ -45,10 +45,10 @@ namespace MoneyNoteUnitTest.Helper
             return result;
         }
 
-        public static MainCategory CreateCategory(MoneyContext context, User user)
+        public static MainCategory CreateCategory(User user)
         {
             var testTitle = Guid.NewGuid().ToString();
-            var service = new CategoryService(context);
+            var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = user;
             newCategory.UserId = user.Id;
@@ -59,14 +59,14 @@ namespace MoneyNoteUnitTest.Helper
             return (MainCategory)saveResult;
         }
 
-        public static (User user, BankBook bankbook, MainCategory category) CreateSeed(MoneyContext context, double defaultAssets = 0)
+        public static (User user, BankBook bankbook, MainCategory category) CreateSeed(double defaultAssets = 0)
         {
             // user
-            var user = CreateTestAccount(context);
+            var user = CreateTestAccount();
             // bankbook
-            var bankbook = CreateBankBook(context, user, defaultAssets);
+            var bankbook = CreateBankBook(user, defaultAssets);
             // category
-            var category = CreateCategory(context, user);
+            var category = CreateCategory(user);
 
             return (user, bankbook, category);
         }

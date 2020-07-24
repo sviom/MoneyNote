@@ -16,17 +16,13 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private MoneyContext Context;
-
-        public UserController(MoneyContext context) => Context = context;
-
         [HttpPost]
         public ApiResult<User> SignUp([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
             {
-                var service = new UserService(Context);
+                var service = new UserService();
 
                 if (item == null)
                 {
@@ -67,7 +63,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-                var service = new UserService(Context);
+                var service = new UserService();
                 var user = item.Content;
 
                 (var userResult, var logInResult, var isApproved) = service.LogIn(user);
@@ -104,7 +100,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<List<User>>();
             try
             {
-                var service = new UserService(Context);
+                var service = new UserService();
 
                 var userList = service.GetUserList(item.Content);
                 if (userList != null)
@@ -127,7 +123,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 //var ss = UtilityLauncher.EncryptAES256(userResult.Id.ToString(), AzureKeyVault.SaltPassword);
-                var service = new UserService(Context);
+                var service = new UserService();
                 var user = item.Content;
                 var countResult = service.ApproveUser(user);
                 result.Content = user;
@@ -147,7 +143,7 @@ namespace MoneyNoteAPI.Controllers
 
             try
             {
-                var service = new UserService(Context);
+                var service = new UserService();
                 var deleteResult = service.DeleteUser(request.Content);
                 if (deleteResult)
                 {

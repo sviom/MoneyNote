@@ -10,17 +10,30 @@ namespace MoneyNoteLibrary
 {
     public class MoneyContext : DbContext
     {
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                if (IsTest)
+                    return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
+
+                return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+            }
+        }
+
+        private static bool IsTest { get; set; }
 
         public MoneyContext() { }
 
-        public MoneyContext(DbContextOptions options, string connectionString = "") : base(options)
-        {
-            if (string.IsNullOrEmpty(connectionString))
-                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-            else
-                ConnectionString = connectionString;
-        }
+        public MoneyContext(bool isTest = false) => IsTest = isTest;
+
+        //public MoneyContext(DbContextOptions options, string connectionString = "") : base(options)
+        //{
+        //    if (string.IsNullOrEmpty(connectionString))
+        //        ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+        //    else
+        //        ConnectionString = connectionString;
+        //}
 
         public DbSet<MoneyItem> MoneyItems { get; set; }
 
@@ -35,8 +48,10 @@ namespace MoneyNoteLibrary
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            if (string.IsNullOrEmpty(ConnectionString))
-                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+            //if (string.IsNullOrEmpty(ConnectionString))
+            //    ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+
+            //ConnectionString = ConnectionString2;
 
             if (!optionsBuilder.IsConfigured)
                 optionsBuilder.UseSqlServer(ConnectionString);
