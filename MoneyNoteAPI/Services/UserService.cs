@@ -17,11 +17,11 @@ namespace MoneyNoteAPI.Services
             try
             {
                 using var context = new MoneyContext();
-                var db = context;
-                db.Entry(user).State = EntityState.Added;
-                var set = db.Set<User>();
-                set.Add(user);
-                int saveResult = db.SaveChanges();
+                //var db = context;
+                //db.Entry(user).State = EntityState.Added;
+                //var set = db.Set<User>();
+                context.Users.Add(user);
+                int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return user;
             }
@@ -40,10 +40,8 @@ namespace MoneyNoteAPI.Services
                 if (CheckExist(user, x => x.Id == user.Id))
                 {
                     using var context = new MoneyContext();
-                    var db = context;
-                    db.Users.Remove(user);
-
-                    db.SaveChanges();
+                    context.Users.Remove(user);
+                    context.SaveChanges();
                     returnValue = true;
                 }
             }
@@ -93,9 +91,7 @@ namespace MoneyNoteAPI.Services
             try
             {
                 using var context = new MoneyContext();
-                var db = context;
-
-                var isNotApprovedUsers = db.Users.Where(x => x.IsApproved == isApproved);
+                var isNotApprovedUsers = context.Users.Where(x => x.IsApproved == isApproved);
 
                 return isNotApprovedUsers.ToList();
             }

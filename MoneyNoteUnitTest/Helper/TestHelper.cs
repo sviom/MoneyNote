@@ -9,7 +9,7 @@ namespace MoneyNoteUnitTest.Helper
 {
     public class TestHelper
     {
-        public static User CreateTestAccount()
+        public User CreateTestAccount()
         {
             User user;
             var email = $"{Guid.NewGuid()}@raincome.net";
@@ -27,7 +27,7 @@ namespace MoneyNoteUnitTest.Helper
             return user;
         }
 
-        public static BankBook CreateBankBook(User user, double defaultAssets = 0)
+        public BankBook CreateBankBook(User user, double defaultAssets = 0)
         {
             var service = new BankBookService();
 
@@ -36,7 +36,7 @@ namespace MoneyNoteUnitTest.Helper
             {
                 Name = testTitle,
                 User = user,
-                UserId = user.Id,
+                //UserId = user.Id,
                 Assets = defaultAssets
             };
 
@@ -45,13 +45,13 @@ namespace MoneyNoteUnitTest.Helper
             return result;
         }
 
-        public static MainCategory CreateCategory(User user)
+        public MainCategory CreateCategory(User user)
         {
             var testTitle = Guid.NewGuid().ToString();
             var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = user;
-            newCategory.UserId = user.Id;
+            //newCategory.UserId = user.Id;
             newCategory.Title = testTitle;
 
             var saveResult = service.SaveCategory(newCategory);
@@ -59,7 +59,7 @@ namespace MoneyNoteUnitTest.Helper
             return (MainCategory)saveResult;
         }
 
-        public static (User user, BankBook bankbook, MainCategory category) CreateSeed(double defaultAssets = 0)
+        public (User user, BankBook bankbook, MainCategory category) CreateSeed(double defaultAssets = 0)
         {
             // user
             var user = CreateTestAccount();

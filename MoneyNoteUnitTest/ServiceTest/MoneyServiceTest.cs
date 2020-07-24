@@ -13,7 +13,13 @@ namespace MoneyNoteUnitTest.ServiceTest
 {
     public class MoneyServiceTest : IClassFixture<SharedDatabaseFixture>
     {
-        public MoneyServiceTest(SharedDatabaseFixture fixture) => Fixture = fixture;
+        public TestHelper Helper = new TestHelper();
+
+        public MoneyServiceTest(SharedDatabaseFixture fixture)
+        {
+            Fixture = fixture;
+            Helper = new TestHelper();
+        }
 
         public SharedDatabaseFixture Fixture { get; }
 
@@ -21,7 +27,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void SaveMoney()
         {
             var context = Fixture.CreateContext();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed();
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed();
             context.Dispose();
 
             //(var options, var connString) = Fixture.CreateOptionsString();            
@@ -58,7 +64,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         {
             var context = Fixture.CreateContext();
             (var options, var connString) = Fixture.CreateOptionsString();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(defaultAssets);
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed(defaultAssets);
             var service = new MoneyService();
 
             var testMoney = 100;
@@ -102,7 +108,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         {
             var context = Fixture.CreateContext();
             (var options, var connString) = Fixture.CreateOptionsString();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed( defaultAssets);
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed( defaultAssets);
             var service = new MoneyService();
 
             var testMoney = 100;

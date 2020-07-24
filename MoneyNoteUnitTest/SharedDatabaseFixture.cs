@@ -25,7 +25,8 @@ namespace MoneyNoteUnitTest
         public MoneyContext CreateContext(DbTransaction transaction = null)
         {
             //var context = new MoneyContext(new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options, ConnectionSting);
-            var context = new MoneyContext(true);
+            var context = new MoneyContext();
+            context.IsTest = true;
 
             if (transaction != null)
             {

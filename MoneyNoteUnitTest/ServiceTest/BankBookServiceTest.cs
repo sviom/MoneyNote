@@ -13,7 +13,12 @@ namespace MoneyNoteUnitTest.ServiceTest
 {
     public class BankBookServiceTest : IClassFixture<SharedDatabaseFixture>
     {
-        public BankBookServiceTest(SharedDatabaseFixture fixture) => Fixture = fixture;
+        public TestHelper Helper = new TestHelper();
+
+        public BankBookServiceTest(SharedDatabaseFixture fixture)
+        {
+            Fixture = fixture;
+        }
 
         public SharedDatabaseFixture Fixture { get; }
 
@@ -21,7 +26,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void SaveBankBook()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount();
+            var testAccount = Helper.CreateTestAccount();
 
             var service = new BankBookService();
 
@@ -46,7 +51,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void DeleteBankBook()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount();
+            var testAccount = Helper.CreateTestAccount();
 
             var service = new BankBookService();
 
@@ -71,7 +76,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void UpdateBankBook()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount();
+            var testAccount = Helper.CreateTestAccount();
 
             var service = new BankBookService();
 

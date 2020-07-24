@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 using System;
@@ -21,11 +22,13 @@ namespace MoneyNoteLibrary
             }
         }
 
-        private static bool IsTest { get; set; }
+        public bool IsTest { get; set; }
 
         public MoneyContext() { }
 
-        public MoneyContext(bool isTest = false) => IsTest = isTest;
+        public MoneyContext(DbContextOptions options) : base(options)
+        {
+        }
 
         //public MoneyContext(DbContextOptions options, string connectionString = "") : base(options)
         //{
