@@ -11,16 +11,16 @@ namespace MoneyNoteLibrary
 {
     public class MoneyContext : DbContext
     {
-        public string ConnectionString
-        {
-            get
-            {
-                if (IsTest)
-                    return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
+        public string ConnectionString { get; set; }
+        //{
+        //    get
+        //    {
+        //        if (IsTest)
+        //            return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
 
-                return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-            }
-        }
+        //        return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
+        //    }
+        //}
 
         public bool IsTest { get; set; }
 
