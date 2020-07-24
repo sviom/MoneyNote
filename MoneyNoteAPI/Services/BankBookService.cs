@@ -34,8 +34,14 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                //using var db = new MoneyContext();
                 using var context = new MoneyContext();
-                context.BankBooks.Remove(bankbook);
+                context.Entry(bankbook).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+
+                var set = context.Set<BankBook>();
+                set.Remove(bankbook);
+
+                //context.BankBooks.Remove(bankbook);
                 int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return true;
@@ -56,7 +62,13 @@ namespace MoneyNoteAPI.Services
             try
             {
                 using var context = new MoneyContext();
-                context.BankBooks.Add(bankbook);
+                context.Entry(bankbook).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+
+                var set = context.Set<BankBook>();
+                set.Add(bankbook);
+
+
+                //context.BankBooks.Add(bankbook);
                 int saveResult = context.SaveChanges();
 
                 if (saveResult > 0)
@@ -76,8 +88,14 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                //using var context = new MoneyContext();
+                //context.BankBooks.Update(bankBook);
                 using var context = new MoneyContext();
-                context.BankBooks.Update(bankBook);
+                context.Entry(bankBook).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                var set = context.Set<BankBook>();
+                set.Update(bankBook);
+
                 int saveResult = context.SaveChanges();
                 if (saveResult > 0)
                     return bankBook;

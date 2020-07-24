@@ -73,14 +73,20 @@ namespace MoneyNoteAPI.Services
                 return null;
             try
             {
-                using var context = new MoneyContext();
+                //using var context = new MoneyContext();
 
-                context.MoneyItems.Add(moneyItem);
+                //context.MoneyItems.Add(moneyItem);
 
-                int saveResult = context.SaveChanges();
+
+                using var db = new MoneyContext();
+                db.Entry(moneyItem).State = EntityState.Added;
+                var set = db.Set<MoneyItem>();
+                set.Add(moneyItem);
+
+                int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                 {
-                    UpdateBankBookWithMoney(context, moneyItem);
+                    UpdateBankBookWithMoney(db, moneyItem);
                     return moneyItem;
                 }
             }
@@ -95,7 +101,11 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var context = new MoneyContext();
+                //using var context = new MoneyContext();
+                using var db = new MoneyContext();
+                db.Entry(moneyItem).State = EntityState.Modified;
+                var set = db.Set<MoneyItem>();
+
 
                 var money = oldMoney - moneyItem.Money;
                 var changeMoneyItem = new MoneyItem()
@@ -106,12 +116,16 @@ namespace MoneyNoteAPI.Services
                     Division = moneyItem.Division
                 };
 
-                context.MoneyItems.Update(moneyItem);
-                int saveResult = context.SaveChanges();
-                if (saveResult <= 0)
-                    return null;
+                //context.MoneyItems.Update(moneyItem);
+                //int saveResult = context.SaveChanges();
+                //if (saveResult <= 0)
+                //    return null;
 
-                var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem);
+                set.Update(moneyItem);
+                int saveResult = db.SaveChanges();
+
+                var bankBookResult = UpdateBankBookWithMoney(db, changeMoneyItem);
+                //var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem);
                 if (!bankBookResult)
                     return null;
 
@@ -130,15 +144,21 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var context = new MoneyContext();
+                //using var context = new MoneyContext();
 
-                context.MoneyItems.Remove(moneyItem);
+                //context.MoneyItems.Remove(moneyItem);
 
-                moneyItem.Money = -moneyItem.Money;
+                //moneyItem.Money = -moneyItem.Money;
 
-                UpdateBankBookWithMoney(context, moneyItem);
+                using var db = new MoneyContext();
+                db.Entry(moneyItem).State = EntityState.Deleted;
+                var set = db.Set<MoneyItem>();
+                set.Remove(moneyItem);
 
-                int saveResult = context.SaveChanges();
+
+                UpdateBankBookWithMoney(db, moneyItem);
+
+                int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                     return true;
 
