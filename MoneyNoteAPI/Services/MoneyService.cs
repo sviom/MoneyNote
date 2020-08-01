@@ -73,11 +73,6 @@ namespace MoneyNoteAPI.Services
                 return null;
             try
             {
-                //using var context = new MoneyContext();
-
-                //context.MoneyItems.Add(moneyItem);
-
-
                 using var db = new MoneyContext();
                 db.Entry(moneyItem).State = EntityState.Added;
                 var set = db.Set<MoneyItem>();
@@ -86,7 +81,7 @@ namespace MoneyNoteAPI.Services
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
                 {
-                    UpdateBankBookWithMoney(db, moneyItem);
+                    UpdateBankBookWithMoney(moneyItem);
                     return moneyItem;
                 }
             }
@@ -101,12 +96,9 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                //using var context = new MoneyContext();
                 using var db = new MoneyContext();
                 db.Entry(moneyItem).State = EntityState.Modified;
                 var set = db.Set<MoneyItem>();
-
-
                 var money = oldMoney - moneyItem.Money;
                 var changeMoneyItem = new MoneyItem()
                 {
@@ -116,16 +108,10 @@ namespace MoneyNoteAPI.Services
                     Division = moneyItem.Division
                 };
 
-                //context.MoneyItems.Update(moneyItem);
-                //int saveResult = context.SaveChanges();
-                //if (saveResult <= 0)
-                //    return null;
-
                 set.Update(moneyItem);
                 int saveResult = db.SaveChanges();
 
-                var bankBookResult = UpdateBankBookWithMoney(db, changeMoneyItem);
-                //var bankBookResult = UpdateBankBookWithMoney(context, changeMoneyItem);
+                var bankBookResult = UpdateBankBookWithMoney(changeMoneyItem);
                 if (!bankBookResult)
                     return null;
 
@@ -136,27 +122,19 @@ namespace MoneyNoteAPI.Services
             {
                 throw ex;
             }
-
-            return null;
         }
 
         public bool DeleteMoney(MoneyItem moneyItem)
         {
             try
             {
-                //using var context = new MoneyContext();
-
-                //context.MoneyItems.Remove(moneyItem);
-
-                //moneyItem.Money = -moneyItem.Money;
-
                 using var db = new MoneyContext();
                 db.Entry(moneyItem).State = EntityState.Deleted;
                 var set = db.Set<MoneyItem>();
                 set.Remove(moneyItem);
+                moneyItem.Money = -moneyItem.Money;
 
-
-                UpdateBankBookWithMoney(db, moneyItem);
+                UpdateBankBookWithMoney(moneyItem);
 
                 int saveResult = db.SaveChanges();
                 if (saveResult > 0)
@@ -172,10 +150,11 @@ namespace MoneyNoteAPI.Services
 
         #region MoneyItem과 연관된 내용의 설정
 
-        public bool UpdateBankBookWithMoney(MoneyContext refContext, MoneyItem moneyItem)
+        public bool UpdateBankBookWithMoney(MoneyItem moneyItem)
         {
+            using var db = new MoneyContext();
             var bankService = new BankBookService();
-            var nowBankBook = refContext.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
+            var nowBankBook = db.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
             if (nowBankBook == null)
                 return false;
 
@@ -184,7 +163,8 @@ namespace MoneyNoteAPI.Services
             else
                 nowBankBook.Assets += moneyItem.Money;
 
-            refContext.BankBooks.Update(nowBankBook);
+            db.BankBooks.Update(nowBankBook);
+            db.SaveChanges();
             return true;
         }
 
