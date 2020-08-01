@@ -73,32 +73,27 @@ namespace MoneyNoteAPI.Services
                 return null;
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(moneyItem).State = EntityState.Added;
-                var set = db.Set<MoneyItem>();
-                set.Add(moneyItem);
+                var result = SqlLauncher.Insert(moneyItem);
+                if (result == null) return null;
 
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                {
-                    UpdateBankBookWithMoney(moneyItem);
-                    return moneyItem;
-                }
+                var bankBookResult = UpdateBankBookWithMoney(moneyItem);
+                if (!bankBookResult) return null;
+
+                return moneyItem;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return null;
         }
 
         public MoneyItem UpdateMoney(double oldMoney, MoneyItem moneyItem)
         {
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(moneyItem).State = EntityState.Modified;
-                var set = db.Set<MoneyItem>();
+                var result = SqlLauncher.Update(moneyItem);
+                if (result == null) return null;
+
                 var money = oldMoney - moneyItem.Money;
                 var changeMoneyItem = new MoneyItem()
                 {
@@ -108,15 +103,12 @@ namespace MoneyNoteAPI.Services
                     Division = moneyItem.Division
                 };
 
-                set.Update(moneyItem);
-                int saveResult = db.SaveChanges();
 
                 var bankBookResult = UpdateBankBookWithMoney(changeMoneyItem);
                 if (!bankBookResult)
                     return null;
 
                 return moneyItem;
-
             }
             catch (Exception ex)
             {
@@ -128,19 +120,15 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(moneyItem).State = EntityState.Deleted;
-                var set = db.Set<MoneyItem>();
-                set.Remove(moneyItem);
+                var result = SqlLauncher.Delete(moneyItem);
+                if (!result) return false;
+
                 moneyItem.Money = -moneyItem.Money;
 
-                UpdateBankBookWithMoney(moneyItem);
+                var bankBookResult = UpdateBankBookWithMoney(moneyItem);
+                if (!bankBookResult) return false;
 
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                    return true;
-
-                return false;
+                return true;
             }
             catch (Exception ex)
             {
