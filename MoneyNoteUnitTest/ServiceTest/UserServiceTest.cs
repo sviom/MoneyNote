@@ -4,6 +4,7 @@ using MoneyNoteLibrary.Models;
 using MoneyNoteUnitTest.Helper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -79,6 +80,29 @@ namespace MoneyNoteUnitTest.ServiceTest
             Assert.True(result);
             Assert.True(isApproved);
             Assert.NotNull(user);
+        }
+
+        [Fact]
+        public void DeleteUser()
+        {
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed();
+
+            var userService = new UserService();
+
+            var deleteResult = userService.DeleteUser(testAccount);
+
+            Assert.True(deleteResult);
+            var context = Fixture.CreateContext();
+
+            var userResult = context.Users.Where(x => x.Id == testAccount.Id).ToList();
+            var moneyResult = context.MoneyItems.Where(x => x.UserId == testAccount.Id).ToList();
+            var bankbookResult = context.BankBooks.Where(x => x.UserId == testAccount.Id).ToList();
+            var categoryResult = context.MainCategories.Where(x => x.UserId == testAccount.Id).ToList();
+
+            Assert.Empty(userResult);
+            Assert.Empty(moneyResult);
+            Assert.Empty(bankbookResult);
+            Assert.Empty(categoryResult);
         }
     }
 }

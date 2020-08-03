@@ -63,7 +63,6 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void UpdateMoney(double defaultAssets, double newMoney, double expectedAssets, MoneyCategory moneyCategory)
         {
             var context = Fixture.CreateContext();
-            (var options, var connString) = Fixture.CreateOptionsString();
             (var testAccount, var bankbook, var category) = Helper.CreateSeed(defaultAssets);
             var service = new MoneyService();
 
@@ -107,8 +106,7 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void DeleteMoney(double defaultAssets, double expectedAssets, MoneyCategory moneyCategory)
         {
             var context = Fixture.CreateContext();
-            (var options, var connString) = Fixture.CreateOptionsString();
-            (var testAccount, var bankbook, var category) = Helper.CreateSeed( defaultAssets);
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed(defaultAssets);
             var service = new MoneyService();
 
             var testMoney = 100;

@@ -31,7 +31,7 @@
 
         <Grid Visibility="{x:Bind ViewModel.IsShowEndPage}">
             <Grid Background="White" Opacity="0.9" />
-            <TextBlock Text="앱을 사용해 주셔서 감사했습니다. 안녕히가세요." VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"
+            <TextBlock Text="앱을 사용해 주셔서 감사합니다." VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWholeWords"
                        Style="{StaticResource TitleTextBlockStyle}" />
         </Grid>
     </Grid>
