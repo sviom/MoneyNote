@@ -24,7 +24,7 @@ namespace MoneyNote.UserControls
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -86,8 +86,12 @@ namespace MoneyNote.UserControls
         private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var result = await ViewModel.LeaveApp(App.LogInedUser);
-            if (result)
-                Application.Current.Exit();
+
+        }
+
+        private void ExitAppButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
