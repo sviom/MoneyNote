@@ -18,7 +18,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 using var context = new MoneyContext();
-                return context.BankBooks.Where(x => x.UserId == user.Id).ToList();
+                return null;// context.BankBooks.Where(x => x.UserId == user.Id).ToList();
             }
             catch (Exception ex)
             {

@@ -11,32 +11,11 @@ namespace MoneyNoteLibrary
 {
     public class MoneyContext : DbContext
     {
-        public string ConnectionString { get; set; }
-        //{
-        //    get
-        //    {
-        //        if (IsTest)
-        //            return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
-
-        //        return AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-        //    }
-        //}
-
-        public bool IsTest { get; set; }
-
         public MoneyContext() { }
 
         public MoneyContext(DbContextOptions options) : base(options)
         {
         }
-
-        //public MoneyContext(DbContextOptions options, string connectionString = "") : base(options)
-        //{
-        //    if (string.IsNullOrEmpty(connectionString))
-        //        ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-        //    else
-        //        ConnectionString = connectionString;
-        //}
 
         public DbSet<MoneyItem> MoneyItems { get; set; }
 
@@ -51,9 +30,10 @@ namespace MoneyNoteLibrary
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            if (string.IsNullOrEmpty(ConnectionString))
-                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-            optionsBuilder.UseSqlServer(ConnectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

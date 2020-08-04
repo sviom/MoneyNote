@@ -46,42 +46,8 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                //using (var db = new MoneyContext())
-                //{
-                //    db.Entry(deleteObject).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-                //    var set = db.Set<T>();
-                //    set.Remove(deleteObject);
-                //    int saveResult = db.SaveChanges();
-                //    if (saveResult > 0)
-                //        result = true;
-                //}
-
-                using var context = new MoneyContext();
-                context.Entry(categoryItem).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-
-                switch (categoryItem)
-                {
-                    case MainCategory mainCategory:
-                        var set = context.Set<MainCategory>();
-                        set.Remove(mainCategory);
-
-                        //context.MainCategories.Remove(mainCategory);
-                        break;
-                    case SubCategory subCategory:
-                        var subset = context.Set<SubCategory>();
-                        subset.Remove(subCategory);
-
-                        //context.SubCategories.Remove(subCategory);
-                        break;
-                    default:
-                        return default;
-                }
-
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return true;
-
-                return false;
+                var result = SqlLauncher.Delete(categoryItem);
+                return result;
             }
             catch (Exception ex)
             {
@@ -93,30 +59,8 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(inputObject).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-                
-
-                //using var context = new MoneyContext();
-                switch (inputObject)
-                {
-                    case MainCategory mainCategory:
-                        var set = db.Set<MainCategory>();
-                        set.Add(mainCategory);
-                        //context.MainCategories.Add(mainCategory);
-                        break;
-                    case SubCategory subCategory:
-                        var subset = db.Set<SubCategory>();
-                        subset.Add(subCategory);
-                        //context.SubCategories.Add(subCategory);
-                        break;
-                    default:
-                        return default;
-                }
-
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                    return inputObject;
+                var saveResult = SqlLauncher.Insert(inputObject);
+                return saveResult;
             }
             catch (Exception ex)
             {
@@ -129,35 +73,9 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                using var db = new MoneyContext();
-                db.Entry(inputObject).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                
-                //int saveResult = db.SaveChanges();
-                //if (saveResult > 0)
-                //    addedObject = updateObject;
+                var result = SqlLauncher.Update(inputObject);
+                return result;
 
-                using var context = new MoneyContext();
-                switch (inputObject)
-                {
-                    case MainCategory mainCategory:
-                        var set = db.Set<MainCategory>();
-                        set.Update(mainCategory);
-
-                        //context.MainCategories.Update(mainCategory);
-                        break;
-                    case SubCategory subCategory:
-                        var subset = db.Set<SubCategory>();
-                        subset.Update(subCategory);
-
-                        //context.SubCategories.Update(subCategory);
-                        break;
-                    default:
-                        return default;
-                }
-
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                    return inputObject;
             }
             catch (Exception ex)
             {

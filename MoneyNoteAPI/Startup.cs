@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MoneyNoteAPI.Context;
 using MoneyNoteLibrary;
+using MoneyNoteLibrary.Common;
 
 namespace MoneyNoteAPI
 {
@@ -29,6 +30,7 @@ namespace MoneyNoteAPI
         {
             services.AddControllers();
             //services.AddScoped<MoneyContext>();
+            //services.AddDbContext<MoneyContext>(options => options.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

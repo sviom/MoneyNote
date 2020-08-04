@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace MoneyNoteAPI.Services
 {
     public class BankBookService
-    {        
+    {
         public List<BankBook> GetBankBooks(User user)
         {
             try
@@ -34,19 +34,8 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                //using var db = new MoneyContext();
-                using var context = new MoneyContext();
-                context.Entry(bankbook).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-
-                var set = context.Set<BankBook>();
-                set.Remove(bankbook);
-
-                //context.BankBooks.Remove(bankbook);
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return true;
-
-                return false;
+                var deleteResult = SqlLauncher.Delete(bankbook);
+                return deleteResult;
             }
             catch (Exception ex)
             {
@@ -61,18 +50,10 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                using var context = new MoneyContext();
-                context.Entry(bankbook).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                var insertResult = SqlLauncher.Insert(bankbook);
 
-                var set = context.Set<BankBook>();
-                set.Add(bankbook);
-
-
-                //context.BankBooks.Add(bankbook);
-                int saveResult = context.SaveChanges();
-
-                if (saveResult > 0)
-                    return bankbook;
+                if (insertResult != null)
+                    return insertResult;
             }
             catch (Exception ex)
             {
@@ -88,17 +69,9 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                //using var context = new MoneyContext();
-                //context.BankBooks.Update(bankBook);
-                using var context = new MoneyContext();
-                context.Entry(bankBook).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-                var set = context.Set<BankBook>();
-                set.Update(bankBook);
-
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return bankBook;
+                var updateResult = SqlLauncher.Update(bankBook);
+                if (updateResult != null)
+                    return updateResult;
             }
             catch (Exception ex)
             {
