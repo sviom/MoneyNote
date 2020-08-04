@@ -12,30 +12,19 @@ namespace MoneyNoteAPI.Services
 {
     public class UserService
     {
-        private readonly MoneyContext context;
-
-        public UserService(MoneyContext _context) => this.context = _context;
-
         public User SignUp(User user)
         {
-            if (context == null)
-                return null;
-
             try
             {
-                var db = context;
-                db.Entry(user).State = EntityState.Added;
-                var set = db.Set<User>();
-                set.Add(user);
-                int saveResult = db.SaveChanges();
-                if (saveResult > 0)
-                    return user;
+                var result = SqlLauncher.Insert(user);
+                if (result == null) return null;
+
+                return result;
             }
             catch (Exception ex)
             {
-                //throw ex;
+                throw ex;
             }
-            return null;
         }
 
         public bool DeleteUser(User user)
@@ -45,15 +34,13 @@ namespace MoneyNoteAPI.Services
             {
                 if (CheckExist(user, x => x.Id == user.Id))
                 {
-                    var db = context;
-                    db.Users.Remove(user);
-
-                    db.SaveChanges();
-                    returnValue = true;
+                    var deleteResult = SqlLauncher.Delete(user);
+                    returnValue = deleteResult;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                throw ex;
             }
 
             return returnValue;
@@ -66,27 +53,29 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                var userCount = context.Users.Where(expression).Count();
+                //using var context = new MoneyContext();
+                var userCount = SqlLauncher.Count(expression); //context.Users.Where(expression).Count();
                 return userCount == 1;
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
-            return false;
         }
 
         public (User user, bool result, bool isApproved) LogIn(User user)
         {
             try
             {
-                var userResult = context.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
+                //using var context = new MoneyContext();
+                var userResult = SqlLauncher.Get<User>(x => x.Email == user.Email && x.Password == user.Password);
+                // context.Users.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault();
                 if (userResult != null)
                     return (userResult, true, userResult.IsApproved);
             }
             catch (Exception ex)
             {
-                //throw ex;
+                throw ex;
             }
             return (null, false, false);
         }
@@ -95,15 +84,15 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                var db = context;
+                //using var context = new MoneyContext();
+                var isNotApprovedUsers = SqlLauncher.GetAll<User>(x => x.IsApproved == isApproved);
+                // context.Users.Where(x => x.IsApproved == isApproved);
 
-                var isNotApprovedUsers = db.Users.Where(x => x.IsApproved == isApproved);
-
-                return isNotApprovedUsers.ToList();
+                return isNotApprovedUsers;
             }
-            catch
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -114,21 +103,21 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                if (CheckExist(item, x => x.Id == item.Id))
+                if (CheckExist(item, x => x.Id == item.Id) && !item.IsApproved)
                 {
-                    if (item != null && !item.IsApproved)
-                    {
-                        item.IsApproved = true;
+                    //using var context = new MoneyContext();
+                    item.IsApproved = true;
+                    var result = SqlLauncher.Update(item);
+                    if (result == null) return false;
 
-                        context.Users.Update(item);
-                        context.SaveChanges();
-                        return true;
-                    }
+                    //context.Users.Update(item);
+                    //context.SaveChanges();
+                    return true;
                 }
             }
             catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
 
             return false;

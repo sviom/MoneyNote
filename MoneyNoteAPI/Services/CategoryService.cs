@@ -12,17 +12,13 @@ namespace MoneyNoteAPI.Services
 {
     public class CategoryService
     {
-        private readonly MoneyContext context;
-
-        public CategoryService(MoneyContext _context) => this.context = _context;
-
         public List<MainCategory> GetCategories(Expression<Func<MainCategory, bool>> expression)
         {
             try
             {
                 if (expression == null)
                     return null;
-
+                using var context = new MoneyContext();
                 return context.MainCategories.Where(expression).ToList();
             }
             catch (Exception ex)
@@ -37,7 +33,7 @@ namespace MoneyNoteAPI.Services
             {
                 if (expression == null)
                     return null;
-
+                using var context = new MoneyContext();
                 return context.SubCategories.Where(expression).ToList();
             }
             catch (Exception ex)
@@ -50,23 +46,8 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                switch (categoryItem)
-                {
-                    case MainCategory mainCategory:
-                        context.MainCategories.Remove(mainCategory);
-                        break;
-                    case SubCategory subCategory:
-                        context.SubCategories.Remove(subCategory);
-                        break;
-                    default:
-                        return default;
-                }
-
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return true;
-
-                return false;
+                var result = SqlLauncher.Delete(categoryItem);
+                return result;
             }
             catch (Exception ex)
             {
@@ -78,21 +59,8 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                switch (inputObject)
-                {
-                    case MainCategory mainCategory:
-                        context.MainCategories.Add(mainCategory);
-                        break;
-                    case SubCategory subCategory:
-                        context.SubCategories.Add(subCategory);
-                        break;
-                    default:
-                        return default;
-                }
-
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return inputObject;
+                var saveResult = SqlLauncher.Insert(inputObject);
+                return saveResult;
             }
             catch (Exception ex)
             {
@@ -105,21 +73,9 @@ namespace MoneyNoteAPI.Services
         {
             try
             {
-                switch (inputObject)
-                {
-                    case MainCategory mainCategory:
-                        context.MainCategories.Update(mainCategory);
-                        break;
-                    case SubCategory subCategory:
-                        context.SubCategories.Update(subCategory);
-                        break;
-                    default:
-                        return default;
-                }
+                var result = SqlLauncher.Update(inputObject);
+                return result;
 
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return inputObject;
             }
             catch (Exception ex)
             {

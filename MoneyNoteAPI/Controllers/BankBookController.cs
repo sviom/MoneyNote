@@ -15,17 +15,13 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class BankBookController : ControllerBase
     {
-        private readonly MoneyContext _context;
-
-        public BankBookController(MoneyContext context) => _context = context;
-
         [HttpPost]
         public ApiResult<List<BankBook>> GetBankBooks([FromBody]ApiRequest<User> user)
         {
             var result = new ApiResult<List<BankBook>>();
             try
             {
-                var service = new BankBookService(_context);
+                var service = new BankBookService();
                 var bankbookList = service.GetBankBooks(user.Content);
 
                 result.Content = bankbookList;
@@ -44,7 +40,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<BankBook>();
             try
             {
-                var service = new BankBookService(_context);
+                var service = new BankBookService();
                 var insertResult = service.SaveBankBook(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
@@ -62,7 +58,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<BankBook>();
             try
             {
-                var service = new BankBookService(_context);
+                var service = new BankBookService();
                 var insertResult = service.UpdateBankBook(item.Content);
                 result.Content = insertResult;
                 result.Result = true;
@@ -80,7 +76,7 @@ namespace MoneyNoteAPI.Controllers
             var result = new ApiResult<bool>();
             try
             {
-                var service = new BankBookService(_context);
+                var service = new BankBookService();
                 var updateResult = service.DeleteBankBook(item.Content);
 
                 result.Content = updateResult;

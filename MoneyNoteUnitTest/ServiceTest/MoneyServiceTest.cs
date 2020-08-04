@@ -13,23 +13,32 @@ namespace MoneyNoteUnitTest.ServiceTest
 {
     public class MoneyServiceTest : IClassFixture<SharedDatabaseFixture>
     {
-        public MoneyServiceTest(SharedDatabaseFixture fixture) => Fixture = fixture;
+        public TestHelper Helper = new TestHelper();
+
+        public MoneyServiceTest(SharedDatabaseFixture fixture)
+        {
+            Fixture = fixture;
+            Helper = new TestHelper();
+        }
 
         public SharedDatabaseFixture Fixture { get; }
 
         [Fact]
         public void SaveMoney()
         {
-            using var context = Fixture.CreateContext();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context);
-            var service = new MoneyService(context);
+            var context = Fixture.CreateContext();
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed();
+            context.Dispose();
+
+            //(var options, var connString) = Fixture.CreateOptionsString();            
+            var service = new MoneyService();
 
             var testMoney = 100000;
             var testTitle = Guid.NewGuid().ToString();
             var newItem = new MoneyItem();
             newItem.Money = testMoney;
             newItem.Title = testTitle;
-            newItem.UserId = testAccount.Id;
+            //newItem.UserId = testAccount.Id;
             newItem.User = testAccount;
             newItem.MainCategory = category;
             newItem.BankBook = bankbook;
@@ -37,7 +46,10 @@ namespace MoneyNoteUnitTest.ServiceTest
             var savedItem = service.SaveMoney(newItem);
 
             var resultItem = service.GetMoney(x => x.Id == savedItem.Id);
+
+            context = Fixture.CreateContext();
             var resultBank = context.BankBooks.Where(x => x.Id == bankbook.Id).FirstOrDefault();
+            context.Dispose();
 
             Assert.NotNull(resultItem);
             Assert.Equal(testMoney, resultItem.Money);
@@ -51,8 +63,8 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void UpdateMoney(double defaultAssets, double newMoney, double expectedAssets, MoneyCategory moneyCategory)
         {
             var context = Fixture.CreateContext();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context, defaultAssets);
-            var service = new MoneyService(context);
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed(defaultAssets);
+            var service = new MoneyService();
 
             var testMoney = 100;
             var testTitle = Guid.NewGuid().ToString();
@@ -69,7 +81,7 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             context.Dispose();
             context = Fixture.CreateContext();
-            service = new MoneyService(context);
+            service = new MoneyService();
 
             var money = savedItem.Money;
             //var newMoney = 200000;
@@ -94,8 +106,8 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void DeleteMoney(double defaultAssets, double expectedAssets, MoneyCategory moneyCategory)
         {
             var context = Fixture.CreateContext();
-            (var testAccount, var bankbook, var category) = TestHelper.CreateSeed(context, defaultAssets);
-            var service = new MoneyService(context);
+            (var testAccount, var bankbook, var category) = Helper.CreateSeed(defaultAssets);
+            var service = new MoneyService();
 
             var testMoney = 100;
             var testTitle = Guid.NewGuid().ToString();
@@ -112,7 +124,7 @@ namespace MoneyNoteUnitTest.ServiceTest
 
             context.Dispose();
             context = Fixture.CreateContext();
-            service = new MoneyService(context);
+            service = new MoneyService();
 
             var deleteItem = savedItem;//.ShallowCopy();
 

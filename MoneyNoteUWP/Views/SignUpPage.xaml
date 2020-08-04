@@ -35,6 +35,9 @@
             <PasswordBox x:Name="ConfirmPasswordText"
                          CornerRadius="5"
                          Password="{x:Bind ViewModel.ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Text="{x:Bind ViewModel.IsNotEqualPassword}"
+                       Foreground="Red"
+                       Visibility="{x:Bind ViewModel.IsNotEqualPassword, Converter={StaticResource StringNotNullToVisibilityConverter}}"/>
 
             <Button x:Name="SignUpButton" Margin="0,20,0,0"
                     Click="SignUpButton_Click"
@@ -65,10 +68,15 @@
             </Button>
 
             <TextBlock Margin="0,4,0,0" TextWrapping="Wrap" Text="본 서비스는 관리자의 승인이 있어야 이용하실 수 있습니다. 가입 신청 후 " />
-            <HyperlinkButton Content="메일" NavigateUri="mailto://kanghanstar@outlook.com" />
+            <HyperlinkButton Content="메일" NavigateUri="mailto://kanghanstar@rainecome.net" />
             <TextBlock Text="로 메일을 보내주시거나," />
             <HyperlinkButton Content="홈페이지" NavigateUri="https://viomshop.tistory.com/category/MoneyNote" />
             <TextBlock Text="에 댓글을 비밀글로 남겨주세요." />
         </StackPanel>
+
+        <Grid Visibility="{x:Bind ViewModel.IsRunProgressRing}">
+            <Grid Background="White" Opacity="0.4"></Grid>
+            <ProgressRing IsActive="{x:Bind ViewModel.IsRunProgressRing}" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </Page>

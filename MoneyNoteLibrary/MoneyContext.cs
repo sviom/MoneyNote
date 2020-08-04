@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
 using System;
@@ -10,16 +11,10 @@ namespace MoneyNoteLibrary
 {
     public class MoneyContext : DbContext
     {
-        public string ConnectionString { get; set; }
-
         public MoneyContext() { }
 
-        public MoneyContext(DbContextOptions options, string connectionString = "") : base(options)
+        public MoneyContext(DbContextOptions options) : base(options)
         {
-            if (string.IsNullOrEmpty(connectionString))
-                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-            else
-                ConnectionString = connectionString;
         }
 
         public DbSet<MoneyItem> MoneyItems { get; set; }
@@ -35,11 +30,10 @@ namespace MoneyNoteLibrary
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            if (string.IsNullOrEmpty(ConnectionString))
-                ConnectionString = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result;
-
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(ConnectionString);
+            {
+                optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

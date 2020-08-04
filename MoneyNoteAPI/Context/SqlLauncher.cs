@@ -144,15 +144,13 @@ namespace MoneyNoteAPI.Context
                 //if (deleteObject == null || deleteObject.Id == Guid.Empty)
                 //    return false;
 
-                using (var db = new MoneyContext())
-                {
-                    db.Entry(deleteObject).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-                    var set = db.Set<T>();
-                    set.Remove(deleteObject);
-                    int saveResult = db.SaveChanges();
-                    if (saveResult > 0)
-                        result = true;
-                }
+                using var db = new MoneyContext();
+                db.Entry(deleteObject).State = EntityState.Deleted;
+                var set = db.Set<T>();
+                set.Remove(deleteObject);
+                int saveResult = db.SaveChanges();
+                if (saveResult > 0)
+                    result = true;
             }
             catch (Exception ex)
             {

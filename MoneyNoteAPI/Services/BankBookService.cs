@@ -14,14 +14,11 @@ namespace MoneyNoteAPI.Services
 {
     public class BankBookService
     {
-        private readonly MoneyContext context;
-
-        public BankBookService(MoneyContext _context) => this.context = _context;
-
         public List<BankBook> GetBankBooks(User user)
         {
             try
             {
+                using var context = new MoneyContext();
                 return context.BankBooks.Where(x => x.UserId == user.Id).ToList();
             }
             catch (Exception ex)
@@ -37,12 +34,8 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                context.BankBooks.Remove(bankbook);
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return true;
-
-                return false;
+                var deleteResult = SqlLauncher.Delete(bankbook);
+                return deleteResult;
             }
             catch (Exception ex)
             {
@@ -57,11 +50,10 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                context.BankBooks.Add(bankbook);
-                int saveResult = context.SaveChanges();
+                var insertResult = SqlLauncher.Insert(bankbook);
 
-                if (saveResult > 0)
-                    return bankbook;
+                if (insertResult != null)
+                    return insertResult;
             }
             catch (Exception ex)
             {
@@ -77,10 +69,9 @@ namespace MoneyNoteAPI.Services
 
             try
             {
-                context.BankBooks.Update(bankBook);
-                int saveResult = context.SaveChanges();
-                if (saveResult > 0)
-                    return bankBook;
+                var updateResult = SqlLauncher.Update(bankBook);
+                if (updateResult != null)
+                    return updateResult;
             }
             catch (Exception ex)
             {

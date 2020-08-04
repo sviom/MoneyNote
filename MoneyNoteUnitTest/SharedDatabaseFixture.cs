@@ -24,14 +24,21 @@ namespace MoneyNoteUnitTest
 
         public MoneyContext CreateContext(DbTransaction transaction = null)
         {
-            var context = new MoneyContext(new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options, ConnectionSting);
-
+            //var context = new MoneyContext(new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options, ConnectionSting);
+            var context = new MoneyContext();
+            
             if (transaction != null)
             {
                 context.Database.UseTransaction(transaction);
             }
 
             return context;
+        }
+
+        public (DbContextOptions<MoneyContext> dbContextOptions, string connectionString) CreateOptionsString()
+        {
+            DbContextOptions<MoneyContext> options = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options;
+            return (options, ConnectionSting);
         }
 
         public void Dispose() => Connection.Dispose();

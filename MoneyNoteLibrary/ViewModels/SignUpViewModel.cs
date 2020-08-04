@@ -10,15 +10,8 @@ using static MoneyNoteLibrary.Enums.MoneyApiInfo;
 
 namespace MoneyNoteLibrary.ViewModels
 {
-    public class SignUpViewModel : INotifyPropertyChanged
+    public class SignUpViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private string _NickName;
         public string NickName
         {
@@ -76,10 +69,13 @@ namespace MoneyNoteLibrary.ViewModels
                 _ConfirmPassword = value;
                 OnPropertyChanged();
                 ValidCheck();
+                OnPropertyChanged(nameof(IsNotEqualPassword));
             }
         }
 
-        public bool IsValidPassword => Password != null ? (Password.Length > 8 && Password.Equals(ConfirmPassword)) : false;
+        public bool IsValidPassword => Password != null && (Password.Length > 8 && Password.Equals(ConfirmPassword));
+
+        public string IsNotEqualPassword => Password != null && Password.Equals(ConfirmPassword) ? string.Empty : "비밀번호가 일치하지 않습니다.";
 
         public bool IsSignUpEnable => Common.ValidCheck.IsValidEmail(EmailAddress) && IsValidPassword && IsValidNickName;
 
@@ -120,6 +116,8 @@ namespace MoneyNoteLibrary.ViewModels
                 Password = encryptedPassword
             };
 
+            IsRunProgressRing = true;
+
             var signUpResult = await MoneyApi.SignUp.ApiLauncher<User, User>(signUpUser, ControllerEnum.user);
             if (signUpResult.Result)
             {
@@ -129,6 +127,9 @@ namespace MoneyNoteLibrary.ViewModels
             {
                 ErrorMessage = !string.IsNullOrEmpty(signUpResult.ResultMessage) ? signUpResult.ResultMessage : "에러!!";
             }
+
+            IsRunProgressRing = false;
+
             return (result, signUpResult.Content);
         }
     }

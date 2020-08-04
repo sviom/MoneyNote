@@ -12,6 +12,8 @@ namespace MoneyNoteUnitTest.ServiceTest
 {
     public class CategoryServiceTest : IClassFixture<SharedDatabaseFixture>
     {
+        public TestHelper Helper = new TestHelper();
+
         public CategoryServiceTest(SharedDatabaseFixture fixture) => Fixture = fixture;
 
         public SharedDatabaseFixture Fixture { get; }
@@ -20,10 +22,10 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void SaveMainCategory()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = Helper.CreateTestAccount();
 
             var testTitle = Guid.NewGuid().ToString();
-            var service = new CategoryService(context);
+            var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = testAccount;
             newCategory.UserId = testAccount.Id;
@@ -40,10 +42,10 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void SaveSubCategory()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = Helper.CreateTestAccount();
 
             var testTitle = Guid.NewGuid().ToString();
-            var service = new CategoryService(context);
+            var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = testAccount;
             newCategory.UserId = testAccount.Id;
@@ -70,10 +72,10 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void UpdateCategory()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = Helper.CreateTestAccount();
 
             var testTitle = Guid.NewGuid().ToString();
-            var service = new CategoryService(context);
+            var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = testAccount;
             newCategory.UserId = testAccount.Id;
@@ -100,10 +102,10 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void DeleteCategory()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = Helper.CreateTestAccount();
 
             var testTitle = Guid.NewGuid().ToString();
-            var service = new CategoryService(context);
+            var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = testAccount;
             newCategory.UserId = testAccount.Id;
@@ -129,10 +131,10 @@ namespace MoneyNoteUnitTest.ServiceTest
         public void DeleteCategoryWithSubCategory()
         {
             using var context = Fixture.CreateContext();
-            var testAccount = TestHelper.CreateTestAccount(context);
+            var testAccount = Helper.CreateTestAccount();
 
             var testTitle = Guid.NewGuid().ToString();
-            var service = new CategoryService(context);
+            var service = new CategoryService();
             var newCategory = new MainCategory();
             newCategory.User = testAccount;
             newCategory.UserId = testAccount.Id;

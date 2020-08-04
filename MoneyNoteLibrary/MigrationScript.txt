@@ -1,5 +1,9 @@
 ﻿Enable-Migrations [Migration Name] -Project [ProjectName] -StartupProject [StartUp ProjectName]
 Add-Migration [Migration Name] -Project [ProjectName] -StartupProject [StartUp ProjectName]
-Add-Migration TestInitialMigraion -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
 
+Add-Migration TestInitialMigraion -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
+Update-Database -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
+
+2020/7/22
+Add-Migration RealEuqalTest -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
 Update-Database -Project MoneyNoteLibrary -StartupProject MoneyNoteAPI
