@@ -69,10 +69,13 @@ namespace MoneyNoteLibrary.ViewModels
                 _ConfirmPassword = value;
                 OnPropertyChanged();
                 ValidCheck();
+                OnPropertyChanged(nameof(IsNotEqualPassword));
             }
         }
 
-        public bool IsValidPassword => Password != null ? (Password.Length > 8 && Password.Equals(ConfirmPassword)) : false;
+        public bool IsValidPassword => Password != null && (Password.Length > 8 && Password.Equals(ConfirmPassword));
+
+        public string IsNotEqualPassword => Password != null && Password.Equals(ConfirmPassword) ? string.Empty : "비밀번호가 일치하지 않습니다.";
 
         public bool IsSignUpEnable => Common.ValidCheck.IsValidEmail(EmailAddress) && IsValidPassword && IsValidNickName;
 
