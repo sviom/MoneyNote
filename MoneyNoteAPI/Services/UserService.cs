@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace MoneyNoteAPI.Services
@@ -121,6 +122,39 @@ namespace MoneyNoteAPI.Services
             }
 
             return false;
+        }
+
+        public async Task<bool> ClearUserData(User user)
+        {
+            var returnValue = false;
+            try
+            {
+                if (!CheckExist(user, x => x.Id == user.Id))
+                    return false;
+
+                using var context = new MoneyContext();
+
+                // 사용자 금액 데이터
+                var moneyList = await context.MoneyItems.Where(x => x.UserId == user.Id).ToListAsync();
+                // 카테고리
+                var categoryList = await context.MainCategories.Where(x => x.UserId == user.Id).ToListAsync();
+                // 자산
+                var bankbookList = await context.BankBooks.Where(x => x.UserId == user.Id).ToListAsync();
+
+                context.MoneyItems.RemoveRange(moneyList);
+                context.MainCategories.RemoveRange(categoryList);
+                context.BankBooks.RemoveRange(bankbookList);
+
+                var result = await context.SaveChangesAsync();
+                if (result > 0)
+                    returnValue = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return returnValue;
         }
     }
 }

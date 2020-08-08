@@ -112,7 +112,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 하위 카테고리 삭제
             /// </summary>
-            DeleteSubCategory
+            DeleteSubCategory,
+            /// <summary>
+            /// 사용자 정보 초기화
+            /// </summary>
+            ClearUser
         }
 
         /// <summary>
