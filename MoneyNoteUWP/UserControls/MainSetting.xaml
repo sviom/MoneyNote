@@ -23,12 +23,13 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<Button x:Name="AllClearButton" Content="전체 초기화" Style="{StaticResource SettingButton}" Click="AllClearButton_Click" />-->
             <Button x:Name="LeaveApp" Content="회원 탈퇴" Style="{StaticResource SettingButton}" Margin="0,8,0,0" Click="LeaveApp_Click" />
+            <Button x:Name="ClearUserButton" Content="초기화" Style="{StaticResource SettingButton}" Margin="0,8,0,0" Click="AllClearButton_Click" />
         </StackPanel>
 
         <Grid Visibility="{x:Bind ViewModel.ErrorMessage, Converter={StaticResource StringNotNullToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="{x:Bind ViewModel.ErrorMessage}" Style="{StaticResource BasicErrorMessage}" />
         </Grid>
-
+        
         <Grid Visibility="{x:Bind ViewModel.IsShowEndPage}">
             <Grid Background="White" Opacity="0.9" />
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -36,6 +37,11 @@
                            Style="{StaticResource TitleTextBlockStyle}" />
                 <Button x:Name="ExitAppButton" Style="{StaticResource CommonButtonStyle}" Content="앱 종료" HorizontalAlignment="Center" Margin="0,8,0,0" Click="ExitAppButton_Click" />
             </StackPanel>
+        </Grid>
+
+        <Grid Visibility="{x:Bind ViewModel.IsRunProgressRing}">
+            <Grid Background="White" Opacity="0.7"></Grid>
+            <ProgressRing VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="{x:Bind ViewModel.IsRunProgressRing}"/>
         </Grid>
     </Grid>
 </UserControl>

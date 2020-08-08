@@ -1,4 +1,5 @@
-﻿using MoneyNoteLibrary.ViewModels;
+﻿using MoneyNote.Views;
+using MoneyNoteLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,13 +62,38 @@ namespace MoneyNote.UserControls
 
         private async void AllClearButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ContentDialog();
-            dialog.DefaultButton = ContentDialogButton.Close;
-            dialog.Title = "전체 초기화를 진행하시겠습니까?";
-            dialog.PrimaryButtonText = "예";
-            dialog.CloseButtonText = "아니오";
-            dialog.Content = "사용자의 금액 내역, 카테고리 등 모든 정보가 초기화됩니다.";
-            await dialog.ShowAsync();
+            var clearDialog = new ContentDialog();
+            clearDialog.DefaultButton = ContentDialogButton.Close;
+            clearDialog.Title = "전체 초기화를 진행하시겠습니까?";
+            clearDialog.PrimaryButtonText = "예";
+            clearDialog.CloseButtonText = "아니오";
+            clearDialog.Content = "사용자의 금액 내역, 카테고리 등 모든 정보가 초기화됩니다.";
+
+            clearDialog.PrimaryButtonClick += ClearDialog_PrimaryButtonClick;
+
+            await clearDialog.ShowAsync();
+        }
+
+        private async void ClearDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            var result = await ViewModel.ClearUserData(App.LogInedUser);
+            if (result)
+            {
+                var resultDialog = new ContentDialog
+                {
+                    DefaultButton = ContentDialogButton.Close,
+                    Title = "초기화 완료됨",
+                    PrimaryButtonText = "확인",
+                    Content = "초기화가 완료되었습니다."
+                };
+                resultDialog.PrimaryButtonClick += ResultDialog_PrimaryButtonClick;
+                await resultDialog.ShowAsync();
+            }
+        }
+
+        private void ResultDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
         }
 
         private async void LeaveApp_Click(object sender, RoutedEventArgs e)
@@ -86,7 +112,8 @@ namespace MoneyNote.UserControls
         private async void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var result = await ViewModel.LeaveApp(App.LogInedUser);
-
+            if (result)
+                ViewModel.IsShowEndPage = true;
         }
 
         private void ExitAppButton_Click(object sender, RoutedEventArgs e)
