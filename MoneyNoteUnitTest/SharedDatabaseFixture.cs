@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+﻿//using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyNoteLibrary;
 using MoneyNoteLibrary.Common;
@@ -15,9 +15,9 @@ namespace MoneyNoteUnitTest
 
         public SharedDatabaseFixture()
         {
-            ConnectionSting = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
-            Connection = new SqlConnection(ConnectionSting);
-            Connection.Open();
+            //ConnectionSting = AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteTestConnection.ToString()).Result;
+            //Connection = new SqlConnection(ConnectionSting);
+            //Connection.Open();
         }
 
         public DbConnection Connection { get; }
@@ -35,11 +35,11 @@ namespace MoneyNoteUnitTest
             return context;
         }
 
-        public (DbContextOptions<MoneyContext> dbContextOptions, string connectionString) CreateOptionsString()
-        {
-            DbContextOptions<MoneyContext> options = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options;
-            return (options, ConnectionSting);
-        }
+        //public (DbContextOptions<MoneyContext> dbContextOptions, string connectionString) CreateOptionsString()
+        //{
+        //    DbContextOptions<MoneyContext> options = new DbContextOptionsBuilder<MoneyContext>().UseSqlServer(Connection).Options;
+        //    return (options, ConnectionSting);
+        //}
 
         public void Dispose() => Connection.Dispose();
     }

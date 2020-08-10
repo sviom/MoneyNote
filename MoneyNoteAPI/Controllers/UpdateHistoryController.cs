@@ -13,18 +13,6 @@ namespace MoneyNoteAPI.Controllers
     [ApiController]
     public class UpdateHistoryController : ControllerBase
     {
-        public List<UpdateHistory> GetBankBooks(UpdateHistory user)
-        {
-            try
-            {
-                using var context = new MoneyContext();
-                return null;// context.BankBooks.Where(x => x.UserId == user.Id).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
     }
 }
