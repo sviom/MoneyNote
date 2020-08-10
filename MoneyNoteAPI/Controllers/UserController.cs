@@ -156,5 +156,25 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public async Task<ApiResult<bool>> ClearUser([FromBody] ApiRequest<User> request)
+        {
+            var result = new ApiResult<bool>();
+            try
+            {
+                var service = new UserService();
+                var clearResult = await service.ClearUserData(request.Content);
+                if (clearResult)
+                {
+                    result.Content = true;
+                    result.Result = true;
+                }
+            }
+            catch
+            {
+            }
+            return result;
+        }
     }
 }

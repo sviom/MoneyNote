@@ -29,16 +29,34 @@ namespace MoneyNoteLibrary.ViewModels
             if (signinedUser == null)
                 return false;
 
-            IsShowEndPage = true;
+            IsRunProgressRing = true;
 
             var result = await MoneyApi.DeleteUser.ApiLauncher<User, bool>(signinedUser, ControllerEnum.user);
 
-            IsShowEndPage = false;
+            IsRunProgressRing = false;
 
             if (result.Result)
                 return true;
 
             ErrorMessage = "탈퇴 과정에 오류가 발생했습니다.";
+            return false;
+        }
+
+        public async Task<bool> ClearUserData(User user)
+        {
+            if (user == null)
+                return false;
+
+            IsRunProgressRing = true;
+
+            var result = await MoneyApi.ClearUser.ApiLauncher<User, bool>(user, ControllerEnum.user);
+
+            IsRunProgressRing = false;
+
+            if (result.Result)
+                return true;
+
+            ErrorMessage = "초기화 과정에 오류가 발생했습니다.";
             return false;
         }
     }
