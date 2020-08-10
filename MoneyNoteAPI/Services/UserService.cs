@@ -141,6 +141,9 @@ namespace MoneyNoteAPI.Services
                 // 자산
                 var bankbookList = await context.BankBooks.Where(x => x.UserId == user.Id).ToListAsync();
 
+                if (moneyList.Count == 0 && categoryList.Count == 0 && bankbookList.Count == 0)
+                    return true;
+
                 context.MoneyItems.RemoveRange(moneyList);
                 context.MainCategories.RemoveRange(categoryList);
                 context.BankBooks.RemoveRange(bankbookList);
