@@ -26,7 +26,7 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>7FE3E5C77035E179A78CF61BD6414434318C3D2C</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>40A87CC75790D41BE90EC723F9D32C6AE8054076</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -306,15 +306,6 @@
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication">
       <Version>1.5.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Data.Sqlite">
-      <Version>3.1.7</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Data.Sqlite.Core">
-      <Version>3.1.7</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
-      <Version>3.1.7</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
       <Version>3.1.7</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -325,9 +316,6 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="System.ComponentModel.Annotations">
-      <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
