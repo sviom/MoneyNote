@@ -36,7 +36,7 @@ namespace MoneyNoteLibrary.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -101,7 +101,6 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-
         public double MoneySum
         {
             get
@@ -148,6 +147,8 @@ namespace MoneyNoteLibrary.ViewModels
                 return result;
             }
         }
+
+        public string MoneySumHeader => SelectedDate.Date.ToString("Y") + " 총합";
 
         public MoneyViewModel(User user)
         {
@@ -201,11 +202,27 @@ namespace MoneyNoteLibrary.ViewModels
             IsRunProgressRing = false;
         }
 
+        public void GetPreviousMonthMoneyList()
+        {
+            SelectedDate = SelectedDate.AddMonths(-1);
+        }
+
+        public void GetNextMonthMoneyList()
+        {
+            SelectedDate = SelectedDate.AddMonths(1);
+        }
+
+        public void GetTodayMoneyList()
+        {
+            SelectedDate = DateTimeOffset.Now;
+        }
+
         public void ReCalculate()
         {
             OnPropertyChanged(nameof(MoneySum));
             OnPropertyChanged(nameof(IncomeSum));
             OnPropertyChanged(nameof(ExpenseSum));
+            OnPropertyChanged(nameof(MoneySumHeader));
         }
     }
 }

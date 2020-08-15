@@ -134,7 +134,7 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <ContentPresenter x:Name="HeaderContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Foreground="{ThemeResource DatePickerHeaderForeground}" HorizontalAlignment="Stretch" Margin="{ThemeResource DatePickerTopHeaderMargin}" MaxWidth="{ThemeResource DatePickerThemeMaxWidth}" Grid.Row="0" TextWrapping="Wrap" VerticalAlignment="Top" Visibility="Collapsed"/>
-                            <Button x:Name="FlyoutButton" Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" IsEnabled="{TemplateBinding IsEnabled}" 
+                            <Button x:Name="FlyoutButton" Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" IsEnabled="{TemplateBinding IsEnabled}" CornerRadius="{TemplateBinding CornerRadius}"
                                     MinWidth="{TemplateBinding MinWidth}" MaxWidth="{TemplateBinding MaxWidth}" Grid.Row="1" Style="{StaticResource DatePickerFlyoutButtonStyle}" UseSystemFocusVisuals="{TemplateBinding UseSystemFocusVisuals}" VerticalAlignment="Top">
                                 <!--MinWidth="{StaticResource DatePickerThemeMinWidth}" MaxWidth="{StaticResource DatePickerThemeMaxWidth}"-->
                                 <Grid x:Name="FlyoutButtonContentGrid">
@@ -178,13 +178,15 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="이전달" HorizontalAlignment="Center" Style="{StaticResource CommonButtonStyle}" />
+                <Button Grid.Column="0" Content="이전달" HorizontalAlignment="Center" Style="{StaticResource CommonButtonStyle}"
+                        Click="{x:Bind ViewModel.GetPreviousMonthMoneyList}" />
 
                 <DatePicker Style="{StaticResource MonthSelectorPickerStyle}" Grid.Column="1" HorizontalAlignment="Stretch" MaxWidth="500"
-                            SelectedDate="{x:Bind ViewModel.SelectedDate, Mode=TwoWay}"
+                            SelectedDate="{x:Bind ViewModel.SelectedDate, Mode=TwoWay}" CornerRadius="4"
                             DayVisible="False" />
 
-                <Button Grid.Column="2" Content="다음달" HorizontalAlignment="Center" Style="{StaticResource CommonButtonStyle}" />
+                <Button Grid.Column="2" Content="다음달" HorizontalAlignment="Center" Style="{StaticResource CommonButtonStyle}" 
+                        Click="{x:Bind ViewModel.GetNextMonthMoneyList}" />
             </Grid>
 
             <SemanticZoom Grid.Row="1">
@@ -247,16 +249,17 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </SemanticZoom.ZoomedOutView>
-
             </SemanticZoom>
-
         </Grid>
 
         <StackPanel Grid.Column="1" Margin="10,0,0,0" >
+            <Button Content="오늘" Style="{StaticResource CommonButtonStyle}" 
+                    Click="{x:Bind ViewModel.GetTodayMoneyList}" />
+
             <TextBlock Text="현재 남은 금액" Style="{StaticResource SubtitleTextBlockStyle}" />
             <TextBlock Text="{x:Bind BankBookViewModel.AllAssets, Converter={StaticResource MoneyDividerConverter}}" FontSize="24"/>
 
-            <TextBlock Text="지출/수입 총합" Margin="0,10,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="{x:Bind ViewModel.MoneySumHeader}" Margin="0,10,0,0" Style="{StaticResource SubtitleTextBlockStyle}" />
             <TextBlock Text="{x:Bind ViewModel.MoneySum, Converter={StaticResource MoneyDividerConverter}}" FontSize="24"/>
 
             <TextBlock  Text="지출" Margin="0,10,0,0" Style="{StaticResource SubtitleTextBlockStyle}"/>
