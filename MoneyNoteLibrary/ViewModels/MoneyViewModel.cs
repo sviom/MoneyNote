@@ -86,7 +86,7 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
-        private DateTimeOffset _SelectedDate;
+        private DateTimeOffset _SelectedDate = DateTimeOffset.Now;
         public DateTimeOffset SelectedDate
         {
             get { return _SelectedDate; }
@@ -152,7 +152,8 @@ namespace MoneyNoteLibrary.ViewModels
         public MoneyViewModel(User user)
         {
             LoginedUser = user;
-            Initialize();
+            //Initialize();
+            GetMoneyList(DateTimeOffset.Now);
         }
 
         public async void Initialize()
@@ -180,8 +181,11 @@ namespace MoneyNoteLibrary.ViewModels
         {
             IsRunProgressRing = true;
             MoneyList = new ObservableCollection<MoneyItem>();
+
+            var reqeust = new ApiRequest<User, DateTimeOffset>(LoginedUser, selectedDate);
+
             //var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
-            var result = await MoneyApi.GetAllMoney.ApiLauncher<string, List<MoneyItem>>(LoginedUser.Id.ToString());
+            var result = await MoneyApi.GetMoneyListWithDate.ApiLauncher<List<MoneyItem>>(reqeust);
             if (result.Result)
             {
                 foreach (var item in result.Content)
