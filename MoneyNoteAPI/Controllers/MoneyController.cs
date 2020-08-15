@@ -39,6 +39,29 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
+        public ApiResult<List<MoneyItem>> GetMoneyListWithDate([FromBody] ApiRequest<User, DateTimeOffset> request)
+        {
+            var result = new ApiResult<List<MoneyItem>>();
+
+            try
+            {
+                var userInfo = request.Content;
+                var standardDate = request.SubContent;
+
+                //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
+                var service = new MoneyService();
+                var moneyList = service.GetMoneyList(x => x.UserId.ToString() == userInfo.Id.ToString() && x.CreatedTime.Year == standardDate.Year && x.CreatedTime.Month == standardDate.Month);
+                result.Content = moneyList;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpPost]
         public ApiResult<MoneyItem> SaveMoney([FromBody]ApiRequest<MoneyItem> item)
         {
             var result = new ApiResult<MoneyItem>();

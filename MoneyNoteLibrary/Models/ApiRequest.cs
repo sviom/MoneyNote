@@ -12,4 +12,19 @@ namespace MoneyNoteLibrary.Models
 
         public T Content { get; set; }
     }
+
+    public class ApiRequest<T, U>
+    {
+        public ApiRequest() { }
+
+        public ApiRequest(T item, U subItem) : base()
+        {
+            Content = item;
+            SubContent = subItem;
+        }
+
+        public T Content { get; set; }
+
+        public U SubContent { get; set; }
+    }
 }
