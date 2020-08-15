@@ -86,6 +86,22 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        private DateTimeOffset _SelectedDate;
+        public DateTimeOffset SelectedDate
+        {
+            get { return _SelectedDate; }
+            set
+            {
+                if (_SelectedDate == value)
+                    return;
+
+                _SelectedDate = value;
+                OnPropertyChanged();
+                GetMoneyList(_SelectedDate);
+            }
+        }
+
+
         public double MoneySum
         {
             get
@@ -140,6 +156,27 @@ namespace MoneyNoteLibrary.ViewModels
         }
 
         public async void Initialize()
+        {
+            IsRunProgressRing = true;
+            MoneyList = new ObservableCollection<MoneyItem>();
+            //var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
+            var result = await MoneyApi.GetAllMoney.ApiLauncher<string, List<MoneyItem>>(LoginedUser.Id.ToString());
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    MoneyList.Add(item);
+                }
+
+                MoneyGroupList = MoneyList.GroupBy(x => x.CreatedTime.Date, (key, itemList) => new MoneyItemsGroup(key, itemList)).ToList();
+
+                ReCalculate();
+            }
+
+            IsRunProgressRing = false;
+        }
+
+        public async void GetMoneyList(DateTimeOffset selectedDate)
         {
             IsRunProgressRing = true;
             MoneyList = new ObservableCollection<MoneyItem>();
