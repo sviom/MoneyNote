@@ -4,7 +4,11 @@ using System.Text;
 
 namespace MoneyNoteLibrary.Models
 {
-    public class ApiRequest<T>
+    public interface IApiRequest
+    {
+    }
+
+    public class ApiRequest<T> : IApiRequest
     {
         public ApiRequest() { }
 
@@ -13,7 +17,7 @@ namespace MoneyNoteLibrary.Models
         public T Content { get; set; }
     }
 
-    public class ApiRequest<T, U>
+    public class ApiRequest<T, U> : IApiRequest
     {
         public ApiRequest() { }
 
