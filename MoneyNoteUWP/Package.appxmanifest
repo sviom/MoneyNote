@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="55954sViom.MoneyNoteDev"
+    Name="55954sViom.MoneyNote"
     Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
-    Version="1.0.80.0" />
+    Version="1.0.85.0" />
 
 
-  <mp:PhoneIdentity PhoneProductId="fe49a83a-ee1e-497a-84fb-3018b72929b0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="319dd05a-6746-4934-a084-088c2d5ebb5f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MoneyNoteDev</DisplayName>
+    <DisplayName>MoneyNote</DisplayName>
     <PublisherDisplayName>Hanbyul Kang</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -33,7 +33,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="MoneyNoteDev.App">
       <uap:VisualElements
-        DisplayName="MoneyNoteDev"
+        DisplayName="MoneyNote"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="MoneyNote 개발 버전"
