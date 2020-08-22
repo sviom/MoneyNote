@@ -24,7 +24,7 @@
     <AppxPackageDir>C:\Users\kangh\Desktop\TestApp\</AppxPackageDir>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateThumbprint>D50E0F97E02CA2D56C675DB03EF45BB699D8206F</PackageCertificateThumbprint>
   </PropertyGroup>

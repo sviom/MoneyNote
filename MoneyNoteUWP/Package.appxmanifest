@@ -9,7 +9,7 @@
   <Identity
     Name="55954sViom.MoneyNote"
     Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
-    Version="1.0.87.0" />
+    Version="1.0.89.0" />
 
 
   <mp:PhoneIdentity PhoneProductId="319dd05a-6746-4934-a084-088c2d5ebb5f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -31,14 +31,14 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MoneyNoteDev.App">
+      EntryPoint="MoneyNote.App">
       <uap:VisualElements
         DisplayName="MoneyNote"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="MoneyNote 개발 버전"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="가계부Dev">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="가계부">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
