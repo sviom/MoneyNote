@@ -36,7 +36,7 @@ namespace MoneyNoteLibrary.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -83,6 +83,21 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _MoneyGroupList = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private DateTimeOffset _SelectedDate = DateTimeOffset.Now;
+        public DateTimeOffset SelectedDate
+        {
+            get { return _SelectedDate; }
+            set
+            {
+                if (_SelectedDate == value)
+                    return;
+
+                _SelectedDate = value;
+                OnPropertyChanged();
+                GetMoneyList(_SelectedDate);
             }
         }
 
@@ -133,10 +148,13 @@ namespace MoneyNoteLibrary.ViewModels
             }
         }
 
+        public string MoneySumHeader => SelectedDate.Date.ToString("Y") + " 총합";
+
         public MoneyViewModel(User user)
         {
             LoginedUser = user;
-            Initialize();
+            //Initialize();
+            GetMoneyList(DateTimeOffset.Now);
         }
 
         public async void Initialize()
@@ -160,11 +178,51 @@ namespace MoneyNoteLibrary.ViewModels
             IsRunProgressRing = false;
         }
 
+        public async void GetMoneyList(DateTimeOffset selectedDate)
+        {
+            IsRunProgressRing = true;
+            MoneyList = new ObservableCollection<MoneyItem>();
+
+            var reqeust = new ApiRequest<User, DateTimeOffset>(LoginedUser, selectedDate);
+
+            //var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
+            var result = await MoneyApi.GetMoneyListWithDate.ApiLauncher<List<MoneyItem>>(reqeust);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    MoneyList.Add(item);
+                }
+
+                MoneyGroupList = MoneyList.GroupBy(x => x.CreatedTime.Date, (key, itemList) => new MoneyItemsGroup(key, itemList)).ToList();
+
+                ReCalculate();
+            }
+
+            IsRunProgressRing = false;
+        }
+
+        public void GetPreviousMonthMoneyList()
+        {
+            SelectedDate = SelectedDate.AddMonths(-1);
+        }
+
+        public void GetNextMonthMoneyList()
+        {
+            SelectedDate = SelectedDate.AddMonths(1);
+        }
+
+        public void GetTodayMoneyList()
+        {
+            SelectedDate = DateTimeOffset.Now;
+        }
+
         public void ReCalculate()
         {
             OnPropertyChanged(nameof(MoneySum));
             OnPropertyChanged(nameof(IncomeSum));
             OnPropertyChanged(nameof(ExpenseSum));
+            OnPropertyChanged(nameof(MoneySumHeader));
         }
     }
 }

@@ -116,7 +116,11 @@ namespace MoneyNoteLibrary.Enums
             /// <summary>
             /// 사용자 정보 초기화
             /// </summary>
-            ClearUser
+            ClearUser,
+            /// <summary>
+            /// 선택된 날짜에 대한 금액 정보들 가져오기
+            /// </summary>
+            GetMoneyListWithDate
         }
 
         /// <summary>
