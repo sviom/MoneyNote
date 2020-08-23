@@ -178,6 +178,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Fonts\OFL.txt" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
@@ -223,6 +224,12 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Assets\Fonts\NotoSansKR-Medium.otf" />
+    <Content Include="Assets\Fonts\NotoSansKR-Regular.otf" />
+    <Content Include="Assets\Fonts\NotoSansKR-Thin.otf" />
+    <Content Include="Assets\Fonts\NotoSansKR-Black.otf" />
+    <Content Include="Assets\Fonts\NotoSansKR-Bold.otf" />
+    <Content Include="Assets\Fonts\NotoSansKR-Light.otf" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
