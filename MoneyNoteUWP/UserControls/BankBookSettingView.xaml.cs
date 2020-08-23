@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MoneyNote.UserControls
 {
-    public sealed partial class BankBookManage : UserControl, INotifyPropertyChanged
+    public sealed partial class BankBookSettingView : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,7 +45,7 @@ namespace MoneyNote.UserControls
             }
         }
 
-        public BankBookManage()
+        public BankBookSettingView()
         {
             this.InitializeComponent();
             this.Loaded += BankBookManage_Loaded;

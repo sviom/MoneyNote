@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MoneyNote.UserControls
 {
-    public sealed partial class MainSetting : UserControl, INotifyPropertyChanged
+    public sealed partial class UserSettingView : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -44,7 +44,7 @@ namespace MoneyNote.UserControls
             }
         }
 
-        public MainSetting()
+        public UserSettingView()
         {
             this.InitializeComponent();
             this.Loaded += MainSetting_Loaded;

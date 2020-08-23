@@ -136,14 +136,14 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserControls\BankBookManage.xaml.cs">
-      <DependentUpon>BankBookManage.xaml</DependentUpon>
+    <Compile Include="UserControls\BankBookSettingView.xaml.cs">
+      <DependentUpon>BankBookSettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CategorySetting.xaml.cs">
-      <DependentUpon>CategorySetting.xaml</DependentUpon>
+    <Compile Include="UserControls\CategorySettingView.xaml.cs">
+      <DependentUpon>CategorySettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MainSetting.xaml.cs">
-      <DependentUpon>MainSetting.xaml</DependentUpon>
+    <Compile Include="UserControls\UserSettingView.xaml.cs">
+      <DependentUpon>UserSettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SubCategorySetting.xaml.cs">
       <DependentUpon>SubCategorySetting.xaml</DependentUpon>
@@ -250,15 +250,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\BankBookManage.xaml">
+    <Page Include="UserControls\BankBookSettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\CategorySetting.xaml">
+    <Page Include="UserControls\CategorySettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MainSetting.xaml">
+    <Page Include="UserControls\UserSettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
