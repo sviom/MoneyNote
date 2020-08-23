@@ -20,11 +20,11 @@ namespace MoneyNoteWebAdmin.Controllers
         [HttpGet]
         public async Task<IEnumerable<User>> Get()
         {
-            var sfff = new ApiRequest<bool>(true);
+            var request = new ApiRequest<bool>(true);
 
-            var aaa = await MoneyApiInfo.MoneyApi.GetUsers.ApiLauncher<List<User>>(sfff, MoneyApiInfo.ControllerEnum.user);
+            var result = await MoneyApiInfo.MoneyApi.GetUsers.ApiLauncher<List<User>>(request, MoneyApiInfo.ControllerEnum.user);
 
-            return aaa.Content.ToArray();
+            return result.Content.ToArray();
         }
     }
 }

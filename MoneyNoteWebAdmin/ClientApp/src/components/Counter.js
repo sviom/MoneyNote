@@ -48,11 +48,11 @@ export class Counter extends Component {
 
         return (
             <div>
-                <h1>Counter</h1>
+                <h1>사용자 관리</h1>
 
-                <p>This is a simple example of a React component.</p>
+                {/*<p>This is a simple example of a React component.</p> */}
 
-                <p aria-live="polite">Current count: <strong>{this.state.currentCount}</strong></p>
+                {/* <p aria-live="polite">Current count: <strong>{this.state.currentCount}</strong></p> */}
 
                 <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
                 <p>사용자 테스트</p>
