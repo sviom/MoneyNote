@@ -148,28 +148,28 @@
     <Compile Include="UserControls\SubCategorySetting.xaml.cs">
       <DependentUpon>SubCategorySetting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BankBooksPage.xaml.cs">
+    <Compile Include="Pages\BankBooksPage.xaml.cs">
       <DependentUpon>BankBooksPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomePage.xaml.cs">
+    <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MoneyBasicListPage.xaml.cs">
+    <Compile Include="Pages\MoneyBasicListPage.xaml.cs">
       <DependentUpon>MoneyBasicListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MoneyCreateView.xaml.cs">
+    <Compile Include="Pages\MoneyCreateView.xaml.cs">
       <DependentUpon>MoneyCreateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MoneyDetailView.xaml.cs">
+    <Compile Include="Pages\MoneyDetailView.xaml.cs">
       <DependentUpon>MoneyDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingPage.xaml.cs">
+    <Compile Include="Pages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SignUpPage.xaml.cs">
+    <Compile Include="Pages\SignUpPage.xaml.cs">
       <DependentUpon>SignUpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UpdateHistoryPage.xaml.cs">
+    <Compile Include="Pages\UpdateHistoryPage.xaml.cs">
       <DependentUpon>UpdateHistoryPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -266,35 +266,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BankBooksPage.xaml">
+    <Page Include="Pages\BankBooksPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HomePage.xaml">
+    <Page Include="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MoneyBasicListPage.xaml">
+    <Page Include="Pages\MoneyBasicListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MoneyCreateView.xaml">
+    <Page Include="Pages\MoneyCreateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MoneyDetailView.xaml">
+    <Page Include="Pages\MoneyDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingPage.xaml">
+    <Page Include="Pages\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SignUpPage.xaml">
+    <Page Include="Pages\SignUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UpdateHistoryPage.xaml">
+    <Page Include="Pages\UpdateHistoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

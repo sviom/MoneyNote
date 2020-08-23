@@ -18,12 +18,12 @@ using Windows.UI.Xaml.Navigation;
 
 // 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=234238에 나와 있습니다.
 
-namespace MoneyNote.Views
+namespace MoneyNote.Pages
 {
     /// <summary>
     /// 자체적으로 사용하거나 프레임 내에서 탐색할 수 있는 빈 페이지입니다.
     /// </summary>
-    public sealed partial class MoneyCreateView : Page, INotifyPropertyChanged
+    public sealed partial class SignUpPage : Page, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,8 +32,8 @@ namespace MoneyNote.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private MoneyHandleViewModel _ViewModel;
-        public MoneyHandleViewModel ViewModel
+        private SignUpViewModel _ViewModel;
+        public SignUpViewModel ViewModel
         {
             get { return _ViewModel; }
             set
@@ -46,43 +46,33 @@ namespace MoneyNote.Views
             }
         }
 
-        private BankBookViewModel _BankBookViewModel;
-        public BankBookViewModel BankBookViewModel
+        public SignUpPage()
         {
-            get { return _BankBookViewModel; }
-            set
-            {
-                if (_BankBookViewModel == value)
-                    return;
+            this.InitializeComponent();
+            this.Loaded += SignUpPage_Loaded;
+        }
 
-                _BankBookViewModel = value;
-                OnPropertyChanged();
+        private void SignUpPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel = new SignUpViewModel();
+        }
+
+        private async void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            (var result, var user) = await ViewModel.SignUp();
+            if (result)
+            {
+                if (user != null)
+                    App.LogInedUser = user;
+
+                Frame.Navigate(typeof(HomePage));
             }
         }
 
-        public MoneyCreateView()
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.InitializeComponent();
-            this.Loaded += MoneyCreateView_Loaded;
-            this.Unloaded += MoneyCreateView_Unloaded;
-        }
-
-        private void MoneyCreateView_Loaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel = new MoneyHandleViewModel(App.LogInedUser);
-            BankBookViewModel = new BankBookViewModel(App.LogInedUser);
-        }
-
-        private void MoneyCreateView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel = null;
-        }
-
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            var result = await ViewModel.SaveMoney();
-            if (result)
-                HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyBasicListPage));
+            if (Frame.CanGoBack)
+                Frame.GoBack();
         }
     }
 }

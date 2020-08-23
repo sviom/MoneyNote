@@ -1,4 +1,4 @@
-﻿using MoneyNote.Views;
+﻿using MoneyNote.Pages;
 using MoneyNoteLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
