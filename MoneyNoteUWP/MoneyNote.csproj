@@ -157,11 +157,11 @@
     <Compile Include="Pages\MoneyBasicListPage.xaml.cs">
       <DependentUpon>MoneyBasicListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MoneyCreateView.xaml.cs">
-      <DependentUpon>MoneyCreateView.xaml</DependentUpon>
+    <Compile Include="Pages\MoneyCreatePage.xaml.cs">
+      <DependentUpon>MoneyCreatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MoneyDetailView.xaml.cs">
-      <DependentUpon>MoneyDetailView.xaml</DependentUpon>
+    <Compile Include="Pages\MoneyDetailPage.xaml.cs">
+      <DependentUpon>MoneyDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
@@ -278,11 +278,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MoneyCreateView.xaml">
+    <Page Include="Pages\MoneyCreatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MoneyDetailView.xaml">
+    <Page Include="Pages\MoneyDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

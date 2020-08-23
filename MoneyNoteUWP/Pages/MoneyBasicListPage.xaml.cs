@@ -80,7 +80,7 @@ namespace MoneyNote.Pages
 
         private void NavigateCreatePage_Click(object sender, RoutedEventArgs e)
         {
-            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyCreateView));
+            HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyCreatePage));
         }
 
         private void MoneyListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -89,7 +89,7 @@ namespace MoneyNote.Pages
             {
                 if (e.ClickedItem is MoneyItem item)
                 {
-                    HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyDetailView), item);
+                    HomePage.CurrentHomePage.MenuContent.Navigate(typeof(MoneyDetailPage), item);
                 }
             }
         }
