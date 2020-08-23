@@ -108,7 +108,21 @@ namespace MoneyNote.Converter
         }
     }
 
+    public class BooleanReverse : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (!(value is bool boolValue))
+                return false;
 
+            return !boolValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return false;
+        }
+    }
 
     #region Visibility 관련
 

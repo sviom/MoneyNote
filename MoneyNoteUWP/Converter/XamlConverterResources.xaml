@@ -16,4 +16,6 @@
 
     <local:NullToBoolean x:Key="NullToBoolean" />
     <local:NotNullToBoolean x:Key="NotNullToBoolean" />
+
+    <local:BooleanReverse x:Key="BooleanReverse" />
 </ResourceDictionary>
