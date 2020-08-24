@@ -124,6 +124,20 @@ namespace MoneyNote.Converter
         }
     }
 
+    public class ColorTo70Opacity : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var colorValue = (Color)value;
+            return Color.FromArgb(0xB3, colorValue.R, colorValue.G, colorValue.B);//80%
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
     #region Visibility 관련
 
 

@@ -18,4 +18,5 @@
     <local:NotNullToBoolean x:Key="NotNullToBoolean" />
 
     <local:BooleanReverse x:Key="BooleanReverse" />
+    <local:ColorTo70Opacity x:Key="ColorTo70Opacity" />
 </ResourceDictionary>
