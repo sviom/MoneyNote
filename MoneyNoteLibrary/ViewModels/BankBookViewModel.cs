@@ -24,7 +24,7 @@ namespace MoneyNoteLibrary.ViewModels
 
                 _BankBooks = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(AllAssets));                
+                OnPropertyChanged(nameof(AllAssets));
             }
         }
 
@@ -57,6 +57,21 @@ namespace MoneyNoteLibrary.ViewModels
                 OnPropertyChanged(nameof(IsShowDeleteButton));
             }
         }
+
+        private int _BankBookSelectedIndex;
+        public int BankBookSelectedIndex
+        {
+            get { return _BankBookSelectedIndex; }
+            set
+            {
+                if (_BankBookSelectedIndex == value)
+                    return;
+
+                _BankBookSelectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _Name;
         public string Name
@@ -98,20 +113,6 @@ namespace MoneyNoteLibrary.ViewModels
                     return;
 
                 _InputAreaText = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _IsShowInputArea;
-        public bool IsShowInputArea
-        {
-            get { return _IsShowInputArea; }
-            set
-            {
-                if (_IsShowInputArea == value)
-                    return;
-
-                _IsShowInputArea = value;
                 OnPropertyChanged();
             }
         }
@@ -164,19 +165,12 @@ namespace MoneyNoteLibrary.ViewModels
                 Name = SelectedItem.Name;
                 AssetsText = SelectedItem.Assets.ToString();
             }
-            ChangeInputArea();
         }
 
-        public void ChangeInputArea()
+        public void AddNewBankBookView()
         {
-            IsShowInputArea = !IsShowInputArea;
-            if (IsShowInputArea)
-                InputAreaText = "내용 삭제";
-            else
-            {
-                InputAreaText = "새로 추가";
-                Clear();
-            }
+            Clear();
+            BankBookSelectedIndex = -1;
         }
 
         public void Clear()
@@ -235,7 +229,6 @@ namespace MoneyNoteLibrary.ViewModels
             else
             {
                 BankBooks.Add(result.Content);
-                ChangeInputArea();
             }
 
 
@@ -262,7 +255,6 @@ namespace MoneyNoteLibrary.ViewModels
             else
             {
                 await GetBankBooks();
-                ChangeInputArea();
             }
 
             IsRunProgressRing = false;
@@ -282,7 +274,6 @@ namespace MoneyNoteLibrary.ViewModels
             else
             {
                 BankBooks.Remove(SelectedItem);
-                ChangeInputArea();
             }
 
             IsRunProgressRing = false;

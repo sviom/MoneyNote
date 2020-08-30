@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="MoneyNote.Pages.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MoneyNote.Pages"
+    xmlns:custom="using:MoneyNote.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Pivot>
+            <PivotItem Header="통장관리">
+                <ScrollViewer>
+                    <custom:BankBookSettingView />
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="수입분류">
+                <ScrollViewer>
+                    <custom:CategorySettingView Division="Income" />
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="지출분류">
+                <ScrollViewer>
+                    <custom:CategorySettingView Division="Expense" />
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="초기화">
+                <ScrollViewer>
+                    <custom:UserSettingView />
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

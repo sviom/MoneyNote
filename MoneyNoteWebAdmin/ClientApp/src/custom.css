@@ -1,0 +1,23 @@
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+code {
+    color: #E01A76;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+html {
+    font-family: 'Noto Sans KR'
+}
+
+@font-face {
+    font-family: "Noto Sans KR";
+    src: url("font/NotoSansKR-Regular.otf") format('opentype')
+}

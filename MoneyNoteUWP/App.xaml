@@ -6,6 +6,11 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <FontFamily x:Key="NoteDefaultFont">/Assets/Fonts/NotoSansKR-Regular.otf#Noto Sans KR Regular</FontFamily>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Converter/XamlConverterResources.xaml"/>
                 <ResourceDictionary Source="./Style/BasicStyle.xaml"/>

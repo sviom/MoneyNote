@@ -74,7 +74,7 @@ namespace MoneyNote
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Views.SignUpPage));
+            Frame.Navigate(typeof(Pages.SignUpPage));
         }
 
         private async void PasswordTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -94,7 +94,7 @@ namespace MoneyNote
                     await SaveId();
                 //AzureKeyVault.SaltPassword = await AzureKeyVault.OnGetAsync(KeyVaultName.SaltPassword.ToString());
                 App.LogInedUser = user;
-                Frame.Navigate(typeof(Views.HomePage));
+                Frame.Navigate(typeof(Pages.HomePage));
             }
         }
 

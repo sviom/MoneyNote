@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="MoneyNote.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MoneyNote.Pages"
+    xmlns:ad="using:MoneyNote.UserControls.AD"
+    xmlns:model="using:MoneyNoteLibrary.Models"
+    xmlns:custom="using:MoneyNote.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:DefaultBindMode="OneWay"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <NavigationView IsBackEnabled="True" 
+                        ItemInvoked="NavigationView_ItemInvoked"
+                        BackRequested="NavigationView_BackRequested">
+            <NavigationView.Header>
+                <Grid VerticalAlignment="Stretch" Margin="0,12,12,0">
+                    <TextBlock Text="{x:Bind PageHeader}"/>
+                </Grid>
+            </NavigationView.Header>
+            
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="BasicListView" Icon="List" Tag="MoneyBasicListPage" >목록보기</NavigationViewItem>
+                <NavigationViewItem x:Name="BankListView" Icon="Permissions" Tag="BankBooksPage" Content="자산 현황" />
+                <!--<NavigationViewItem x:Name="GotoVersionHistory" Icon="Clock" Tag="UpdateHistory" Content="업데이트 기록" />-->
+                <!--<NavigationViewItem x:Name="MonthlyListView" Icon="CalendarDay">월별보기</NavigationViewItem>
+                <NavigationViewItem x:Name="CategoryView" Icon="Comment">카테고리</NavigationViewItem>-->
+            </NavigationView.MenuItems>
+
+            <NavigationView.PaneFooter>
+                <StackPanel>
+                    <ad:VungleBannerAd Width="320" Height="50" />
+                </StackPanel>
+            </NavigationView.PaneFooter>
+            <Frame x:Name="ContentFrame" Margin="12,0,12,12"></Frame>
+        </NavigationView>
+    </Grid>
+</Page>

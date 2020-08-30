@@ -108,7 +108,35 @@ namespace MoneyNote.Converter
         }
     }
 
+    public class BooleanReverse : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (!(value is bool boolValue))
+                return false;
 
+            return !boolValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return false;
+        }
+    }
+
+    public class ColorTo70Opacity : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var colorValue = (Color)value;
+            return Color.FromArgb(0xB3, colorValue.R, colorValue.G, colorValue.B);//80%
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotSupportedException();
+        }
+    }
 
     #region Visibility 관련
 
