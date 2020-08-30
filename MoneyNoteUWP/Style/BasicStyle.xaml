@@ -3,6 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MoneyNote.Style">
 
+    <SolidColorBrush x:Key="MainColor" Color="#007405"/>
+    <SolidColorBrush x:Key="MainColor70" Color="#CC007405"/>
+    
 
     <Style x:Key="BasicErrorMessage" TargetType="TextBlock">
         <Setter Property="Foreground" Value="Red"/>
@@ -123,4 +126,7 @@
     <Style TargetType="TextBox">
         <Setter Property="CornerRadius" Value="4" />
     </Style>
+    
+    
+    
 </ResourceDictionary>
