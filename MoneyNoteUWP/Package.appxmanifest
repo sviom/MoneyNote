@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="55954sViom.MoneyNoteDev"
+    Name="55954sViom.MoneyNote"
     Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
-    Version="1.0.91.0" />
+    Version="0.0.1.0" />
 
 
-  <mp:PhoneIdentity PhoneProductId="df2d0fde-92bf-45b6-a613-5adf4638fd7b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="968bc494-1ea6-469c-b00a-8a6a5802a90f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MoneyNoteDev</DisplayName>
+    <DisplayName>MoneyNote</DisplayName>
     <PublisherDisplayName>Hanbyul Kang</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
