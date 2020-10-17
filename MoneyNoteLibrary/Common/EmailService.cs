@@ -17,7 +17,7 @@ namespace MoneyNoteLibrary.Common
         public static string basic = "https://moneynoteapi.azurewebsites.net/api/";
 #endif
 
-        public static string Key => "";
+        public static string Key => AzureKeyVault.OnGetAsync(KeyVaultName.SendGridKey.ToString()).Result;
 
         public static async Task<bool> SendEmail(string emailAddress, User user)
         {

@@ -10,7 +10,7 @@ namespace MoneyNoteLibrary.Common
 {
     public static class AzureKeyVault
     {
-        public static string SaltPassword { get; set; }// => OnGetAsync("SaltPassword").Result;
+        public static string SaltPassword => OnGetAsync("SaltPassword").Result;
 
         public static string GetKeyVaultEndpoint() => "https://todaylunchkeyvault.vault.azure.net";
 
@@ -36,6 +36,7 @@ namespace MoneyNoteLibrary.Common
     {
         MoneyNoteConnectionString,
         SaltPassword,
-        MoneyNoteTestConnection
+        MoneyNoteTestConnection,
+        SendGridKey
     }
 }
