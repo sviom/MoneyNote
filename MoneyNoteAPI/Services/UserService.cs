@@ -97,6 +97,18 @@ namespace MoneyNoteAPI.Services
             }
         }
 
+        public User GetUser(string userId, bool isApproved = false)
+        {
+            try
+            {
+                return SqlLauncher.Get<User>(x => x.IsApproved == isApproved && x.Id.ToString() == userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool ApproveUser(User item)
         {
             if (item == null)
@@ -158,6 +170,20 @@ namespace MoneyNoteAPI.Services
             }
 
             return returnValue;
+        }
+
+        public bool UpdateUser(User user)
+        {
+            try
+            {
+                var result = SqlLauncher.Update(user);
+                if (result != null)
+                    return true;
+            }
+            catch
+            {
+            }
+            return false;
         }
     }
 }

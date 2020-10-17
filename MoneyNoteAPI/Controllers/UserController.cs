@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
 using MoneyNoteLibrary;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
+using Newtonsoft.Json;
 
 namespace MoneyNoteAPI.Controllers
 {
@@ -134,6 +136,26 @@ namespace MoneyNoteAPI.Controllers
                 result.Result = false;
             }
             return result;
+        }
+
+        [HttpGet]
+        public bool ConfirmEmail(string confirmMessage)
+        {
+            try
+            {
+                var emailMessage = UtilityLauncher.DecryptAES256(confirmMessage, AzureKeyVault.SaltPassword);
+                var needConfirmedUser = JsonConvert.DeserializeObject<User>(emailMessage);
+
+                var service = new UserService();
+                var user = service.GetUser(needConfirmedUser.Id.ToString());
+                user.IsApproved = true;
+                var result = service.UpdateUser(user);
+                return result;
+            }
+            catch
+            {
+            }
+            return false;
         }
 
         [HttpPost]
