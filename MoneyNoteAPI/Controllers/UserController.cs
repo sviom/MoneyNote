@@ -19,7 +19,7 @@ namespace MoneyNoteAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public ApiResult<User> SignUp([FromBody] ApiRequest<User> item)
+        public async Task<ApiResult<User>> SignUp([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
@@ -50,6 +50,7 @@ namespace MoneyNoteAPI.Controllers
                     {
                         // 이메일 보내기
                         // SendEmail
+                        await EmailService.SendEmail("kanghanstar@outlook.com", insertResult);
 
                         result.Content = insertResult;
                         result.Result = true;
