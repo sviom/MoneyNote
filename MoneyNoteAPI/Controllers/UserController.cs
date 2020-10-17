@@ -45,8 +45,15 @@ namespace MoneyNoteAPI.Controllers
                 else
                 {
                     var insertResult = service.SignUp(item.Content);
-                    result.Content = insertResult;
-                    result.Result = true;
+
+                    if (insertResult != null)
+                    {
+                        // 이메일 보내기
+                        // SendEmail
+
+                        result.Content = insertResult;
+                        result.Result = true;
+                    }
                 }
             }
             catch
