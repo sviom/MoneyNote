@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Connections.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
@@ -48,12 +49,19 @@ namespace MoneyNoteAPI.Controllers
 
                     if (insertResult != null)
                     {
-                        // 이메일 보내기
-                        // SendEmail
-                        await EmailService.SendEmail("kanghanstar@outlook.com", insertResult);
-
-                        result.Content = insertResult;
-                        result.Result = true;
+                        if (!string.IsNullOrEmpty(insertResult.Email))
+                        {
+                            var sendEmailResult = await EmailService.SendConfirmEmail("kanghanstar@outlook.com", insertResult);
+                            if (sendEmailResult)
+                            {
+                                result.Content = insertResult;
+                                result.Result = true;
+                            }
+                            else
+                            {
+                                result.ResultMessage = "이메일 인증에 문제가 발생했습니다.";
+                            }
+                        }
                     }
                 }
             }

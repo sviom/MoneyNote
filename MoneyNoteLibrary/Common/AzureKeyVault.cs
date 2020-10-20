@@ -37,6 +37,6 @@ namespace MoneyNoteLibrary.Common
         MoneyNoteConnectionString,
         SaltPassword,
         MoneyNoteTestConnection,
-        SendGridKey
+        MainEmailKey
     }
 }
