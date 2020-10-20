@@ -51,7 +51,7 @@ namespace MoneyNoteAPI.Controllers
                     {
                         if (!string.IsNullOrEmpty(insertResult.Email))
                         {
-                            var sendEmailResult = await EmailService.SendConfirmEmail("kanghanstar@outlook.com", insertResult);
+                            var sendEmailResult = await EmailLauncher.SendConfirmEmail("kanghanstar@outlook.com", insertResult);
                             if (sendEmailResult)
                             {
                                 result.Content = insertResult;

@@ -9,14 +9,8 @@ using SendGrid.Helpers.Mail;
 
 namespace MoneyNoteLibrary.Common
 {
-    public class EmailService
+    public class EmailLauncher
     {
-#if DEBUG
-        public static string basic = "http://localhost:50456/api/";
-#else
-        public static string basic = "https://moneynoteapi.azurewebsites.net/api/";
-#endif
-
         public static string Key => AzureKeyVault.OnGetAsync(KeyVaultName.MainEmailKey.ToString()).Result;
 
         public static async Task<bool> SendConfirmEmail(string emailAddress, User user)
@@ -33,7 +27,7 @@ namespace MoneyNoteLibrary.Common
             var encryptedUser = UtilityLauncher.EncryptAES256(userString, AzureKeyVault.SaltPassword);
             var htmlContent = @"
 <strong>우측의 링크를 클릭해주세요.</strong>
-<a href='" + basic + encryptedUser + "' >이메일 인증 링크</a>";
+<a href='" + HttpLauncher.BaseURL + encryptedUser + "' >이메일 인증 링크</a>";
             //var displayRecipients = false; // set this to true if you want recipients to see each others mail id 
             //var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, "", htmlContent, false);
             var msg = MailHelper.CreateSingleEmail(mailFrom, mailTo, subject, "", htmlContent);
