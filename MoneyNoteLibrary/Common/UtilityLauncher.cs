@@ -36,6 +36,22 @@ namespace MoneyNoteLibrary.Common
             return urlSafeBase64String.Replace('+', '-').Replace('/', '_').TrimEnd('=');
         }
 
+        public static string ConvertSafeString(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            return text.Replace('+', '-').Replace('/', '_').TrimEnd('=');
+        }
+
+        public static string ConvertSaftToOriginalString(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            return text.Replace('-', '+').Replace('_', '/');
+        }
+
         public static Guid ConvertBase64ToGuid(string base64)
         {
             base64 = base64.Replace('-', '+').Replace('_', '/');

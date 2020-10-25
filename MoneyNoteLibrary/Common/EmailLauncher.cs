@@ -25,9 +25,14 @@ namespace MoneyNoteLibrary.Common
 
             var userString = JsonConvert.SerializeObject(user);
             var encryptedUser = UtilityLauncher.EncryptAES256(userString, AzureKeyVault.SaltPassword);
+            var userInfo = UtilityLauncher.ConvertSafeString(encryptedUser);
+
+            var url = HttpLauncher.BaseUri + "Auth?query=" + userInfo;
+
             var htmlContent = @"
 <strong>우측의 링크를 클릭해주세요.</strong>
-<a href='" + HttpLauncher.BaseURL + encryptedUser + "' >이메일 인증 링크</a>";
+<br />
+<a href='" + url + "' >이메일 인증 링크</a>";
             //var displayRecipients = false; // set this to true if you want recipients to see each others mail id 
             //var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, "", htmlContent, false);
             var msg = MailHelper.CreateSingleEmail(mailFrom, mailTo, subject, "", htmlContent);

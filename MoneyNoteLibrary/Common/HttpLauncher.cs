@@ -12,8 +12,10 @@ namespace MoneyNoteLibrary.Common
     public static class HttpLauncher
     {
 #if DEBUG
+        public static string BaseUri = "http://localhost:50456/";
         public static string BaseURL = "http://localhost:50456/api/";
 #else
+        public static string BaseUri = "https://moneynoteapi.azurewebsites.net/";
         public static string BaseURL = "https://moneynoteapi.azurewebsites.net/api/";
 #endif
 
