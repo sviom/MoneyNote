@@ -23,11 +23,11 @@ namespace MoneyNoteLibrary.Common
 
             var subject = "[MoneyNote] 메일 주소를 인증해주세요.";
 
-            var userString = JsonConvert.SerializeObject(user);
-            var encryptedUser = UtilityLauncher.EncryptAES256(userString, AzureKeyVault.SaltPassword);
-            var userInfo = UtilityLauncher.ConvertSafeString(encryptedUser);
+            //var userString = JsonConvert.SerializeObject(user);
+            var encryptedUser = UtilityLauncher.EncryptAES256(user.Id.ToString(), AzureKeyVault.SaltPassword);
+            var userGuid = UtilityLauncher.ConvertSafeString(encryptedUser);
 
-            var url = HttpLauncher.BaseUri + "Auth?query=" + userInfo;
+            var url = HttpLauncher.BaseUri + "Auth?query=" + userGuid;
 
             var htmlContent = @"
 <strong>우측의 링크를 클릭해주세요.</strong>

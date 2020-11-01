@@ -41,10 +41,10 @@ namespace MoneyNoteLibrary.Common
             if (string.IsNullOrEmpty(text))
                 return string.Empty;
 
-            return text.Replace('+', '-').Replace('/', '_').TrimEnd('=');
+            return text.Replace('+', '-').Replace('/', '_');//.TrimEnd('=');
         }
 
-        public static string ConvertSaftToOriginalString(string text)
+        public static string ConvertSafeToOriginalString(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return string.Empty;
