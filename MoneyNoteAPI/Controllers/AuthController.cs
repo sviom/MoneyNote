@@ -19,18 +19,11 @@ namespace MoneyNoteAPI.Controllers
             ViewBag.IsSuccessApprove = false;
             try
             {
-                var base64Text = UtilityLauncher.ConvertSafeToOriginalString(query);
-                byte[] orgBytes = Convert.FromBase64String(base64Text);
-                string orgStr = Encoding.UTF8.GetString(orgBytes);
-
-                var sss = UtilityLauncher.DecryptAES256(orgStr, AzureKeyVault.SaltPassword);
-
-                var fff = JsonConvert.DeserializeObject<User>(sss);
+                var safeString = UtilityLauncher.ConvertSafeToOriginalString(query);
+                var userGuid = UtilityLauncher.DecryptAES256(safeString, AzureKeyVault.SaltPassword);
 
                 var service = new UserService();
-
-                var user = service.GetUser(sss);
-
+                var user = service.GetUser(userGuid);
                 var countResult = service.ApproveUser(user);
                 ViewBag.IsSuccessApprove = countResult;
             }
