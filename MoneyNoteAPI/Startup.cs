@@ -28,6 +28,7 @@ namespace MoneyNoteAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddControllers();
             //services.AddScoped<MoneyContext>();
             //services.AddDbContext<MoneyContext>(options => options.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
@@ -48,6 +49,10 @@ namespace MoneyNoteAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    );
             });
         }
     }

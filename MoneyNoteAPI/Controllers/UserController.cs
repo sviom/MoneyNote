@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Connections.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
 using MoneyNoteLibrary;
 using MoneyNoteLibrary.Common;
 using MoneyNoteLibrary.Models;
+using Newtonsoft.Json;
 
 namespace MoneyNoteAPI.Controllers
 {
@@ -17,7 +20,7 @@ namespace MoneyNoteAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public ApiResult<User> SignUp([FromBody] ApiRequest<User> item)
+        public async Task<ApiResult<User>> SignUp([FromBody] ApiRequest<User> item)
         {
             var result = new ApiResult<User>();
             try
@@ -39,12 +42,25 @@ namespace MoneyNoteAPI.Controllers
                     result.Content = item.Content;
                     result.ResultMessage = "중복된 이메일이 존재합니다.";
                     result.Result = false;
+                    return result;
+                }
+
+                var insertResult = service.SignUp(item.Content);
+                if (insertResult == null)
+                    return result;
+
+                if (string.IsNullOrEmpty(insertResult.Email))
+                    return result;
+
+                var sendEmailResult = await EmailLauncher.SendConfirmEmail(insertResult.Email, insertResult);
+                if (sendEmailResult)
+                {
+                    result.Content = insertResult;
+                    result.Result = true;
                 }
                 else
                 {
-                    var insertResult = service.SignUp(item.Content);
-                    result.Content = insertResult;
-                    result.Result = true;
+                    result.ResultMessage = "이메일 인증에 문제가 발생했습니다.";
                 }
             }
             catch
@@ -134,6 +150,26 @@ namespace MoneyNoteAPI.Controllers
                 result.Result = false;
             }
             return result;
+        }
+
+        [HttpGet]
+        public bool ConfirmEmail(string confirmMessage)
+        {
+            try
+            {
+                var emailMessage = UtilityLauncher.DecryptAES256(confirmMessage, AzureKeyVault.SaltPassword);
+                var needConfirmedUser = JsonConvert.DeserializeObject<User>(emailMessage);
+
+                var service = new UserService();
+                var user = service.GetUser(needConfirmedUser.Id.ToString());
+                user.IsApproved = true;
+                var result = service.UpdateUser(user);
+                return result;
+            }
+            catch
+            {
+            }
+            return false;
         }
 
         [HttpPost]

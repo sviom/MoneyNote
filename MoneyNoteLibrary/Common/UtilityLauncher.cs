@@ -36,6 +36,22 @@ namespace MoneyNoteLibrary.Common
             return urlSafeBase64String.Replace('+', '-').Replace('/', '_').TrimEnd('=');
         }
 
+        public static string ConvertSafeString(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            return text.Replace('+', '-').Replace('/', '_');//.TrimEnd('=');
+        }
+
+        public static string ConvertSafeToOriginalString(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+
+            return text.Replace('-', '+').Replace('_', '/');
+        }
+
         public static Guid ConvertBase64ToGuid(string base64)
         {
             base64 = base64.Replace('-', '+').Replace('_', '/');
@@ -61,8 +77,8 @@ namespace MoneyNoteLibrary.Common
             {
                 using (RijndaelManaged rijndaelManaged = new RijndaelManaged())
                 {
-                    byte[] textBytes = System.Text.Encoding.Unicode.GetBytes(plainText);
-                    byte[] salt = Encoding.ASCII.GetBytes(password.Length.ToString());
+                    byte[] textBytes = Encoding.UTF8.GetBytes(plainText);
+                    byte[] salt = Encoding.UTF8.GetBytes(password.Length.ToString());
                     PasswordDeriveBytes deriveBytes = new PasswordDeriveBytes(password, salt);
 
                     ICryptoTransform encryptor = rijndaelManaged.CreateEncryptor(deriveBytes.GetBytes(32), deriveBytes.GetBytes(16));
@@ -103,7 +119,7 @@ namespace MoneyNoteLibrary.Common
                 {
 
                     byte[] encryptData = Convert.FromBase64String(base64String);
-                    byte[] salt = Encoding.ASCII.GetBytes(password.Length.ToString());
+                    byte[] salt = Encoding.UTF8.GetBytes(password.Length.ToString());
                     PasswordDeriveBytes deriveBytes = new PasswordDeriveBytes(password, salt);
 
                     ICryptoTransform decryptor = rijndaelManaged.CreateDecryptor(deriveBytes.GetBytes(32), deriveBytes.GetBytes(16));
@@ -117,7 +133,7 @@ namespace MoneyNoteLibrary.Common
                                 byte[] decryptedData = new byte[encryptData.Length];
 
                                 int count = cryptoStream.Read(decryptedData, 0, decryptedData.Length);
-                                result = Encoding.Unicode.GetString(decryptedData, 0, count);
+                                result = Encoding.UTF8.GetString(decryptedData, 0, count);
                             }
                         }
                     }

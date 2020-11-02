@@ -27,7 +27,7 @@ namespace MoneyNote.Pages
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -62,10 +62,16 @@ namespace MoneyNote.Pages
             (var result, var user) = await ViewModel.SignUp();
             if (result)
             {
-                if (user != null)
-                    App.LogInedUser = user;
+                var resultDialog = new ContentDialog
+                {
+                    DefaultButton = ContentDialogButton.Close,
+                    Title = "⚠주의사항",
+                    PrimaryButtonText = "확인",
+                    Content = "이메일을 인증하셔야 사용하실 수 있습니다. 이메일을 확인해주세요."
+                };
+                await resultDialog.ShowAsync();
 
-                Frame.Navigate(typeof(HomePage));
+                Frame.Navigate(typeof(MainPage));
             }
         }
 

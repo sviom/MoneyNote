@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var isSuccess = ViewBag.IsSuccessApprove;
+}
+
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+</head>
+<body>
+
+    @{
+
+        if (isSuccess)
+        {
+            <strong>인증에 성공하였습니다! 창을 닫아주세요.</strong>
+        }
+        else
+        {
+            <strong>인증에 실패하였습니다. 다시 시도해보시고, 또다시 일어날 경우 이메일로 문의해주세요.</strong>
+        }
+    }
+</body>
+</html>
