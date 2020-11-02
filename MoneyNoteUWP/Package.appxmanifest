@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="55954sViom.MoneyNote"
+    Name="55954sViom.MoneyNoteDev"
     Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
     Version="0.0.1.0" />
 
@@ -15,7 +15,7 @@
   <mp:PhoneIdentity PhoneProductId="968bc494-1ea6-469c-b00a-8a6a5802a90f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MoneyNote</DisplayName>
+    <DisplayName>MoneyNoteDev</DisplayName>
     <PublisherDisplayName>Hanbyul Kang</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

@@ -34,7 +34,7 @@ namespace MoneyNoteLibrary.Common
             var url = HttpLauncher.BaseUri + "Auth?query=" + userGuid;
 
             var htmlContent = @"
-<strong>우측의 링크를 클릭해주세요.</strong>
+<strong>아래의 링크를 클릭해주세요.</strong>
 <br />
 <a href='" + url + "' >이메일 인증 링크</a>";
             //var displayRecipients = false; // set this to true if you want recipients to see each others mail id 
