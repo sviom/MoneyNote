@@ -42,27 +42,25 @@ namespace MoneyNoteAPI.Controllers
                     result.Content = item.Content;
                     result.ResultMessage = "중복된 이메일이 존재합니다.";
                     result.Result = false;
+                    return result;
+                }
+
+                var insertResult = service.SignUp(item.Content);
+                if (insertResult == null)
+                    return result;
+
+                if (string.IsNullOrEmpty(insertResult.Email))
+                    return result;
+
+                var sendEmailResult = await EmailLauncher.SendConfirmEmail(insertResult.Email, insertResult);
+                if (sendEmailResult)
+                {
+                    result.Content = insertResult;
+                    result.Result = true;
                 }
                 else
                 {
-                    var insertResult = service.SignUp(item.Content);
-
-                    if (insertResult != null)
-                    {
-                        if (!string.IsNullOrEmpty(insertResult.Email))
-                        {
-                            var sendEmailResult = await EmailLauncher.SendConfirmEmail("kanghanstar@outlook.com", insertResult);
-                            if (sendEmailResult)
-                            {
-                                result.Content = insertResult;
-                                result.Result = true;
-                            }
-                            else
-                            {
-                                result.ResultMessage = "이메일 인증에 문제가 발생했습니다.";
-                            }
-                        }
-                    }
+                    result.ResultMessage = "이메일 인증에 문제가 발생했습니다.";
                 }
             }
             catch

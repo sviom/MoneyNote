@@ -19,11 +19,15 @@ namespace MoneyNoteAPI.Controllers
             ViewBag.IsSuccessApprove = false;
             try
             {
+                ViewBag.IsSuccessApprove = false;
                 var safeString = UtilityLauncher.ConvertSafeToOriginalString(query);
                 var userGuid = UtilityLauncher.DecryptAES256(safeString, AzureKeyVault.SaltPassword);
 
                 var service = new UserService();
                 var user = service.GetUser(userGuid);
+
+                if (user == null) return View();
+
                 var countResult = service.ApproveUser(user);
                 ViewBag.IsSuccessApprove = countResult;
             }

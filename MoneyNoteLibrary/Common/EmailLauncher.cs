@@ -16,6 +16,10 @@ namespace MoneyNoteLibrary.Common
         public static async Task<bool> SendConfirmEmail(string emailAddress, User user)
         {
             var apiKey = Key;// _configuration.GetSection("SENDGRID_API_KEY").Value;
+
+            if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(emailAddress))
+                return false;
+
             var client = new SendGridClient(apiKey);
             var mailFrom = new EmailAddress("kanghanstar@raincome.net", "MoneyNote");
 
