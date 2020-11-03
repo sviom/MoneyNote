@@ -30,11 +30,11 @@
                 <NavigationViewItem x:Name="CategoryView" Icon="Comment">카테고리</NavigationViewItem>-->
             </NavigationView.MenuItems>
 
-            <NavigationView.PaneFooter>
+            <!--<NavigationView.PaneFooter>
                 <StackPanel>
                     <ad:VungleBannerAd Width="320" Height="50" />
                 </StackPanel>
-            </NavigationView.PaneFooter>
+            </NavigationView.PaneFooter>-->
             <Frame x:Name="ContentFrame" Margin="12,0,12,12"></Frame>
         </NavigationView>
     </Grid>
