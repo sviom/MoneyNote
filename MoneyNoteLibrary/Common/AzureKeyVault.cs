@@ -3,8 +3,9 @@
 using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault;
+using Microsoft.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.Azure.Services.AppAuthentication;
+//using Microsoft.Azure.Services.AppAuthentication;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,8 @@ namespace MoneyNoteLibrary.Common
         public static string SaltPassword => OnGetAsync("SaltPassword").Result;
 
         public static string GetKeyVaultEndpoint() => "https://todaylunchkeyvault.vault.azure.net/";
+
+        private static string KeyVaultEndPoint => "https://moneynote.vault.azure.net/";
 
         public static async Task<string> OnGetAsync(string secretName)
         {
@@ -38,8 +41,10 @@ namespace MoneyNoteLibrary.Common
                         Mode = RetryMode.Exponential
                     }
                 };
-                var client = new SecretClient(new Uri(GetKeyVaultEndpoint()), new DefaultAzureCredential(), options);
-
+                var client = new SecretClient(new Uri(GetKeyVaultEndpoint()), new DefaultAzureCredential());
+                //var client = new SecretClient(new Uri(GetKeyVaultEndpoint()), new DefaultAzureCredential(), options);
+                //MoneyNoteConnectionString
+                //
                 var secret = await client.GetSecretAsync(secretName);
                 secretValue = secret.Value.Value;
             }
