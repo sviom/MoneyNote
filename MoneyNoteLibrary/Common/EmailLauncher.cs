@@ -11,7 +11,7 @@ namespace MoneyNoteLibrary.Common
 {
     public class EmailLauncher
     {
-        public static string Key => AzureKeyVault.OnGetAsync(KeyVaultName.MainEmailKey.ToString()).Result;
+        public static string Key => AzureKeyVault.OnGetAsync(KeyVaultName.MainEmailKey).Result;
 
         public static async Task<bool> SendConfirmEmail(string emailAddress, User user)
         {

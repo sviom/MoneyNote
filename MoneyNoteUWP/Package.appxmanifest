@@ -7,12 +7,12 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="55954sViom.MoneyNote"
-    Publisher="CN=0B7049AE-B554-4554-875E-D6A1FF8E3C39"
-    Version="0.0.1.0" />
+    Name="55954sViom.MoneyNoteDev"
+    Publisher="CN=kanghanstar"
+    Version="1.0.101.0" />
 
 
-  <mp:PhoneIdentity PhoneProductId="968bc494-1ea6-469c-b00a-8a6a5802a90f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="8a551549-b5d5-4cf4-a298-1f4178b13293" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>MoneyNote</DisplayName>
@@ -31,14 +31,14 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MoneyNote.App">
+      EntryPoint="MoneyNoteDev.App">
       <uap:VisualElements
         DisplayName="MoneyNote"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="MoneyNote 개발 버전"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="가계부">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="가계부Dev">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
