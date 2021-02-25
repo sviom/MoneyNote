@@ -32,7 +32,7 @@ namespace MoneyNoteAPI.Context
             //base.OnConfiguring(optionsBuilder);
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result);
+                optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString).Result);
             }
         }
 
