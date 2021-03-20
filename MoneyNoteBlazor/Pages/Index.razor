@@ -1,0 +1,64 @@
+﻿@layout EmptyLayout
+@page "/"
+@using MoneyNoteLibrary.Common;
+
+
+<div>
+    <h1>MoneyNote</h1>
+
+    Welcome to your new app.
+
+    <SurveyPrompt Title="How is Blazor working for you?" />
+    <input type="text" @bind="Email" />
+    <input type="password" @bind="Password" />
+    <button type="button" @onclick="Login">로그인</button>
+
+
+</div>
+
+
+@code{
+
+    private string _Email;
+    public string Email
+    {
+        get { return _Email; }
+        set
+        {
+            if (_Email == value)
+                return;
+
+            _Email = value;
+            //ValidCheck();
+        }
+    }
+
+    private string _Password;
+    public string Password
+    {
+        get { return _Password; }
+        set
+        {
+            if (_Password == value)
+                return;
+
+            _Password = value;
+            //ValidCheck();
+        }
+    }
+
+    public bool IsValidEmail => MoneyNoteLibrary.Common.ValidCheck.IsValidEmail(Email);
+
+    public bool IsValidPassword => Password?.Length > 8;
+
+    public bool IsEnableLogin => IsValidEmail && IsValidPassword;
+
+    private async Task Login()
+    {
+        if (!IsEnableLogin)
+            return;
+
+
+
+    }
+}
