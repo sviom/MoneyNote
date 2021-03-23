@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNote", "MoneyNoteUWP\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteUnitTest", "MoneyNoteUnitTest\MoneyNoteUnitTest.csproj", "{E301A2A3-2E33-4AA3-BB1B-DB3E7324E534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNoteBlazor", "MoneyNoteBlazor\MoneyNoteBlazor.csproj", "{D9FC3F8D-38DE-4D2C-9669-36ACF7CC3AD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteBlazor", "MoneyNoteBlazor\MoneyNoteBlazor.csproj", "{D9FC3F8D-38DE-4D2C-9669-36ACF7CC3AD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNoteLibrary5", "MoneyNoteLibrary5\MoneyNoteLibrary5.csproj", "{31262C64-FEC1-42CC-A850-30ABDF72458D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +137,26 @@ Global
 		{D9FC3F8D-38DE-4D2C-9669-36ACF7CC3AD2}.Release|x64.Build.0 = Release|Any CPU
 		{D9FC3F8D-38DE-4D2C-9669-36ACF7CC3AD2}.Release|x86.ActiveCfg = Release|Any CPU
 		{D9FC3F8D-38DE-4D2C-9669-36ACF7CC3AD2}.Release|x86.Build.0 = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|x64.Build.0 = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Debug|x86.Build.0 = Debug|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|ARM.Build.0 = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|ARM64.Build.0 = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|x64.ActiveCfg = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|x64.Build.0 = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|x86.ActiveCfg = Release|Any CPU
+		{31262C64-FEC1-42CC-A850-30ABDF72458D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
