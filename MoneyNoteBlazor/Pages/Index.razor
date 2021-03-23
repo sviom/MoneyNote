@@ -1,7 +1,8 @@
 ﻿@layout EmptyLayout
 @page "/"
-@using MoneyNoteLibrary.Common;
-
+@using MoneyNoteLibrary5.Common;
+@using MoneyNoteLibrary5.Models;
+@using static MoneyNoteLibrary5.Enums.MoneyApiInfo;
 
 <div>
     <h1>MoneyNote</h1>
@@ -19,6 +20,21 @@
 
 @code{
 
+    public ControllerEnum Controller => ControllerEnum.user;
+
+    private string _ErrorMessage;
+    public string ErrorMessage
+    {
+        get { return _ErrorMessage; }
+        set
+        {
+            if (_ErrorMessage == value)
+                return;
+
+            _ErrorMessage = value;
+        }
+    }
+
     private string _Email;
     public string Email
     {
@@ -29,7 +45,6 @@
                 return;
 
             _Email = value;
-            //ValidCheck();
         }
     }
 
@@ -43,22 +58,37 @@
                 return;
 
             _Password = value;
-            //ValidCheck();
         }
     }
 
-    public bool IsValidEmail => MoneyNoteLibrary.Common.ValidCheck.IsValidEmail(Email);
+    public bool IsValidEmail => MoneyNoteLibrary5.Common.ValidCheck.IsValidEmail(Email);
 
     public bool IsValidPassword => Password?.Length > 8;
 
     public bool IsEnableLogin => IsValidEmail && IsValidPassword;
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
 
     private async Task Login()
     {
         if (!IsEnableLogin)
             return;
 
+        var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
+        var tempUser = new User()
+        {
+            Email = Email,
+            Password = encryptedPassword
+        };
 
+        var result = await MoneyApi.LogIn.ApiLauncher<User, User>(tempUser, Controller);
+
+        if (!result.Result)
+            ErrorMessage = !string.IsNullOrEmpty(result.ResultMessage) ? result.ResultMessage : "에러가 발생했습니다.";
+
+        if (NavigationManager != null)
+            NavigationManager.NavigateTo("/Counter");
 
     }
 }

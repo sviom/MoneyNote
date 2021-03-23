@@ -19,6 +19,11 @@ namespace MoneyNoteBlazor
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            if (builder.HostEnvironment.IsDevelopment())
+            {
+
+            }
+
             await builder.Build().RunAsync();
         }
     }
