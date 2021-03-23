@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,17 @@ namespace MoneyNoteAPI
         {
             services.AddMvc();
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => builder.WithOrigins("https://localhost:44327").AllowAnyHeader().AllowAnyMethod());
+            });
+
+            //services.AddHttpsRedirection(options =>
+            //{
+            //    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+            //    options.HttpsPort = 44356;
+            //});
+
             //services.AddScoped<MoneyContext>();
             //services.AddDbContext<MoneyContext>(options => options.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
         }
@@ -44,6 +56,11 @@ namespace MoneyNoteAPI
 
             app.UseRouting();
 
+            if (env.IsDevelopment())
+            {
+                app.UseCors();
+            }
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
