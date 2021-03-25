@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteUnitTest", "MoneyN
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteBlazor", "MoneyNoteBlazor\MoneyNoteBlazor.csproj", "{D9FC3F8D-38DE-4D2C-9669-36ACF7CC3AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyNoteLibrary5", "MoneyNoteLibrary5\MoneyNoteLibrary5.csproj", "{31262C64-FEC1-42CC-A850-30ABDF72458D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyNoteLibrary5", "MoneyNoteLibrary5\MoneyNoteLibrary5.csproj", "{31262C64-FEC1-42CC-A850-30ABDF72458D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
