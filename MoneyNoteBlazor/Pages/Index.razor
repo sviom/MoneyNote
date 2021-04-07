@@ -70,6 +70,9 @@
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
+    [Parameter]
+    public User LoginedUser { get; set; }
+
     private async Task Login()
     {
         if (!IsEnableLogin)
@@ -87,8 +90,11 @@
         if (!result.Result)
             ErrorMessage = !string.IsNullOrEmpty(result.ResultMessage) ? result.ResultMessage : "에러가 발생했습니다.";
 
+        LoginedUser = result.Content;
+        SharedClass.SharedUser = LoginedUser;
+
         if (NavigationManager != null)
-            NavigationManager.NavigateTo("/Counter");
+            NavigationManager.NavigateTo("/MoneyList/" + LoginedUser.Id);
 
     }
 }
