@@ -50,12 +50,51 @@ namespace MoneyNoteLibrary5.Common
         /// <returns></returns>
         public static async Task<ApiResult<T>> ApiLauncher<T>(this MoneyApi api, IApiRequest request, ControllerEnum controllerEnum = ControllerEnum.money)
         {
+            //ApiResult<T> result;
+            //using (var client = new HttpClient())
+            //{
+            //    var itemString = JsonConvert.SerializeObject(request);
+
+            //    var content = new StringContent(itemString, Encoding.UTF8, "application/json");
+            //    var response = await client.PostAsync(BaseURL + controllerEnum + "/" + api, content);
+
+            //    var responseContent = await response.Content.ReadAsStringAsync();
+            //    var apiResult = JsonConvert.DeserializeObject<ApiResult<T>>(responseContent);
+            //    result = apiResult;
+            //}
+            //return result;
+            var itemString = JsonConvert.SerializeObject(request);
+            var result = await SendPostAsync<T>(api, itemString, controllerEnum);
+            return result;
+        }
+
+        public static async Task<ApiResult<T>> ApiStringLauncher<T>(this MoneyApi api, string request, ControllerEnum controllerEnum = ControllerEnum.money)
+        {
+            //ApiResult<T> result;
+            //using (var client = new HttpClient())
+            //{
+            //    var itemString = JsonConvert.SerializeObject(request);
+
+            //    var content = new StringContent(itemString, Encoding.UTF8, "application/json");
+            //    var response = await client.PostAsync(BaseURL + controllerEnum + "/" + api, content);
+
+            //    var responseContent = await response.Content.ReadAsStringAsync();
+            //    var apiResult = JsonConvert.DeserializeObject<ApiResult<T>>(responseContent);
+            //    result = apiResult;
+            //}
+            //return result;
+         
+            var itemString = request;// JsonConvert.SerializeObject(request);
+            var result = await SendPostAsync<T>(api, itemString, controllerEnum);
+            return result;
+        }
+
+        private static async Task<ApiResult<T>> SendPostAsync<T>(MoneyApi api, string contentString, ControllerEnum controllerEnum = ControllerEnum.money)
+        {
             ApiResult<T> result;
             using (var client = new HttpClient())
             {
-                var itemString = JsonConvert.SerializeObject(request);
-
-                var content = new StringContent(itemString, Encoding.UTF8, "application/json");
+                var content = new StringContent(contentString, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(BaseURL + controllerEnum + "/" + api, content);
 
                 var responseContent = await response.Content.ReadAsStringAsync();

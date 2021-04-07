@@ -97,7 +97,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
                 _SelectedDate = value;
                 OnPropertyChanged();
-                GetMoneyList(_SelectedDate);
+                //GetMoneyList(_SelectedDate);
             }
         }
 
@@ -154,7 +154,7 @@ namespace MoneyNoteLibrary5.ViewModels
         {
             LoginedUser = user;
             //Initialize();
-            GetMoneyList(DateTimeOffset.Now);
+            //GetMoneyList(DateTimeOffset.Now);
         }
 
         public async void Initialize()
@@ -178,7 +178,7 @@ namespace MoneyNoteLibrary5.ViewModels
             IsRunProgressRing = false;
         }
 
-        public async void GetMoneyList(DateTimeOffset selectedDate)
+        public async Task GetMoneyList(DateTimeOffset selectedDate)
         {
             IsRunProgressRing = true;
             MoneyList = new ObservableCollection<MoneyItem>();

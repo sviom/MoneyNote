@@ -1,5 +1,32 @@
-﻿<h3>MoneyList</h3>
+﻿@page "/moneylist/{Id:guid}"
+@using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
+
+<h3>MoneyList</h3>
+<h2>@Id</h2>
 
 @code {
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    public User LoginedUser { get; set; }
+
+    public MoneyViewModel ViewModel { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        string test = "";
+        LoginedUser = new User();
+        LoginedUser.Id = Id;
+
+        if (LoginedUser != null)
+            ViewModel = new MoneyViewModel(LoginedUser);
+
+        ViewModel.LoginedUser = SharedClass.SharedUser;
+        await ViewModel.GetMoneyList(DateTimeOffset.Now);
+
+        //return base.OnInitializedAsync();
+    }
 
 }
