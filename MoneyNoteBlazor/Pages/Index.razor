@@ -1,8 +1,6 @@
 ﻿@layout EmptyLayout
 @page "/"
-@using MoneyNoteLibrary5.Common;
-@using MoneyNoteLibrary5.Models;
-@using static MoneyNoteLibrary5.Enums.MoneyApiInfo;
+@using MoneyNoteLibrary5.ViewModels;
 
 <div>
     <h1>MoneyNote</h1>
@@ -10,91 +8,30 @@
     Welcome to your new app.
 
     <SurveyPrompt Title="How is Blazor working for you?" />
-    <input type="text" @bind="Email" />
-    <input type="password" @bind="Password" />
+    <input type="text" @bind="ViewModel.Email" />
+    <input type="password" @bind="ViewModel.Password" />
     <button type="button" @onclick="Login">로그인</button>
-
-
 </div>
 
 
 @code{
-
-    public ControllerEnum Controller => ControllerEnum.user;
-
-    private string _ErrorMessage;
-    public string ErrorMessage
-    {
-        get { return _ErrorMessage; }
-        set
-        {
-            if (_ErrorMessage == value)
-                return;
-
-            _ErrorMessage = value;
-        }
-    }
-
-    private string _Email;
-    public string Email
-    {
-        get { return _Email; }
-        set
-        {
-            if (_Email == value)
-                return;
-
-            _Email = value;
-        }
-    }
-
-    private string _Password;
-    public string Password
-    {
-        get { return _Password; }
-        set
-        {
-            if (_Password == value)
-                return;
-
-            _Password = value;
-        }
-    }
-
-    public bool IsValidEmail => MoneyNoteLibrary5.Common.ValidCheck.IsValidEmail(Email);
-
-    public bool IsValidPassword => Password?.Length > 8;
-
-    public bool IsEnableLogin => IsValidEmail && IsValidPassword;
-
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
-    [Parameter]
-    public User LoginedUser { get; set; }
+    public LoginViewModel ViewModel { get; set; } = new LoginViewModel();
 
     private async Task Login()
     {
-        if (!IsEnableLogin)
+        if (!ViewModel.IsEnableLogin)
             return;
 
-        var encryptedPassword = UtilityLauncher.EncryptSHA256(Password);
-        var tempUser = new User()
+        var result = await ViewModel.LogIn();
+        if (result.Item1)
         {
-            Email = Email,
-            Password = encryptedPassword
-        };
+            SharedClass.SharedUser = result.Item2;
 
-        var result = await MoneyApi.LogIn.ApiLauncher<User, User>(tempUser, Controller);
-
-        if (!result.Result)
-            ErrorMessage = !string.IsNullOrEmpty(result.ResultMessage) ? result.ResultMessage : "에러가 발생했습니다.";
-
-        LoginedUser = result.Content;
-        SharedClass.SharedUser = LoginedUser;
-
-        if (NavigationManager != null)
-            NavigationManager.NavigateTo("/MoneyList/" + LoginedUser.Id);
-
+            if (NavigationManager != null)
+                NavigationManager.NavigateTo("/MoneyList");
+        }
     }
 }
