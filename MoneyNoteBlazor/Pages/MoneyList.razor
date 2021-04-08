@@ -1,5 +1,7 @@
 ﻿@page "/moneylist"
 @using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
+@inject IJSRuntime JS;
 
 <h3>MoneyList</h3>
 <h4>@SharedClass.SharedUser?.Name</h4>
@@ -47,28 +49,21 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (SharedClass.SharedUser == null)
+            SharedClass.SharedUser = await GetUserInfo();
+
         if (SharedClass.SharedUser != null)
         {
             ViewModel = new MoneyViewModel(SharedClass.SharedUser);
             await ViewModel.Initialize();
         }
-        StateHasChanged();
         //return base.OnInitializedAsync();
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    public async Task<User> GetUserInfo()
     {
-        base.OnAfterRender(firstRender);
-    }
-
-    //protected override bool ShouldRender()
-    //{
-    //    return base.ShouldRender();
-    //}
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
+        var result = await JS.InvokeAsync<string>("GetUserInfo", "userKey");
+        return JsonConvert.DeserializeObject<User>(result);
     }
 
 }
