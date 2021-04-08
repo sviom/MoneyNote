@@ -157,22 +157,30 @@ namespace MoneyNoteLibrary5.ViewModels
             //GetMoneyList(DateTimeOffset.Now);
         }
 
-        public async void Initialize()
+        public async Task Initialize()
         {
             IsRunProgressRing = true;
-            MoneyList = new ObservableCollection<MoneyItem>();
-            //var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
-            var result = await MoneyApi.GetAllMoney.ApiLauncher<string, List<MoneyItem>>(LoginedUser.Id.ToString());
-            if (result.Result)
+            try
             {
-                foreach (var item in result.Content)
+                MoneyList = new ObservableCollection<MoneyItem>();
+                //var encryptedId = UtilityLauncher.EncryptAES256(LoginedUser.Id.ToString(), AzureKeyVault.SaltPassword);
+                var result = await MoneyApi.GetAllMoney.ApiLauncher<string, List<MoneyItem>>(LoginedUser.Id.ToString());
+                if (result.Result)
                 {
-                    MoneyList.Add(item);
+                    foreach (var item in result.Content)
+                    {
+                        MoneyList.Add(item);
+                    }
+
+                    MoneyGroupList = MoneyList.GroupBy(x => x.CreatedTime.Date, (key, itemList) => new MoneyItemsGroup(key, itemList)).ToList();
+
+                    ReCalculate();
                 }
 
-                MoneyGroupList = MoneyList.GroupBy(x => x.CreatedTime.Date, (key, itemList) => new MoneyItemsGroup(key, itemList)).ToList();
+            }
+            catch (Exception ex)
+            {
 
-                ReCalculate();
             }
 
             IsRunProgressRing = false;
