@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MoneyNoteLibrary5\MoneyNoteLibrary5.csproj" />
     <ProjectReference Include="..\MoneyNoteLibrary\MoneyNoteLibrary.csproj" />
   </ItemGroup>
 
