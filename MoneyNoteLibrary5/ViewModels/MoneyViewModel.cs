@@ -205,6 +205,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 MoneyGroupList = MoneyList.GroupBy(x => x.CreatedTime.Date, (key, itemList) => new MoneyItemsGroup(key, itemList)).ToList();
 
                 ReCalculate();
+                SelectedDate = selectedDate;
             }
 
             IsRunProgressRing = false;

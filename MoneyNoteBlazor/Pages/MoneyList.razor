@@ -6,16 +6,16 @@
 <h3>MoneyList</h3>
 <h4>@SharedClass.SharedUser?.Name</h4>
 
-@if (ViewModel == null)
+@if (ViewModel == null || ViewModel.IsRunProgressRing)
 {
     <p>가져오는 중...</p>
 }
 else
 {
     <div>
-        <button>왼쪽</button>
-        <span>@DateTime.Now.ToString("yyyy-MM")</span>
-        <button>오른쪽</button>
+        <button @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">왼쪽</button>
+        <span>@SelectedDate.ToString("yyyy-MM")</span>
+        <button @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(1))">오른쪽</button>
     </div>
     <table>
         <thead>
@@ -45,7 +45,7 @@ else
 @code {
     public MoneyViewModel ViewModel { get; set; }
 
-    public DateTime StandardDate { get; set; } = DateTime.Now;
+    public DateTimeOffset SelectedDate => ViewModel != null ? ViewModel.SelectedDate : DateTimeOffset.Now;
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,7 +55,7 @@ else
         if (SharedClass.SharedUser != null)
         {
             ViewModel = new MoneyViewModel(SharedClass.SharedUser);
-            await ViewModel.Initialize();
+            await ViewModel.GetMoneyList(DateTime.Now);
         }
         //return base.OnInitializedAsync();
     }
@@ -64,6 +64,11 @@ else
     {
         var result = await JS.InvokeAsync<string>("GetUserInfo", "userKey");
         return JsonConvert.DeserializeObject<User>(result);
+    }
+
+    public async Task GetMoneyListWithDate(MouseEventArgs e, DateTime selectedDate)
+    {
+        await ViewModel.GetMoneyList(selectedDate);
     }
 
 }
