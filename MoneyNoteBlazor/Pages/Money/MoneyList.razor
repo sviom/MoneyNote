@@ -13,6 +13,9 @@
 else
 {
     <div>
+        <NavLink href="/money/moneywrite"/>
+    </div>
+    <div>
         <button @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">왼쪽</button>
         <span>@SelectedDate.ToString("yyyy-MM")</span>
         <button @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(1))">오른쪽</button>

@@ -1,0 +1,31 @@
+﻿@page "/money/moneywrite"
+@using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
+@inject IJSRuntime JS;
+
+<h3>MoneyWrite</h3>
+
+
+
+@code {
+    public MoneyHandleViewModel ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SharedClass.SharedUser == null)
+            SharedClass.SharedUser = await GetUserInfo();
+
+        if (SharedClass.SharedUser != null)
+        {
+            ViewModel = new MoneyHandleViewModel(SharedClass.SharedUser);
+        }
+        //return base.OnInitializedAsync();
+    }
+
+    public async Task<User> GetUserInfo()
+    {
+        var result = await JS.InvokeAsync<string>("GetUserInfo", "userKey");
+        return JsonConvert.DeserializeObject<User>(result);
+    }
+
+}
