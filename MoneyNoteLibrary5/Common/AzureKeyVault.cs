@@ -52,7 +52,16 @@ namespace MoneyNoteLibrary5.Common
                         Mode = RetryMode.Exponential
                     }
                 };
-                var client = new SecretClient(new Uri(GetKeyVaultEndpoint()), new DefaultAzureCredential());
+
+#if DEBUG
+                var sss = new DefaultAzureCredential(includeInteractiveCredentials: true);
+#else
+                var sss = new DefaultAzureCredential();
+#endif
+                //var fff = new ClientSecretCredential('', "", "");
+                
+
+                var client = new SecretClient(new Uri(GetKeyVaultEndpoint()), sss);
                 var secret = await client.GetSecretAsync(secretName.ToString());
                 secretValue = secret.Value.Value;
             }

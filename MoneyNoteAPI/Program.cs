@@ -26,6 +26,26 @@ namespace MoneyNoteAPI
                 //if (context.HostingEnvironment.IsProduction())
                 //{
                 //}
+
+                //config.AddAzureAppConfiguration(options =>
+                //{
+                //    options.Connect(settings["ConnectionStrings:AppConfig"])
+                //            .ConfigureKeyVault(kv =>
+                //            {
+                //                var cert = new ClientSecretCredential("<tenant id>", "client id", "client secret");
+                //                kv.SetCredential(cert);
+                //            });
+                //});
+
+                //var keyVaultEndpoint = AzureKeyVault.GetKeyVaultEndpoint();
+                //if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                //{
+                //    var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                //    var keyVaultClient = new KeyVaultClient(
+                //        new KeyVaultClient.AuthenticationCallback(
+                //            azureServiceTokenProvider.KeyVaultTokenCallback));
+                //    config.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+                //}
             })
 
             .ConfigureWebHostDefaults(webBuilder =>
