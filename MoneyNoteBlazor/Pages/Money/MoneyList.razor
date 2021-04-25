@@ -53,7 +53,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         if (SharedClass.SharedUser == null)
-            SharedClass.SharedUser = await GetUserInfo();
+            SharedClass.SharedUser = await SharedClass.GetUserInfo(JS);
 
         if (SharedClass.SharedUser != null)
         {
@@ -61,12 +61,6 @@ else
             await ViewModel.GetMoneyList(DateTime.Now);
         }
         //return base.OnInitializedAsync();
-    }
-
-    public async Task<User> GetUserInfo()
-    {
-        var result = await JS.InvokeAsync<string>("GetUserInfo", "userKey");
-        return JsonConvert.DeserializeObject<User>(result);
     }
 
     public async Task GetMoneyListWithDate(MouseEventArgs e, DateTime selectedDate)

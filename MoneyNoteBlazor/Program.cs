@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop;
 using MoneyNoteLibrary5.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -32,5 +34,11 @@ namespace MoneyNoteBlazor
     public static class SharedClass
     {
         public static User SharedUser { get; set; }
+
+        public static async Task<User> GetUserInfo(IJSRuntime JS)
+        {
+            var result = await JS.InvokeAsync<string>("GetUserInfo", "userKey");
+            return JsonConvert.DeserializeObject<User>(result);
+        }
     }
 }
