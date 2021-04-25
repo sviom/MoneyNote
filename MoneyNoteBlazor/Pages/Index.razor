@@ -33,7 +33,7 @@
             var saveResult = await JS.InvokeAsync<bool>("SetUserInfo", JsonConvert.SerializeObject(result.Item2));
 
             if (NavigationManager != null)
-                NavigationManager.NavigateTo("/MoneyList");
+                NavigationManager.NavigateTo("/Money/MoneyList");
         }
     }
 }
