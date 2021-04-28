@@ -156,8 +156,8 @@ namespace MoneyNoteLibrary5.ViewModels
                 OnPropertyChanged();
                 ValidCheck();
 
-                if (value)
-                    CategoryInitialize();
+                //if (value)
+                //    CategoryInitialize();
             }
         }
 
@@ -173,8 +173,8 @@ namespace MoneyNoteLibrary5.ViewModels
                 _IsIncome = value;
                 OnPropertyChanged();
 
-                if (value)
-                    CategoryInitialize();
+                //if (value)
+                //    CategoryInitialize();
             }
         }
 
@@ -241,7 +241,7 @@ namespace MoneyNoteLibrary5.ViewModels
         public MoneyHandleViewModel(User user)
         {
             LoginedUser = user;
-            CategoryInitialize();
+            //CategoryInitialize();
         }
 
         public MoneyHandleViewModel(User user, MoneyItem item)
@@ -251,7 +251,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 SetViewModel(item);
         }
 
-        public async void CategoryInitialize()
+        public async Task CategoryInitialize()
         {
             MainCategories = new ObservableCollection<MainCategory>();
             SubCategories = new ObservableCollection<SubCategory>();
