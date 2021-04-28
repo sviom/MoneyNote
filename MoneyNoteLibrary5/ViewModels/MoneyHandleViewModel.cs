@@ -211,7 +211,26 @@ namespace MoneyNoteLibrary5.ViewModels
                     _MainCategory.User = LoginedUser;
 
                 OnPropertyChanged();
-                GetSubCategories();
+                //GetSubCategories();
+            }
+        }
+
+        private Guid _MainCategoryId;
+        public Guid MainCategoryId
+        {
+            get { return _MainCategoryId; }
+            set
+            {
+
+                if (_MainCategoryId == value)
+                    return;
+
+                _MainCategoryId = value;
+
+                //if (_MainCategoryId != null)
+                //    _MainCategory.User = LoginedUser;
+                
+                OnPropertyChanged();
             }
         }
 
@@ -385,9 +404,9 @@ namespace MoneyNoteLibrary5.ViewModels
             IsRunProgressRing = false;
         }
 
-        public async void GetSubCategories()
+        public async Task GetSubCategories()
         {
-            if (MainCategory == null)
+            if (MainCategoryId == Guid.Empty)
                 return;
 
             if (LoginedUser == null)
@@ -397,7 +416,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
             IsSubCategoryProgress = true;
             IsRunProgressRing = true;
-            var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, ObservableCollection<SubCategory>>(MainCategory, ControllerEnum.category);
+            var result = await MoneyApi.GetSubCategories.ApiLauncher<Guid, ObservableCollection<SubCategory>>(MainCategoryId, ControllerEnum.category);
             if (result.Result)
             {
                 foreach (var item in result.Content)

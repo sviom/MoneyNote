@@ -11,15 +11,44 @@
 else
 {
     <h4>@ViewModel.Title</h4>
-    <input type="text" @bind="ViewModel.Title" />
-    <input type="number" @bind="ViewModel.MoneyText" />
-    <input type="text" @bind="ViewModel.Description" />
-    <select>
-        @foreach (var item in ViewModel.MainCategories)
-        {
-            <option value="@item.Id">@item.Title</option>
-        }
-    </select>
+    <div>
+        <input type="radio" name="isIncomeRadio" value="dd" checked="@ViewModel.IsExpense" />
+        <label>지출</label>
+        <input type="radio" name="isIncomeRadio" value="ff" />
+        <label>수입</label>
+    </div>
+    <div>
+        <label>제목</label>
+        <input type="text" @bind="ViewModel.Title" />
+    </div>
+
+    <div>
+        <label>금액</label>
+        <input type="number" @bind="ViewModel.MoneyText" />
+    </div>
+
+    <div>
+        <label>설명</label>
+        <input type="text" @bind="ViewModel.Description" />
+    </div>
+
+    <div>
+        <select value="@ViewModel.MainCategoryId" @onchange="e => GetSubCategories(e)">
+            @foreach (var item in ViewModel.MainCategories)
+            {
+                <option value="@item.Id">@item.Title</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <select>
+            @foreach (var item in ViewModel.SubCategories)
+            {
+                <option value="@item.Id">@item.Title</option>
+            }
+        </select>
+    </div>
 }
 
 
@@ -39,4 +68,9 @@ else
         //return base.OnInitializedAsync();
     }
 
+    public async Task GetSubCategories(ChangeEventArgs e)
+    {
+        ViewModel.MainCategoryId = new Guid(e.Value.ToString());
+        await ViewModel.GetSubCategories();
+    }
 }
