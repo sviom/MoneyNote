@@ -42,12 +42,18 @@ else
     </div>
 
     <div>
-        <select>
+        <select @bind="ViewModel.SubCategoryId">
             @foreach (var item in ViewModel.SubCategories)
             {
                 <option value="@item.Id">@item.Title</option>
             }
         </select>
+    </div>
+
+    <div>
+        <button @onclick="e => SaveMoney(e)">저장</button>
+        <button @onclick="e => ModifyMoney(e)">수정</button>
+        <button @onclick="e => DeleteMoney(e)">삭제</button>
     </div>
 }
 
@@ -72,5 +78,20 @@ else
     {
         ViewModel.MainCategoryId = new Guid(e.Value.ToString());
         await ViewModel.GetSubCategories();
+    }
+
+    public async Task SaveMoney(EventArgs e)
+    {
+        await ViewModel.SaveMoney();
+    }
+
+    public async Task ModifyMoney(EventArgs e)
+    {
+        await ViewModel.ModifyMoney();
+    }
+
+    public async Task DeleteMoney(EventArgs e)
+    {
+        await ViewModel.DeleteMoney();
     }
 }

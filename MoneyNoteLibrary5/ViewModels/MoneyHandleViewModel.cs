@@ -196,60 +196,34 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-        private MainCategory _MainCategory;
-        public MainCategory MainCategory
-        {
-            get { return _MainCategory; }
-            set
-            {
-                if (_MainCategory == value)
-                    return;
-
-                _MainCategory = value;
-
-                if (_MainCategory != null)
-                    _MainCategory.User = LoginedUser;
-
-                OnPropertyChanged();
-                //GetSubCategories();
-            }
-        }
-
         private Guid _MainCategoryId;
         public Guid MainCategoryId
         {
             get { return _MainCategoryId; }
             set
             {
-
                 if (_MainCategoryId == value)
                     return;
 
                 _MainCategoryId = value;
-
-                //if (_MainCategoryId != null)
-                //    _MainCategory.User = LoginedUser;
-                
                 OnPropertyChanged();
             }
         }
 
-        private SubCategory _SubCategory;
-        public SubCategory SubCategory
+        private Guid _SubCategoryId;
+        public Guid SubCategoryId
         {
-            get { return _SubCategory; }
+            get { return _SubCategoryId; }
             set
             {
-                if (_SubCategory == value)
+                if (_SubCategoryId == value)
                     return;
 
-                _SubCategory = value;
-
-                if (MainCategory != null && _SubCategory != null)
-                    _SubCategory.MainCategoryId = MainCategory.Id;
+                _SubCategoryId = value;
                 OnPropertyChanged();
             }
         }
+
 
         public bool IsValidMoney => Common.ValidCheck.IsValidNumber(MoneyText);
 
@@ -306,8 +280,9 @@ namespace MoneyNoteLibrary5.ViewModels
             }
 
             SelectedBankBook = item.BankBook;
-            MainCategory = item.MainCategory;
-            SubCategory = item.SubCategory;
+            //MainCategory = item.MainCategory;
+            MainCategoryId = item.MainCategory.Id;
+            SubCategoryId = item.SubCategory.Id;
         }
 
         public void ValidCheck()
@@ -332,8 +307,8 @@ namespace MoneyNoteLibrary5.ViewModels
                 Money = mo,
                 BankBook = SelectedBankBook,
                 Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
-                MainCategory = MainCategory,
-                SubCategory = SubCategory,
+                //MainCategory = MainCategory,
+                //SubCategory = SubCategory,
                 User = LoginedUser
             };
 
@@ -357,9 +332,9 @@ namespace MoneyNoteLibrary5.ViewModels
             PreMoneyItem.BankBook = SelectedBankBook;
             PreMoneyItem.BankBookId = SelectedBankBook.Id;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
-            PreMoneyItem.MainCategory = MainCategory;
-            PreMoneyItem.MainCategoryId = MainCategory.Id;
-            PreMoneyItem.SubCategory = SubCategory;
+            //PreMoneyItem.MainCategory = MainCategory;
+            PreMoneyItem.MainCategoryId = MainCategoryId;
+            //PreMoneyItem.SubCategory = SubCategory;
             PreMoneyItem.CreatedTime = CreatedTime;
             PreMoneyItem.UpdatedTime = DateTimeOffset.Now;
             PreMoneyItem.User = LoginedUser;
