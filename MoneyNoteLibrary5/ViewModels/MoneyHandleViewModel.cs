@@ -196,6 +196,20 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
+        private Guid _SelectedBankBookId;
+        public Guid SelectedBankBookId
+        {
+            get { return _SelectedBankBookId; }
+            set
+            {
+                if (_SelectedBankBookId == value)
+                    return;
+
+                _SelectedBankBookId = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Guid _MainCategoryId;
         public Guid MainCategoryId
         {
@@ -296,28 +310,35 @@ namespace MoneyNoteLibrary5.ViewModels
         {
             if (LoginedUser == null)
                 return false;
-
-            double.TryParse(MoneyText, out double mo);
-
-            var item = new MoneyItem()
+            try
             {
-                Title = Title,
-                Description = Description,
-                CreatedTime = CreatedTime,
-                Money = mo,
-                BankBook = SelectedBankBook,
-                Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
-                //MainCategory = MainCategory,
-                //SubCategory = SubCategory,
-                User = LoginedUser
-            };
+                double.TryParse(MoneyText, out double mo);
 
-            var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
+                var item = new MoneyItem()
+                {
+                    Title = Title,
+                    Description = Description,
+                    CreatedTime = CreatedTime,
+                    Money = mo,
+                    BankBook = SelectedBankBook,
+                    Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
+                    MainCategoryId = MainCategoryId,                    
+                    //MainCategory = MainCategory,
+                    //SubCategory = SubCategory,
+                    User = LoginedUser
+                };
 
-            if (!result.Result)
-                ErrorMessage = "에러가 발생했습니다.";
+                var result = await MoneyApi.SaveMoney.ApiLauncher<MoneyItem, MoneyItem>(item);
 
-            return result.Result;
+                if (!result.Result)
+                    ErrorMessage = "에러가 발생했습니다.";
+
+                return result.Result;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> ModifyMoney()

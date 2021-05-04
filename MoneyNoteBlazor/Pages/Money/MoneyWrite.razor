@@ -18,6 +18,14 @@ else
         <label>수입</label>
     </div>
     <div>
+        <select @bind="ViewModel.SelectedBankBookId">
+            @foreach (var item in BankBookViewModel.BankBooks)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+    <div>
         <label>제목</label>
         <input type="text" @bind="ViewModel.Title" />
     </div>
@@ -61,6 +69,8 @@ else
 @code {
     public MoneyHandleViewModel ViewModel { get; set; }
 
+    public BankBookViewModel BankBookViewModel { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         if (SharedClass.SharedUser == null)
@@ -69,7 +79,9 @@ else
         if (SharedClass.SharedUser != null)
         {
             ViewModel = new MoneyHandleViewModel(SharedClass.SharedUser);
+            BankBookViewModel = new BankBookViewModel(SharedClass.SharedUser);
             await ViewModel.CategoryInitialize();
+            await BankBookViewModel.GetBankBooks();
         }
         //return base.OnInitializedAsync();
     }

@@ -143,12 +143,6 @@ namespace MoneyNoteLibrary5.ViewModels
         public BankBookViewModel(User user)
         {
             LoginedUser = user;
-            Initialize();
-        }
-
-        public async void Initialize()
-        {
-            await GetBankBooks();
         }
 
         public void ValidCheck()
