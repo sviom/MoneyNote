@@ -42,8 +42,10 @@ namespace MoneyNoteAPI
             //    options.HttpsPort = 44356;
             //});
 
-            //services.AddScoped<MoneyContext>();
-            //services.AddDbContext<MoneyContext>(options => options.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString.ToString()).Result), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
+            services.AddScoped<MoneyContext>();
+            services.AddDbContext<MoneyContext>(
+                options =>
+                    options.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString).Result), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +62,7 @@ namespace MoneyNoteAPI
             {
                 app.UseCors();
             }
-            
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

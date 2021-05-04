@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyNoteAPI.Context;
 
 namespace MoneyNoteAPI.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20210504144302_net5test")]
+    partial class net5test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
