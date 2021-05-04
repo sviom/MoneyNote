@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyNoteAPI.Context;
-using MoneyNoteLibrary;
+using MoneyNoteLibrary5;
 
 namespace MoneyNoteAPI.Migrations
 {

@@ -8,7 +8,7 @@ using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using MoneyNoteLibrary.Common;
+using MoneyNoteLibrary5.Common;
 
 namespace MoneyNoteAPI
 {

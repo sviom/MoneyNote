@@ -38,6 +38,7 @@ namespace MoneyNoteLibrary.Models
         [Required]
         public MainCategory MainCategory { get; set; }
 
+        [Required]
         public Guid MainCategoryId { get; set; }
 
         public SubCategory SubCategory { get; set; }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyNoteAPI.Context;
-using MoneyNoteLibrary;
-using MoneyNoteLibrary.Models;
+using MoneyNoteLibrary5;
+using MoneyNoteLibrary5.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

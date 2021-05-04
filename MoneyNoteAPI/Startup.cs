@@ -12,8 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MoneyNoteAPI.Context;
-using MoneyNoteLibrary;
-using MoneyNoteLibrary.Common;
+using MoneyNoteLibrary5;
+using MoneyNoteLibrary5.Common;
 
 namespace MoneyNoteAPI
 {

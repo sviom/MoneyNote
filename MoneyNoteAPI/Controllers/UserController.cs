@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using MoneyNoteAPI.Context;
 using MoneyNoteAPI.Services;
-using MoneyNoteLibrary;
-using MoneyNoteLibrary.Common;
-using MoneyNoteLibrary.Models;
+using MoneyNoteLibrary5;
+using MoneyNoteLibrary5.Common;
+using MoneyNoteLibrary5.Models;
 using Newtonsoft.Json;
 
 namespace MoneyNoteAPI.Controllers
