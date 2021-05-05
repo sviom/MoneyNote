@@ -3,6 +3,7 @@ using MoneyNoteLibrary5.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -72,6 +73,20 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
+        private Guid _SelectedBankBookId;
+        public Guid SelectedBankBookId
+        {
+            get { return _SelectedBankBookId; }
+            set
+            {
+                if (_SelectedBankBookId == value)
+                    return;
+
+                _SelectedBankBookId = value;
+                OnPropertyChanged();
+                SelectedItem = BankBooks.FirstOrDefault(x => x.Id == _SelectedBankBookId);
+            }
+        }
 
         private string _Name;
         public string Name

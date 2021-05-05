@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -210,6 +211,20 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
+        private MainCategory _MainCategory;
+        public MainCategory MainCategory
+        {
+            get { return _MainCategory; }
+            set
+            {
+                if (_MainCategory == value)
+                    return;
+
+                _MainCategory = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Guid _MainCategoryId;
         public Guid MainCategoryId
         {
@@ -220,6 +235,24 @@ namespace MoneyNoteLibrary5.ViewModels
                     return;
 
                 _MainCategoryId = value;
+                OnPropertyChanged();
+
+                // selected main category 
+                MainCategory = MainCategories.FirstOrDefault(x => x.Id == _MainCategoryId);
+            }
+        }
+
+
+        private SubCategory _SubCategory;
+        public SubCategory SubCategory
+        {
+            get { return _SubCategory; }
+            set
+            {
+                if (_SubCategory == value)
+                    return;
+
+                _SubCategory = value;
                 OnPropertyChanged();
             }
         }
@@ -235,6 +268,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
                 _SubCategoryId = value;
                 OnPropertyChanged();
+                SubCategory = SubCategories.FirstOrDefault(x => x.Id == SubCategoryId);
             }
         }
 
@@ -322,9 +356,8 @@ namespace MoneyNoteLibrary5.ViewModels
                     Money = mo,
                     BankBook = SelectedBankBook,
                     Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense,
-                    MainCategoryId = MainCategoryId,                    
-                    //MainCategory = MainCategory,
-                    //SubCategory = SubCategory,
+                    MainCategory = MainCategory,
+                    SubCategory = SubCategory,
                     User = LoginedUser
                 };
 

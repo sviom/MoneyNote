@@ -18,7 +18,7 @@ else
         <label>수입</label>
     </div>
     <div>
-        <select @bind="ViewModel.SelectedBankBookId">
+        <select @onchange="e => SetBankBook(e)">
             @foreach (var item in BankBookViewModel.BankBooks)
             {
                 <option value="@item.Id">@item.Name</option>
@@ -105,5 +105,12 @@ else
     public async Task DeleteMoney(EventArgs e)
     {
         await ViewModel.DeleteMoney();
+    }
+
+    public void SetBankBook(ChangeEventArgs e)
+    {
+        BankBookViewModel.SelectedBankBookId = new Guid(e.Value.ToString());
+
+        ViewModel.SelectedBankBook = BankBookViewModel.SelectedItem;
     }
 }
