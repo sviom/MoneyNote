@@ -41,6 +41,32 @@ namespace MoneyNoteLibrary5.Common
         }
 
         /// <summary>
+        /// Get 방식으로 API 통신하는 런처 
+        /// </summary>
+        /// <typeparam name="T">반환값으로 받기 원하는 타입</typeparam>
+        /// <param name="api">API Enum 이름</param>
+        /// <param name="item">쿼리스트링</param>
+        /// <param name="controllerEnum">어느 컨트롤러를 사용할 것인지</param>
+        /// <returns></returns>
+        public static async Task<ApiResult<T>> ApiGetLauncher<T>(this MoneyApi api, string item, ControllerEnum controllerEnum = ControllerEnum.money)
+        {
+            ApiResult<T> result;
+            using (var client = new HttpClient())
+            {
+                //var request = new ApiRequest<T>(item);
+                //var itemString = JsonConvert.SerializeObject(request);
+
+                //var content = new StringContent(itemString, Encoding.UTF8, "application/json");
+                var response = await client.GetAsync(BaseURL + controllerEnum + "/" + api + "?" + item);
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var apiResult = JsonConvert.DeserializeObject<ApiResult<T>>(responseContent);
+                result = apiResult;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// API실행기
         /// </summary>
         /// <typeparam name="T">반환받고 싶은 형식</typeparam>
