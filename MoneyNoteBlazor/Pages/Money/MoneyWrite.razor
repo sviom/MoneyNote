@@ -1,4 +1,4 @@
-﻿@page "/money/moneywrite"
+﻿@page "/money/moneywrite/{MoneyItemGuid:guid?}"
 @using MoneyNoteLibrary5.ViewModels;
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
@@ -71,6 +71,9 @@ else
 
     public BankBookViewModel BankBookViewModel { get; set; }
 
+    [Parameter]
+    public Guid MoneyItemGuid { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         if (SharedClass.SharedUser == null)
@@ -84,6 +87,13 @@ else
             await BankBookViewModel.GetBankBooks();
         }
         //return base.OnInitializedAsync();
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        if (ViewModel != null)
+            ViewModel.SetViewModel(MoneyItemGuid);
+        return base.OnParametersSetAsync();
     }
 
     public async Task GetSubCategories(ChangeEventArgs e)

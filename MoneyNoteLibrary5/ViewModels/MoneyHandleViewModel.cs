@@ -328,7 +328,46 @@ namespace MoneyNoteLibrary5.ViewModels
             }
 
             SelectedBankBook = item.BankBook;
-            //MainCategory = item.MainCategory;
+            MainCategory = item.MainCategory;
+            MainCategoryId = item.MainCategory.Id;
+            SubCategoryId = item.SubCategory.Id;
+        }
+
+        public async void SetViewModel(Guid moneyId)
+        {
+            MainCategories = new ObservableCollection<MainCategory>();
+            SubCategories = new ObservableCollection<SubCategory>();
+
+            await GetMainCategories();
+
+            var getResult = await MoneyApi.GetMoneyItem.ApiGetLauncher<MoneyItem>("guid=" + moneyId.ToString());
+            if (!getResult.Result)
+                return;
+
+            var item = getResult.Content;
+
+            PreMoneyItem = item;
+
+            Title = item.Title;
+            Description = item.Description;
+            MoneyText = item.Money.ToString();
+            CreatedTime = item.CreatedTime;
+            switch (item.Division)
+            {
+                case Enums.MoneyEnum.MoneyCategory.Expense:
+                    IsIncome = false;
+                    IsExpense = true;
+                    break;
+                case Enums.MoneyEnum.MoneyCategory.Income:
+                    IsIncome = true;
+                    IsExpense = false;
+                    break;
+                default:
+                    break;
+            }
+
+            SelectedBankBook = item.BankBook;
+            MainCategory = item.MainCategory;
             MainCategoryId = item.MainCategory.Id;
             SubCategoryId = item.SubCategory.Id;
         }

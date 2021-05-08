@@ -121,14 +121,20 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpGet]
-        public ApiResult<MoneyItem> GetMoneyItem(Guid guid)
+        public ApiResult<MoneyItem> GetMoneyItem(string guid)
         {
             var result = new ApiResult<MoneyItem>();
 
             try
             {
+                //var moneyItemId = new Guid(guid);
+
+                var tryResult = Guid.TryParse(guid, out Guid moneyItemId);
+                if (!tryResult)
+                    throw new Exception();
+
                 var service = new MoneyService();
-                var moneyItem = service.GetMoney(x => x.Id == guid);
+                var moneyItem = service.GetMoney(x => x.Id == moneyItemId);
                 result.Content = moneyItem;
                 result.Result = true;
             }

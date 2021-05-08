@@ -120,7 +120,11 @@ namespace MoneyNoteLibrary5.Enums
             /// <summary>
             /// 선택된 날짜에 대한 금액 정보들 가져오기
             /// </summary>
-            GetMoneyListWithDate
+            GetMoneyListWithDate,
+            /// <summary>
+            /// 금액 상세 정보 가져오기
+            /// </summary>
+            GetMoneyItem
         }
 
         /// <summary>
