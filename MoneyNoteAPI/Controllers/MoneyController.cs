@@ -18,7 +18,7 @@ namespace MoneyNoteAPI.Controllers
     {
 
         [HttpPost]
-        public ApiResult<List<MoneyItem>> GetAllMoney([FromBody]ApiRequest<string> user)
+        public ApiResult<List<MoneyItem>> GetAllMoney([FromBody] ApiRequest<string> user)
         {
             var result = new ApiResult<List<MoneyItem>>();
 
@@ -62,11 +62,11 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<MoneyItem> SaveMoney([FromBody]ApiRequest<MoneyItem> item)
+        public ApiResult<MoneyItem> SaveMoney([FromBody] ApiRequest<MoneyItem> item)
         {
             var result = new ApiResult<MoneyItem>();
             try
-            {            
+            {
                 var service = new MoneyService();
                 var insertResult = service.SaveMoney(item.Content);
                 result.Content = insertResult;
@@ -80,7 +80,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<MoneyItem> UpdateMoney([FromBody]ApiRequest<MoneyItem> item)
+        public ApiResult<MoneyItem> UpdateMoney([FromBody] ApiRequest<MoneyItem> item)
         {
             var result = new ApiResult<MoneyItem>();
             try
@@ -101,7 +101,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpPost]
-        public ApiResult<bool> DeleteMoney([FromBody]ApiRequest<MoneyItem> item)
+        public ApiResult<bool> DeleteMoney([FromBody] ApiRequest<MoneyItem> item)
         {
             var result = new ApiResult<bool>();
             try
@@ -111,6 +111,25 @@ namespace MoneyNoteAPI.Controllers
 
                 //var updateResult = SqlLauncher.Update(item.Content);
                 result.Content = updateResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpGet]
+        public ApiResult<MoneyItem> GetMoneyItem(Guid guid)
+        {
+            var result = new ApiResult<MoneyItem>();
+
+            try
+            {
+                var service = new MoneyService();
+                var moneyItem = service.GetMoney(x => x.Id == guid);
+                result.Content = moneyItem;
                 result.Result = true;
             }
             catch
