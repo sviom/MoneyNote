@@ -328,15 +328,13 @@ namespace MoneyNoteLibrary5.ViewModels
             SelectedBankBook = item.BankBook;
             MainCategory = item.MainCategory;
             MainCategoryId = item.MainCategory.Id;
-            SubCategoryId = item.SubCategory.Id;
+            SubCategoryId = item.SubCategory != null ? item.SubCategory.Id : Guid.Empty;
         }
 
         public async Task SetViewModel(Guid moneyId)
         {
             MainCategories = new ObservableCollection<MainCategory>();
             SubCategories = new ObservableCollection<SubCategory>();
-
-            await GetMainCategories();
 
             var getResult = await MoneyApi.GetMoneyItem.ApiGetLauncher<MoneyItem>("guid=" + moneyId.ToString());
             if (!getResult.Result)
@@ -365,9 +363,12 @@ namespace MoneyNoteLibrary5.ViewModels
             }
 
             SelectedBankBook = item.BankBook;
+            SelectedBankBookId = item.BankBook != null ? item.BankBook.Id : Guid.Empty;
             MainCategory = item.MainCategory;
             MainCategoryId = item.MainCategory.Id;
-            SubCategoryId = item.SubCategory.Id;
+            SubCategoryId = item.SubCategory != null ? item.SubCategory.Id : Guid.Empty;
+
+            await GetMainCategories();
         }
 
         public void ValidCheck()
