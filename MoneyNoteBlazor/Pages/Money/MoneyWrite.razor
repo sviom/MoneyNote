@@ -18,7 +18,7 @@ else
         <label>수입</label>
     </div>
     <div>
-        <select @onchange="e => SetBankBook(e)">
+        <select value="@ViewModel.SelectedBankBookId"  @onchange="SetBankBook">
             @foreach (var item in BankBookViewModel.BankBooks)
             {
                 <option value="@item.Id">@item.Name</option>
@@ -81,8 +81,9 @@ else
 
         if (SharedClass.SharedUser != null)
         {
-            ViewModel = new MoneyHandleViewModel(SharedClass.SharedUser);
             BankBookViewModel = new BankBookViewModel(SharedClass.SharedUser);
+            ViewModel = new MoneyHandleViewModel(SharedClass.SharedUser);
+            ViewModel.RefViewModel = BankBookViewModel;
             await ViewModel.CategoryInitialize();
             await BankBookViewModel.GetBankBooks();
         }

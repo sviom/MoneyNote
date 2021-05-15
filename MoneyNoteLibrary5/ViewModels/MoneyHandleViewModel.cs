@@ -14,6 +14,8 @@ namespace MoneyNoteLibrary5.ViewModels
 {
     public class MoneyHandleViewModel : ViewModelBase
     {
+        public ViewModelBase RefViewModel { get; set; }
+
         private bool _IsMainCategoryProgress;
         public bool IsMainCategoryProgress
         {
@@ -364,6 +366,10 @@ namespace MoneyNoteLibrary5.ViewModels
 
             SelectedBankBook = item.BankBook;
             SelectedBankBookId = item.BankBook != null ? item.BankBook.Id : Guid.Empty;
+            if (RefViewModel is BankBookViewModel bankbookViewModel)
+            {
+                bankbookViewModel.SelectedBankBookId = SelectedBankBookId;
+            }
             MainCategory = item.MainCategory;
             MainCategoryId = item.MainCategory.Id;
             SubCategoryId = item.SubCategory != null ? item.SubCategory.Id : Guid.Empty;
