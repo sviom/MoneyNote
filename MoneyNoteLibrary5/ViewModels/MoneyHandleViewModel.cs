@@ -333,7 +333,7 @@ namespace MoneyNoteLibrary5.ViewModels
             SubCategoryId = item.SubCategory.Id;
         }
 
-        public async void SetViewModel(Guid moneyId)
+        public async Task SetViewModel(Guid moneyId)
         {
             MainCategories = new ObservableCollection<MainCategory>();
             SubCategories = new ObservableCollection<SubCategory>();

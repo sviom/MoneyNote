@@ -89,11 +89,11 @@ else
         //return base.OnInitializedAsync();
     }
 
-    protected override Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        if (ViewModel != null)
-            ViewModel.SetViewModel(MoneyItemGuid);
-        return base.OnParametersSetAsync();
+        if (ViewModel != null && MoneyItemGuid != Guid.Empty)
+            await ViewModel.SetViewModel(MoneyItemGuid);
+        //return base.OnParametersSetAsync();
     }
 
     public async Task GetSubCategories(ChangeEventArgs e)
