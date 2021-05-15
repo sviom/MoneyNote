@@ -453,6 +453,8 @@ namespace MoneyNoteLibrary5.ViewModels
             if (LoginedUser == null)
                 return;
 
+            MainCategories?.Clear();
+
             IsRunProgressRing = true;
             IsMainCategoryProgress = true;
             var result = await MoneyApi.GetMainCategories.ApiLauncher<User, List<MainCategory>>(LoginedUser, ControllerEnum.category);
@@ -478,7 +480,7 @@ namespace MoneyNoteLibrary5.ViewModels
             if (LoginedUser == null)
                 return;
 
-            SubCategories = new ObservableCollection<SubCategory>();
+            SubCategories?.Clear();
 
             IsSubCategoryProgress = true;
             IsRunProgressRing = true;

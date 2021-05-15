@@ -41,7 +41,7 @@ else
     </div>
 
     <div>
-        <select value="@ViewModel.MainCategoryId" @onchange="e => GetSubCategories(e)">
+        <select value="@ViewModel.MainCategoryId" @onchange="GetSubCategories">
             @foreach (var item in ViewModel.MainCategories)
             {
                 <option value="@item.Id">@item.Title</option>
