@@ -12,9 +12,9 @@ else
 {
     <h4>@ViewModel.Title</h4>
     <div>
-        <input type="radio" name="isIncomeRadio" value="dd" checked="@ViewModel.IsExpense" />
+        <input type="radio" name="isIncomeRadio" value="expense" checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
         <label>지출</label>
-        <input type="radio" name="isIncomeRadio" value="ff" />
+        <input type="radio" name="isIncomeRadio" value="income" checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
         <label>수입</label>
     </div>
     <div>
@@ -122,5 +122,28 @@ else
         BankBookViewModel.SelectedBankBookId = new Guid(e.Value.ToString());
 
         ViewModel.SelectedBankBook = BankBookViewModel.SelectedItem;
+    }
+
+    public async Task DivisionChanged(ChangeEventArgs e)
+    {
+        if (ViewModel == null)
+            return;
+
+        var valueString = e.Value.ToString();
+        switch (valueString)
+        {
+            case "income":
+                ViewModel.IsIncome = true;
+                ViewModel.IsExpense = false;
+                break;
+            case "expense":
+                ViewModel.IsIncome = false;
+                ViewModel.IsExpense = true;
+                break;
+            default:
+                return;
+        }
+
+        await ViewModel.GetMainCategories();
     }
 }

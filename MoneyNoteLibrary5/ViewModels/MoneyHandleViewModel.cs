@@ -242,7 +242,6 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-
         private SubCategory _SubCategory;
         public SubCategory SubCategory
         {
@@ -271,7 +270,6 @@ namespace MoneyNoteLibrary5.ViewModels
                 SubCategory = SubCategories.FirstOrDefault(x => x.Id == SubCategoryId);
             }
         }
-
 
         public bool IsValidMoney => Common.ValidCheck.IsValidNumber(MoneyText);
 
