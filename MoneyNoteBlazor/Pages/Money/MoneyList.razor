@@ -4,7 +4,6 @@
 @inject IJSRuntime JS;
 
 <h3>MoneyList</h3>
-<h4>@SharedClass.SharedUser?.Name</h4>
 
 @if (ViewModel == null || ViewModel.IsRunProgressRing)
 {
@@ -13,36 +12,45 @@
 else
 {
     <div>
-        <NavLink href="/money/moneywrite">작성하기</NavLink>
-    </div>
-    <div>
-        <button @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">왼쪽</button>
-        <span>@SelectedDate.ToString("yyyy-MM")</span>
-        <button @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(1))">오른쪽</button>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>제목</th>
-                <th>내용</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in ViewModel?.MoneyList)
-            {
-                <tr @onclick="e => MoveToModify(e, item.Id)">
-                    <td>
-                        <span>@(item != null ? item.Title : "없다")</span>
-                    </td>
-                    <td>
-                        <span>@(item != null ? item.Money : 0)</span>
-                    </td>
-                </tr>
 
-            }
-        </tbody>
-    </table>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            <button class="btn btn-outline-primary" @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">왼쪽</button>
+            <span>@SelectedDate.ToString("yyyy-MM")</span>
+            <button class="btn btn-outline-primary" @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(1))">오른쪽</button>
+        </div>
+        <div class="col-3">
+            <NavLink href="/money/moneywrite" class="btn btn-outline-primary float-end">작성하기</NavLink>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewModel?.MoneyList)
+                    {
+                        <tr @onclick="e => MoveToModify(e, item.Id)">
+                            <td>
+                                <span>@(item != null ? item.Title : "없다")</span>
+                            </td>
+                            <td>
+                                <span>@(item != null ? item.Money : 0)</span>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
 
 @code {
@@ -78,3 +86,11 @@ else
     }
 
 }
+
+<style>
+    .write_btn {
+        text-align: right;
+    }
+
+
+</style>
