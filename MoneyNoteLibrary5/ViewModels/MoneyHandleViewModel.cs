@@ -269,7 +269,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
                 _SubCategoryId = value;
                 OnPropertyChanged();
-                SubCategory = SubCategories.FirstOrDefault(x => x.Id == SubCategoryId);
+                SubCategory = SubCategories.FirstOrDefault(x => x.Id == _SubCategoryId);
             }
         }
 
@@ -375,6 +375,7 @@ namespace MoneyNoteLibrary5.ViewModels
             SubCategoryId = item.SubCategory != null ? item.SubCategory.Id : Guid.Empty;
 
             await GetMainCategories();
+            await GetSubCategories();
         }
 
         public void ValidCheck()
