@@ -370,12 +370,12 @@ namespace MoneyNoteLibrary5.ViewModels
             {
                 bankbookViewModel.SelectedBankBookId = SelectedBankBookId;
             }
+            await GetMainCategories();
             MainCategory = item.MainCategory;
             MainCategoryId = item.MainCategory.Id;
-            SubCategoryId = item.SubCategory != null ? item.SubCategory.Id : Guid.Empty;
 
-            await GetMainCategories();
             await GetSubCategories();
+            SubCategoryId = item.SubCategory != null ? item.SubCategory.Id : Guid.Empty;
         }
 
         public void ValidCheck()
