@@ -18,7 +18,7 @@ else
         <label>수입</label>
     </div>
     <div>
-        <select value="@ViewModel.SelectedBankBookId"  @onchange="SetBankBook">
+        <select value="@ViewModel.SelectedBankBookId" @onchange="SetBankBook">
             @foreach (var item in BankBookViewModel.BankBooks)
             {
                 <option value="@item.Id">@item.Name</option>
@@ -60,8 +60,8 @@ else
 
     <div>
         <button @onclick="e => SaveMoney(e)">저장</button>
-        <button @onclick="e => ModifyMoney(e)">수정</button>
-        <button @onclick="e => DeleteMoney(e)">삭제</button>
+        <button @onclick="ModifyMoney">수정</button>
+        <button @onclick="DeleteMoney">삭제</button>
     </div>
 }
 
@@ -73,6 +73,9 @@ else
 
     [Parameter]
     public Guid MoneyItemGuid { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -110,12 +113,16 @@ else
 
     public async Task ModifyMoney(EventArgs e)
     {
-        await ViewModel.ModifyMoney();
+        var result = await ViewModel.ModifyMoney();
+        if (result)
+            NavigationManager?.NavigateTo("/Money/MoneyList");
     }
 
     public async Task DeleteMoney(EventArgs e)
     {
-        await ViewModel.DeleteMoney();
+        var result = await ViewModel.DeleteMoney();
+        if (result)
+            NavigationManager?.NavigateTo("/Money/MoneyList");
     }
 
     public void SetBankBook(ChangeEventArgs e)
