@@ -431,9 +431,9 @@ namespace MoneyNoteLibrary5.ViewModels
             PreMoneyItem.BankBook = SelectedBankBook;
             PreMoneyItem.BankBookId = SelectedBankBook.Id;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
-            //PreMoneyItem.MainCategory = MainCategory;
+            PreMoneyItem.MainCategory = MainCategory;
             PreMoneyItem.MainCategoryId = MainCategoryId;
-            //PreMoneyItem.SubCategory = SubCategory;
+            PreMoneyItem.SubCategory = SubCategory;
             PreMoneyItem.CreatedTime = CreatedTime;
             PreMoneyItem.UpdatedTime = DateTimeOffset.Now;
             PreMoneyItem.User = LoginedUser;
