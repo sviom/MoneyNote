@@ -1,0 +1,102 @@
+﻿@page "/bankbook/bankbookwrite/{MoneyItemGuid:guid?}"
+@using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
+@inject IJSRuntime JS;
+
+<h3>BankBook 추가/수정</h3>
+@if (ViewModel == null || ViewModel.IsRunProgressRing)
+{
+    <h2>가져오는 중...</h2>
+}
+else
+{
+    <h4>@ViewModel.Title</h4>
+    <div>
+        <input type="radio" name="isIncomeRadio" value="expense" checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
+        <label>지출</label>
+        <input type="radio" name="isIncomeRadio" value="income" checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
+        <label>수입</label>
+    </div>
+    <div>
+        <label>제목</label>
+        <input type="text" @bind="ViewModel.Name" />
+    </div>
+
+    <div>
+        <label>금액</label>
+        <input type="number" @bind="ViewModel.AllAssets" />
+    </div>
+
+    <div>
+        <label>설명</label>
+        <input type="text" @bind="ViewModel.Description" />
+    </div>
+
+
+    <div>
+        <button @onclick="e => SaveMoney(e)">저장</button>
+        <button @onclick="ModifyMoney">수정</button>
+        <button @onclick="DeleteMoney">삭제</button>
+    </div>
+}
+
+
+@code {
+
+    public BankBookViewModel ViewModel { get; set; }
+
+    [Parameter]
+    public Guid MoneyItemGuid { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SharedClass.SharedUser == null)
+            SharedClass.SharedUser = await SharedClass.GetUserInfo(JS);
+
+        if (SharedClass.SharedUser != null)
+        {
+            BankBookViewModel = new BankBookViewModel(SharedClass.SharedUser);
+
+
+            await BankBookViewModel.GetBankBooks();
+        }
+        //return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //return base.OnParametersSetAsync();
+    }
+
+    public async Task GetSubCategories(ChangeEventArgs e)
+    {
+    }
+
+    public async Task SaveMoney(EventArgs e)
+    {
+        //await ViewModel.SaveMoney();
+    }
+
+    public async Task ModifyMoney(EventArgs e)
+    {
+        var result = await ViewModel.ModifyBankBook();
+        if (result)
+            NavigationManager?.NavigateTo("/Money/MoneyList");
+    }
+
+    public async Task DeleteMoney(EventArgs e)
+    {
+        var result = await ViewModel.DeleteBankBook();
+        if (result)
+            NavigationManager?.NavigateTo("/Money/MoneyList");
+    }
+
+    public void SetBankBook(ChangeEventArgs e)
+    {
+        //BankBookViewModel.SelectedBankBookId = new Guid(e.Value.ToString());
+        //ViewModel.SelectedBankBook = BankBookViewModel.SelectedItem;
+    }
+}
