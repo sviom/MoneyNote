@@ -4,15 +4,47 @@
 @inject IJSRuntime JS;
 
 <h3>BankBookList</h3>
+@if (ViewModel == null || ViewModel.IsRunProgressRing)
+{
+    <p>가져오는 중...</p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewModel?.BankBooks)
+                    {
+                        <tr @onclick="e => MoveToModify(e, item.Id)">
+                            <td>
+                                <span>@(item != null ? item.Name : "없다")</span>
+                            </td>
+                            <td>
+                                <span>@(item != null ? item.Assets : 0)</span>
+                            </td>
+                        </tr>
 
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
 
 @code {
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
-    public MoneyViewModel ViewModel { get; set; }
+    public BankBookViewModel ViewModel { get; set; }
 
-    public DateTimeOffset SelectedDate => ViewModel != null ? ViewModel.SelectedDate : DateTimeOffset.Now;
+    //public DateTimeOffset SelectedDate => ViewModel != null ? ViewModel.SelectedDate : DateTimeOffset.Now;
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,16 +53,17 @@
 
         if (SharedClass.SharedUser != null)
         {
-            ViewModel = new MoneyViewModel(SharedClass.SharedUser);
-            await ViewModel.GetMoneyList(DateTime.Now);
+            ViewModel = new BankBookViewModel(SharedClass.SharedUser);
+            await ViewModel.GetBankBooks();
+            //await ViewModel.GetMoneyList(DateTime.Now);
         }
         //return base.OnInitializedAsync();
     }
 
-    public async Task GetMoneyListWithDate(MouseEventArgs e, DateTime selectedDate)
-    {
-        await ViewModel.GetMoneyList(selectedDate);
-    }
+    //public async Task GetMoneyListWithDate(MouseEventArgs e, DateTime selectedDate)
+    //{
+    //    await ViewModel.GetMoneyList(selectedDate);
+    //}
 
     public void MoveToModify(EventArgs e, Guid moneyGuid)
     {
