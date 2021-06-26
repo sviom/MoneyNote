@@ -1,4 +1,4 @@
-﻿@page "/bankbook/bankbookwrite/{MoneyItemGuid:guid?}"
+﻿@page "/bankbook/bankbookwrite/{bankBookGuid:guid?}"
 @using MoneyNoteLibrary5.ViewModels;
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
@@ -10,31 +10,24 @@
 }
 else
 {
-    <h4>@ViewModel.Title</h4>
-    <div>
-        <input type="radio" name="isIncomeRadio" value="expense" checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
-        <label>지출</label>
-        <input type="radio" name="isIncomeRadio" value="income" checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
-        <label>수입</label>
-    </div>
     <div>
         <label>제목</label>
-        <input type="text" @bind="ViewModel.Name" />
+        <input type="text" @bind="SelectedBankBook.Name" />
     </div>
 
     <div>
         <label>금액</label>
-        <input type="number" @bind="ViewModel.AllAssets" />
+        <input type="number" @bind="SelectedBankBook.Assets" />
     </div>
 
-    <div>
-        <label>설명</label>
-        <input type="text" @bind="ViewModel.Description" />
-    </div>
+    @*<div>
+            <label>설명</label>
+            <input type="text" @bind="ViewModel.Description" />
+        </div>*@
 
 
     <div>
-        <button @onclick="e => SaveMoney(e)">저장</button>
+        <button @onclick="SaveMoney">저장</button>
         <button @onclick="ModifyMoney">수정</button>
         <button @onclick="DeleteMoney">삭제</button>
     </div>
@@ -45,11 +38,15 @@ else
 
     public BankBookViewModel ViewModel { get; set; }
 
+    public BankBook SelectedBankBook => ViewModel?.SelectedItem;
+
     [Parameter]
-    public Guid MoneyItemGuid { get; set; }
+    public Guid bankBookGuid { get; set; }
 
     [Inject]
     public NavigationManager NavigationManager { get; set; }
+
+    public string BankBookListLink => "/BankBook/BankBookList";
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,10 +55,9 @@ else
 
         if (SharedClass.SharedUser != null)
         {
-            BankBookViewModel = new BankBookViewModel(SharedClass.SharedUser);
-
-
-            await BankBookViewModel.GetBankBooks();
+            ViewModel = new BankBookViewModel(SharedClass.SharedUser);
+            await ViewModel.GetBankBooks();
+            ViewModel.SelectedBankBookId = bankBookGuid;
         }
         //return base.OnInitializedAsync();
     }
@@ -71,32 +67,22 @@ else
         //return base.OnParametersSetAsync();
     }
 
-    public async Task GetSubCategories(ChangeEventArgs e)
-    {
-    }
-
     public async Task SaveMoney(EventArgs e)
     {
-        //await ViewModel.SaveMoney();
+        await ViewModel.SaveBankBook();
     }
 
     public async Task ModifyMoney(EventArgs e)
     {
         var result = await ViewModel.ModifyBankBook();
         if (result)
-            NavigationManager?.NavigateTo("/Money/MoneyList");
+            NavigationManager?.NavigateTo(BankBookListLink);
     }
 
     public async Task DeleteMoney(EventArgs e)
     {
         var result = await ViewModel.DeleteBankBook();
         if (result)
-            NavigationManager?.NavigateTo("/Money/MoneyList");
-    }
-
-    public void SetBankBook(ChangeEventArgs e)
-    {
-        //BankBookViewModel.SelectedBankBookId = new Guid(e.Value.ToString());
-        //ViewModel.SelectedBankBook = BankBookViewModel.SelectedItem;
+            NavigationManager?.NavigateTo(BankBookListLink);
     }
 }
