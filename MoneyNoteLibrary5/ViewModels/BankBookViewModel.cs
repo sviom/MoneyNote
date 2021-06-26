@@ -43,7 +43,7 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-        private BankBook _SelectedItem;
+        private BankBook _SelectedItem = new BankBook();
         public BankBook SelectedItem
         {
             get { return _SelectedItem; }
