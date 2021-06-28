@@ -12,12 +12,12 @@ else
 {
     <div>
         <label>제목</label>
-        <input type="text" @bind="SelectedBankBook.Name" />
+        <input type="text" @bind="ViewModel.Name" />
     </div>
 
     <div>
         <label>금액</label>
-        <input type="number" @bind="SelectedBankBook.Assets" />
+        <input type="number" @bind="ViewModel.AssetsText" />
     </div>
 
     @*<div>
@@ -27,7 +27,7 @@ else
 
 
     <div>
-        <button @onclick="SaveMoney">저장</button>
+        <button @onclick="SaveMoney" disabled="@ViewModel.IsEnableSave">저장</button>
         <button @onclick="ModifyMoney">수정</button>
         <button @onclick="DeleteMoney">삭제</button>
     </div>

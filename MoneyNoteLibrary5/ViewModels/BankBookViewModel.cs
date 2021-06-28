@@ -100,6 +100,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 _Name = value;
                 OnPropertyChanged();
                 ValidCheck();
+                SelectedItem.Name = _Name;
             }
         }
 
@@ -115,6 +116,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 _AssetsText = value;
                 OnPropertyChanged();
                 ValidCheck();
+                SelectedItem.Assets = Convert.ToDouble(_AssetsText);
             }
         }
 
@@ -214,7 +216,10 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public async Task<bool> SaveBankBook()
         {
-            if (SelectedItem != null)
+            if (SelectedItem == null)
+                return false;
+
+            if(SelectedItem.Id != Guid.Empty)
                 return await ModifyBankBook();
             else
                 return await SaveNewBankBook();
