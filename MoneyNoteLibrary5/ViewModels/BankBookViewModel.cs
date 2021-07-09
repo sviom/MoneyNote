@@ -168,14 +168,15 @@ namespace MoneyNoteLibrary5.ViewModels
             OnPropertyChanged(nameof(IsEnableSave));
         }
 
-        public void SetSelectedItem(BankBook bankBook)
+        public void SetSelectedItem()
         {
-            SelectedItem = bankBook;
-            if (SelectedItem != null)
-            {
-                Name = SelectedItem.Name;
-                AssetsText = SelectedItem.Assets.ToString();
-            }
+            if (SelectedItem == null)
+                return;
+
+            Name = SelectedItem.Name;
+            AssetsText = SelectedItem.Assets.ToString();
+
+            ValidCheck();
         }
 
         public void AddNewBankBookView()
@@ -219,13 +220,13 @@ namespace MoneyNoteLibrary5.ViewModels
             if (SelectedItem == null)
                 return false;
 
-            if(SelectedItem.Id != Guid.Empty)
+            if (SelectedItem.Id != Guid.Empty)
                 return await ModifyBankBook();
             else
                 return await SaveNewBankBook();
         }
 
-        public async Task<bool> SaveNewBankBook()
+        private async Task<bool> SaveNewBankBook()
         {
             IsRunProgressRing = true;
 
@@ -250,7 +251,7 @@ namespace MoneyNoteLibrary5.ViewModels
             return result.Result;
         }
 
-        public async Task<bool> ModifyBankBook()
+        private async Task<bool> ModifyBankBook()
         {
             if (SelectedItem == null)
                 return false;

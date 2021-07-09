@@ -27,9 +27,13 @@ else
 
 
     <div>
-        <button @onclick="SaveMoney" disabled="@ViewModel.IsEnableSave">저장</button>
-        <button @onclick="ModifyMoney">수정</button>
-        <button @onclick="DeleteMoney">삭제</button>
+        <button @onclick="SaveMoney" disabled="@(!ViewModel.IsEnableSave)">저장</button>
+
+        @if (ViewModel.IsShowDeleteButton)
+        {
+            <button @onclick="DeleteMoney">삭제</button>
+        }
+
     </div>
 }
 
@@ -59,26 +63,24 @@ else
             await ViewModel.GetBankBooks();
             if (bankBookGuid != Guid.Empty)
                 ViewModel.SelectedBankBookId = bankBookGuid;
+
+            ViewModel.SetSelectedItem();
         }
         //return base.OnInitializedAsync();
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        //return base.OnParametersSetAsync();
-    }
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    return base.OnParametersSetAsync();
+    //}
 
     public async Task SaveMoney(EventArgs e)
     {
-        await ViewModel.SaveBankBook();
-    }
-
-    public async Task ModifyMoney(EventArgs e)
-    {
-        var result = await ViewModel.ModifyBankBook();
+        var result = await ViewModel.SaveBankBook();
         if (result)
             NavigationManager?.NavigateTo(BankBookListLink);
     }
+
 
     public async Task DeleteMoney(EventArgs e)
     {
