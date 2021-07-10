@@ -2,17 +2,38 @@
 @page "/"
 @using MoneyNoteLibrary5.ViewModels;
 @inject IJSRuntime JS;
+@*<div class="main">
+        <div class="content px-4 text-center">
 
-<div>
-    <h1>MoneyNote</h1>
+        </div>
+    </div>*@
 
-    Welcome to your new app.
+<div class="row justify-content-center">
+    <form>
+        <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-    <SurveyPrompt Title="How is Blazor working for you?" />
-    <input type="text" @bind="ViewModel.Email" />
-    <input type="password" @bind="ViewModel.Password" />
-    <button type="button" @onclick="Login">로그인</button>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" @bind="ViewModel.Email" />
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" @bind="ViewModel.Password" />
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                @*<input type="checkbox" value="remember-me"> Remember me*@
+                <input type="checkbox" @bind-value="IsContainLogin" name="isContainLogin" /> 로그인 유지
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="button" @onclick="Login">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    </form>
 </div>
+
+
 
 @code
 {
@@ -20,6 +41,24 @@
     public NavigationManager NavigationManager { get; set; }
 
     public LoginViewModel ViewModel { get; set; } = new LoginViewModel();
+
+    public bool IsContainLogin { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //await JS.InvokeAsync<bool>("SetUserInfo", null);
+        var result = await SharedClass.GetUserInfo(JS);
+        if (result != null)
+            NavigationManager?.NavigateTo("/Money/MoneyList");
+
+
+        //return base.OnInitializedAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
 
     private async Task Login()
     {
@@ -31,6 +70,12 @@
         {
             SharedClass.SharedUser = result.Item2;
             var saveResult = await JS.InvokeAsync<bool>("SetUserInfo", JsonConvert.SerializeObject(result.Item2));
+
+            if (IsContainLogin)
+            {
+                await SharedClass.SetItemInLocallStorage(JS, "keepLogin", "true");
+            }
+
 
             if (NavigationManager != null)
                 NavigationManager.NavigateTo("/Money/MoneyList");
