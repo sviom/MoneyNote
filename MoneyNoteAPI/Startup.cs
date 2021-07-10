@@ -26,6 +26,8 @@ namespace MoneyNoteAPI
 
         public IConfiguration Configuration { get; }
 
+        public string[] corsDomains => new string[] { "https://localhost:44327", "http://moneynote.azurewebsites.net" };
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,7 +35,7 @@ namespace MoneyNoteAPI
             services.AddControllers();
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.WithOrigins("https://localhost:44327").AllowAnyHeader().AllowAnyMethod());
+                options.AddDefaultPolicy(builder => builder.WithOrigins(corsDomains).AllowAnyHeader().AllowAnyMethod());
             });
 
             //services.AddHttpsRedirection(options =>
@@ -58,10 +60,7 @@ namespace MoneyNoteAPI
 
             app.UseRouting();
 
-            if (env.IsDevelopment())
-            {
-                app.UseCors();
-            }
+            app.UseCors();
 
             app.UseAuthorization();
 
