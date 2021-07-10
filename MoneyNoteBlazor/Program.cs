@@ -38,7 +38,18 @@ namespace MoneyNoteBlazor
         public static async Task<User> GetUserInfo(IJSRuntime JS)
         {
             var result = await JS.InvokeAsync<string>("GetUserInfo", "userKey");
+            if (string.IsNullOrEmpty(result))
+                return null;
+
             return JsonConvert.DeserializeObject<User>(result);
+        }
+
+        public static async Task SetItemInLocallStorage(IJSRuntime JS, string key, string value)
+        {
+            if (string.IsNullOrEmpty(key))
+                return;
+
+            await JS.InvokeAsync<string>(key, value);
         }
     }
 }
