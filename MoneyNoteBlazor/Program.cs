@@ -44,12 +44,22 @@ namespace MoneyNoteBlazor
             return JsonConvert.DeserializeObject<User>(result);
         }
 
-        public static async Task SetItemInLocallStorage(IJSRuntime JS, string key, string value)
+        public static async Task<T> GetItemInLocalStorage<T>(IJSRuntime JS, Keys key)
         {
-            if (string.IsNullOrEmpty(key))
-                return;
+            var result = await JS.InvokeAsync<T>("GetUserInfo", key.ToString());
 
-            await JS.InvokeAsync<string>(key, value);
+            return result;
+        }
+
+        public static async Task SetItemInLocallStorage(IJSRuntime JS, Keys key, object value)
+        {
+            await JS.InvokeVoidAsync("SetToLocalStorage", key.ToString(), JsonConvert.SerializeObject(value));
+        }
+
+        public enum Keys
+        {
+            userKey,
+            KeepLogin
         }
     }
 }
