@@ -1,6 +1,7 @@
 ﻿@layout EmptyLayout
 @page "/"
 @using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 @*<div class="main">
         <div class="content px-4 text-center">
@@ -44,20 +45,40 @@
 
     public bool IsContainLogin { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override Task OnParametersSetAsync()
     {
-        //await JS.InvokeAsync<bool>("SetUserInfo", null);
-        var result = await SharedClass.GetUserInfo(JS);
-        if (result != null)
-            NavigationManager?.NavigateTo("/Money/MoneyList");
-
-
-        //return base.OnInitializedAsync();
+        return base.OnParametersSetAsync();
     }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await SharedClass.GetItemInLocalStorage<string>(JS, SharedClass.Keys.KeepLogin);
+        bool.TryParse(result, out bool result22);
+        if (result22)
+        {
+            var userInfo = await SharedClass.GetItemInLocalStorage<string>(JS, SharedClass.Keys.userKey);
+            var user = JsonConvert.DeserializeObject<User>(userInfo);
+
+
+            if (user.Id != Guid.Empty)
+                NavigationManager?.NavigateTo("/Money/MoneyList");
+        }
+        else
+        {
+            // delete user key
+        }
+
+        //return base.OnAfterRenderAsync(firstRender);
     }
 
     private async Task Login()
@@ -69,11 +90,12 @@
         if (result.Item1)
         {
             SharedClass.SharedUser = result.Item2;
-            var saveResult = await JS.InvokeAsync<bool>("SetUserInfo", JsonConvert.SerializeObject(result.Item2));
+            //var saveResult = await JS.InvokeAsync<bool>("SetUserInfo", JsonConvert.SerializeObject(result.Item2));
+            await SharedClass.SetItemInLocallStorage(JS, SharedClass.Keys.userKey, result.Item2);
 
             if (IsContainLogin)
             {
-                await SharedClass.SetItemInLocallStorage(JS, "keepLogin", "true");
+                await SharedClass.SetItemInLocallStorage(JS, SharedClass.Keys.KeepLogin, true);
             }
 
 
