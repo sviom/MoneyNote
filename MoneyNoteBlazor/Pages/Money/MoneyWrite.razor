@@ -3,7 +3,6 @@
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 
-<h3>MoneyWrite</h3>
 @if (ViewModel == null || ViewModel.IsRunProgressRing)
 {
     <h2>가져오는 중...</h2>
@@ -12,9 +11,9 @@ else
 {
     <main>
         <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+            @*<img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">*@
             <h2>@(@ViewModel.IsExpense ? "지출" : "수입") 작성</h2>
-            <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+            <p class="lead">@(@ViewModel.IsExpense ? "지출" : "수입") 내역을 작성합니다.</p>
         </div>
     </main>
 
