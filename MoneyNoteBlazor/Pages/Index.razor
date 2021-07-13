@@ -49,7 +49,7 @@
     protected override async Task OnInitializedAsync()
     {
 #if DEBUG
-        await Task.Delay(10000);
+        await Task.Delay(1000);
 #endif
 
         var result = await SharedClass.GetItemInLocalStorage<string>(JS, SharedClass.Keys.KeepLogin);

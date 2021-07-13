@@ -10,14 +10,23 @@
 }
 else
 {
-    <h4>@ViewModel.Title</h4>
-    <div>
-        <input type="radio" name="isIncomeRadio" value="expense" checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
+    <main>
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+            <h2>@(@ViewModel.IsExpense ? "지출" : "수입") 작성</h2>
+            <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        </div>
+    </main>
+
+    <div class="row">
+        <input type="radio" name="isIncomeRadio" value="expense" class="form-control"
+               checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
         <label>지출</label>
-        <input type="radio" name="isIncomeRadio" value="income" checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
+        <input type="radio" name="isIncomeRadio" value="income" class="form-control"
+               checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
         <label>수입</label>
     </div>
-    <div>
+    <div class="row">
         <select value="@ViewModel.SelectedBankBookId" @onchange="SetBankBook">
             @foreach (var item in BankBookViewModel.BankBooks)
             {
@@ -25,23 +34,23 @@ else
             }
         </select>
     </div>
-    <div>
+    <div class="row">
         <label>제목</label>
         <input type="text" @bind="ViewModel.Title" />
     </div>
 
-    <div>
+    <div class="row">
         <label>금액</label>
         <input type="number" @bind="ViewModel.MoneyText" />
     </div>
 
-    <div>
+    <div class="row">
         <label>설명</label>
         <input type="text" @bind="ViewModel.Description" />
     </div>
 
-    <div>
-        <select value="@ViewModel.MainCategoryId" @onchange="GetSubCategories">
+    <div class="row">
+        <select class="form-select" value="@ViewModel.MainCategoryId" @onchange="GetSubCategories">
             @foreach (var item in ViewModel.MainCategories)
             {
                 <option value="@item.Id">@item.Title</option>
@@ -49,24 +58,37 @@ else
         </select>
     </div>
 
-    <div>
-        <select @bind="ViewModel.SubCategoryId">
+    <div class="row">
+        <select class="form-select" @bind="ViewModel.SubCategoryId">
             @foreach (var item in ViewModel.SubCategories)
             {
                 <option value="@item.Id">@item.Title</option>
             }
         </select>
-    </div><div>
-        @if (ViewModel.IsModifyMode)
-        {
-            <button @onclick="ModifyMoney">수정</button>
-        }
-        else
-        {
-            <button @onclick="e => SaveMoney(e)" disabled="@(!ViewModel.IsEnableSave)">저장</button>
-        }
+    </div>
+    <div class="row">
+        <div class="col-6 mx-auto text-center">
+            @if (ViewModel.IsModifyMode)
+            {
+                <div class="row">
+                    <div class="d-grid gap-0 col-6">
+                        <button class="btn btn-primary d-block" type="button" @onclick="ModifyMoney">수정</button>
+                    </div>
+                    <div class="d-grid gap-0  col-6">
+                        <button class="btn btn-danger d-block" type="button" @onclick="DeleteMoney">삭제</button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="d-grid gap-0 col">
+                        <button class="btn btn-primary" @onclick="e => SaveMoney(e)" disabled="@(!ViewModel.IsEnableSave)">저장</button>
+                    </div>
+                </div>
+            }
+        </div>
 
-        <button @onclick="DeleteMoney">삭제</button>
     </div>
 }
 
