@@ -57,6 +57,9 @@
         if (result22)
         {
             var userInfo = await SharedClass.GetItemInLocalStorage<string>(JS, SharedClass.Keys.userKey);
+            if (userInfo == "'null'" || userInfo == null)
+                return;
+
             var user = JsonConvert.DeserializeObject<User>(userInfo);
 
 
