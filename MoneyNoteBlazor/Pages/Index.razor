@@ -46,28 +46,12 @@
 
     public bool IsContainLogin { get; set; }
 
-    protected override Task OnParametersSetAsync()
-    {
-        return base.OnParametersSetAsync();
-    }
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
 #if DEBUG
-        Thread.Sleep(5000);
+        await Task.Delay(10000);
 #endif
 
-
-        base.OnInitialized();
-    }
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
         var result = await SharedClass.GetItemInLocalStorage<string>(JS, SharedClass.Keys.KeepLogin);
         bool.TryParse(result, out bool result22);
         if (result22)
@@ -84,9 +68,8 @@
             // delete user key
             await SharedClass.SetItemInLocallStorage(JS, SharedClass.Keys.userKey, null);
         }
-
-        //return base.OnAfterRenderAsync(firstRender);
     }
+
 
     private async Task Login()
     {
