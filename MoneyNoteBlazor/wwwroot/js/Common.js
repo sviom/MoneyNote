@@ -15,3 +15,8 @@ window.GetUserInfo = (key) => {
     const localStorage = window.localStorage;
     return localStorage.getItem(key);
 }
+
+window.ClearLocalStorage = () => {
+    const localStorage = window.localStorage;
+    localStorage.clear();
+}

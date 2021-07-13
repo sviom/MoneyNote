@@ -56,6 +56,11 @@ namespace MoneyNoteBlazor
             await JS.InvokeVoidAsync("SetToLocalStorage", key.ToString(), JsonConvert.SerializeObject(value));
         }
 
+        public static async Task ClearLocalStorage(IJSRuntime JS)
+        {
+            await JS.InvokeVoidAsync("ClearLocalStorage");
+        }
+
         public enum Keys
         {
             userKey,
