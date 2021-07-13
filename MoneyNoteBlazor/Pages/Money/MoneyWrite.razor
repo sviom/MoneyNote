@@ -56,11 +56,16 @@ else
                 <option value="@item.Id">@item.Title</option>
             }
         </select>
-    </div>
+    </div><div>
+        @if (ViewModel.IsModifyMode)
+        {
+            <button @onclick="ModifyMoney">수정</button>
+        }
+        else
+        {
+            <button @onclick="e => SaveMoney(e)" disabled="@(!ViewModel.IsEnableSave)">저장</button>
+        }
 
-    <div>
-        <button @onclick="e => SaveMoney(e)">저장</button>
-        <button @onclick="ModifyMoney">수정</button>
         <button @onclick="DeleteMoney">삭제</button>
     </div>
 }

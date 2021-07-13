@@ -279,6 +279,8 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public bool IsEnableSave => IsValidMoney && !string.IsNullOrEmpty(Title) && IsValidDivision;
 
+        public bool IsModifyMode => PreMoneyItem != null;
+
         public MoneyHandleViewModel(User user)
         {
             LoginedUser = user;
