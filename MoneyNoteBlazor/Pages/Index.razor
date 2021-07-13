@@ -2,6 +2,7 @@
 @page "/"
 @using MoneyNoteLibrary5.ViewModels;
 @using MoneyNoteLibrary5.Models;
+@using System.Threading;
 @inject IJSRuntime JS;
 @*<div class="main">
         <div class="content px-4 text-center">
@@ -52,6 +53,11 @@
 
     protected override void OnInitialized()
     {
+#if DEBUG
+        Thread.Sleep(5000);
+#endif
+
+
         base.OnInitialized();
     }
 
@@ -76,6 +82,7 @@
         else
         {
             // delete user key
+            await SharedClass.SetItemInLocallStorage(JS, SharedClass.Keys.userKey, null);
         }
 
         //return base.OnAfterRenderAsync(firstRender);
@@ -99,8 +106,7 @@
             }
 
 
-            if (NavigationManager != null)
-                NavigationManager.NavigateTo("/Money/MoneyList");
+            NavigationManager?.NavigateTo("/Money/MoneyList");
         }
     }
 }
