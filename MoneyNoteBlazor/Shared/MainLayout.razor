@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JS;
 
 <div class="page">
     <div class="sidebar">
@@ -7,6 +8,7 @@
 
     <div class="main">
         <div class="top-row px-4">
+            <a href="javascript:void(0)" class="btn btn-secondary" @onclick="Logout">로그아웃</a>
             <a href="http://blazor.net" target="_blank" class="ml-md-auto">홈페이지로 이동</a>
         </div>
 
@@ -15,3 +17,16 @@
         </div>
     </div>
 </div>
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    public async Task Logout()
+    {
+        await SharedClass.SetItemInLocallStorage(JS, SharedClass.Keys.userKey, null);
+        await SharedClass.SetItemInLocallStorage(JS, SharedClass.Keys.KeepLogin, false);
+        NavigationManager?.NavigateTo("/");
+    }
+
+}
