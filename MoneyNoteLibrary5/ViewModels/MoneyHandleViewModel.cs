@@ -464,6 +464,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 return;
 
             MainCategories?.Clear();
+            SubCategories?.Clear();
 
             IsRunProgressRing = true;
             IsMainCategoryProgress = true;
