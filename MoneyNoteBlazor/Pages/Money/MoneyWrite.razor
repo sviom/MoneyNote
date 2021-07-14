@@ -11,7 +11,7 @@ else
 {
     <div class="row">
         <div class="col justify-content-around">
-            <NavLink class="btn btn-info" href="/Money/MoneyList">뒤로가기</NavLink>
+            <NavLink class="btn btn-info" href="@MoveToListHref">뒤로가기</NavLink>
         </div>
     </div>
 
@@ -45,6 +45,13 @@ else
                     <option value="@item.Id">@item.Name</option>
                 }
             </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-4 col-lg-2 col-form-label">날짜</label>
+        <div class="col-8 col-lg-10">
+            <input type="date" class="form-control" @bind="ViewModel.CreatedTime" />
         </div>
     </div>
 
@@ -124,6 +131,8 @@ else
     public MoneyHandleViewModel ViewModel { get; set; }
 
     public BankBookViewModel BankBookViewModel { get; set; }
+
+    public string MoveToListHref => $"/Money/MoneyList/{ViewModel.CreatedTime.ToString("yyyy-MM-dd")}";
 
     [Parameter]
     public Guid MoneyItemGuid { get; set; }
@@ -211,7 +220,7 @@ else
 
     public void MoveToList()
     {
-        NavigationManager?.NavigateTo("/Money/MoneyList");
+        NavigationManager?.NavigateTo(MoveToListHref);
     }
 }
 

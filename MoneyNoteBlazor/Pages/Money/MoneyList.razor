@@ -88,13 +88,16 @@ else
         if (SharedClass.SharedUser != null)
         {
             ViewModel = new MoneyViewModel(SharedClass.SharedUser);
-            await ViewModel.GetMoneyList(DateTime.Now);
+
+            var parseResult = DateTime.TryParse(ParamDate, out DateTime paramDateTime);
+            if (parseResult)
+            {
+                ViewModel.SelectedDate = paramDateTime;
+                await ViewModel.GetMoneyList(paramDateTime);
+            }
+            else
+                await ViewModel.GetMoneyList(DateTime.Now);
         }
-
-        var parseResult = DateTime.TryParse(ParamDate, out DateTime paramDateTime);
-        if (parseResult)
-            ViewModel.SelectedDate = paramDateTime;
-
         //return base.OnInitializedAsync();
     }
 
