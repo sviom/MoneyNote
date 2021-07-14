@@ -18,53 +18,78 @@ else
     </main>
 
     <div class="row">
-        <input type="radio" name="isIncomeRadio" value="expense" class="form-control"
-               checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
-        <label>지출</label>
-        <input type="radio" name="isIncomeRadio" value="income" class="form-control"
-               checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
-        <label>수입</label>
-    </div>
-    <div class="row">
-        <select value="@ViewModel.SelectedBankBookId" @onchange="SetBankBook">
-            @foreach (var item in BankBookViewModel.BankBooks)
-            {
-                <option value="@item.Id">@item.Name</option>
-            }
-        </select>
-    </div>
-    <div class="row">
-        <label>제목</label>
-        <input type="text" @bind="ViewModel.Title" />
+        <div class="col form-check">
+            <input type="radio" name="isIncomeRadio" value="expense" class="form-check-input"
+                   checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
+            <label class="form-check-label">지출</label>
+        </div>
+        <div class="col form-check">
+            <input type="radio" name="isIncomeRadio" value="income" class="form-check-input"
+                   checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
+            <label class="form-check-label">수입</label>
+        </div>
     </div>
 
     <div class="row">
-        <label>금액</label>
-        <input type="number" @bind="ViewModel.MoneyText" />
+        <label class="col-2 col-form-label">자산종류</label>
+        <div class="col-10">
+            <select class="form-select" value="@ViewModel.SelectedBankBookId" @onchange="SetBankBook">
+                @foreach (var item in BankBookViewModel.BankBooks)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+
+    </div>
+    <div class="row">
+        <label class="col-lg-2 col-sm-4 col-form-label">제목</label>
+        <div class="col-lg-10 col-sm-8">
+            <input type="text" class="form-control" @bind="ViewModel.Title" />
+        </div>
+
     </div>
 
     <div class="row">
-        <label>설명</label>
-        <input type="text" @bind="ViewModel.Description" />
+        <label class="col-2 col-form-label">금액</label>
+        <div class="col-10">
+            <input type="number" class="form-control" @bind="ViewModel.MoneyText" />
+        </div>
+
     </div>
 
     <div class="row">
-        <select class="form-select" value="@ViewModel.MainCategoryId" @onchange="GetSubCategories">
-            @foreach (var item in ViewModel.MainCategories)
-            {
-                <option value="@item.Id">@item.Title</option>
-            }
-        </select>
+        <label class="col-2 col-form-label">설명</label>
+        <div class="col-10">
+            <input type="text" class="form-control" @bind="ViewModel.Description" />
+        </div>
     </div>
 
     <div class="row">
-        <select class="form-select" @bind="ViewModel.SubCategoryId">
-            @foreach (var item in ViewModel.SubCategories)
-            {
-                <option value="@item.Id">@item.Title</option>
-            }
-        </select>
+        <label class="col-2 col-form-label">대분류</label>
+        <div class="col-10">
+            <select class="form-select" value="@ViewModel.MainCategoryId" @onchange="GetSubCategories">
+                @foreach (var item in ViewModel.MainCategories)
+                {
+                    <option value="@item.Id">@item.Title</option>
+                }
+            </select>
+        </div>
+
     </div>
+
+    <div class="row">
+        <label class="col-2 col-form-label">소분류</label>
+        <div class="col-10">
+            <select class="form-select" @bind="ViewModel.SubCategoryId">
+                @foreach (var item in ViewModel.SubCategories)
+                {
+                    <option value="@item.Id">@item.Title</option>
+                }
+            </select>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12 mx-auto text-center">
             @if (ViewModel.IsModifyMode)
