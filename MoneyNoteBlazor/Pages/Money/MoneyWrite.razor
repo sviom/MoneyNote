@@ -3,8 +3,6 @@
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 
-
-@*|| ViewModel.IsRunProgressRing*@
 @if (ViewModel == null)
 {
     <h2>가져오는 중...</h2>
@@ -48,14 +46,13 @@ else
                 }
             </select>
         </div>
-
     </div>
+
     <div class="row">
         <label class="col-4 col-lg-2 col-form-label">제목</label>
         <div class="col-8 col-lg-10">
             <input type="text" class="form-control" @bind="ViewModel.Title" />
         </div>
-
     </div>
 
     <div class="row">
@@ -63,7 +60,6 @@ else
         <div class="col-8 col-lg-10">
             <input type="number" class="form-control" @bind="ViewModel.MoneyText" />
         </div>
-
     </div>
 
     <div class="row">
@@ -83,7 +79,6 @@ else
                 }
             </select>
         </div>
-
     </div>
 
     <div class="row">
@@ -174,14 +169,14 @@ else
     {
         var result = await ViewModel.ModifyMoney();
         if (result)
-            NavigationManager?.NavigateTo("/Money/MoneyList");
+            MoveToList();
     }
 
     public async Task DeleteMoney(EventArgs e)
     {
         var result = await ViewModel.DeleteMoney();
         if (result)
-            NavigationManager?.NavigateTo("/Money/MoneyList");
+            MoveToList();
     }
 
     public void SetBankBook(ChangeEventArgs e)
@@ -212,6 +207,11 @@ else
         }
 
         await ViewModel.GetMainCategories();
+    }
+
+    public void MoveToList()
+    {
+        NavigationManager?.NavigateTo("/Money/MoneyList");
     }
 }
 

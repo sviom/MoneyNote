@@ -1,4 +1,4 @@
-﻿@page "/money/moneylist"
+﻿@page "/money/moneylist/{ParamDate?}"
 @using MoneyNoteLibrary5.ViewModels;
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
@@ -76,6 +76,10 @@ else
 
     public DateTimeOffset SelectedDate => ViewModel != null ? ViewModel.SelectedDate : DateTimeOffset.Now;
 
+    [Parameter]
+    public string ParamDate { get; set; }
+
+
     protected override async Task OnInitializedAsync()
     {
         if (SharedClass.SharedUser == null)
@@ -86,6 +90,11 @@ else
             ViewModel = new MoneyViewModel(SharedClass.SharedUser);
             await ViewModel.GetMoneyList(DateTime.Now);
         }
+
+        var parseResult = DateTime.TryParse(ParamDate, out DateTime paramDateTime);
+        if (parseResult)
+            ViewModel.SelectedDate = paramDateTime;
+
         //return base.OnInitializedAsync();
     }
 
