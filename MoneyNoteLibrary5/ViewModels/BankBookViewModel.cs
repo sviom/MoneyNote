@@ -14,7 +14,7 @@ namespace MoneyNoteLibrary5.ViewModels
 {
     public class BankBookViewModel : ViewModelBase
     {
-        private ObservableCollection<BankBook> _BankBooks;
+        private ObservableCollection<BankBook> _BankBooks = new ObservableCollection<BankBook>();
         public ObservableCollection<BankBook> BankBooks
         {
             get { return _BankBooks; }
