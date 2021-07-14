@@ -10,7 +10,7 @@
 else
 {
     <main>
-        <div class="py-5 text-center">
+        <div class="text-center">
             @*<img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">*@
             <h2>@(@ViewModel.IsExpense ? "지출" : "수입") 작성</h2>
             <p class="lead">@(@ViewModel.IsExpense ? "지출" : "수입") 내역을 작성합니다.</p>
@@ -18,12 +18,12 @@ else
     </main>
 
     <div class="row">
-        <div class="col form-check">
+        <div class="col-lg-3 col-md-12 col-sm-12 form-check mx-auto justify-content-center">
             <input type="radio" name="isIncomeRadio" value="expense" class="form-check-input"
                    checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
             <label class="form-check-label">지출</label>
         </div>
-        <div class="col form-check">
+        <div class="col-lg-3 col-md-12 col-sm-12 form-check mx-auto  justify-content-center">
             <input type="radio" name="isIncomeRadio" value="income" class="form-check-input"
                    checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
             <label class="form-check-label">수입</label>
