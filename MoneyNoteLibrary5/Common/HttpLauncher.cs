@@ -66,6 +66,39 @@ namespace MoneyNoteLibrary5.Common
             return result;
         }
 
+        public static async Task<ApiResult<T>> ApiGetLauncher<T>(this MoneyApi api, string[] itemArgs, string[] valueArgs, ControllerEnum controllerEnum = ControllerEnum.money)
+        {
+            if (itemArgs.Length != valueArgs.Length)
+                return null;
+
+            ApiResult<T> result;
+            using (var client = new HttpClient())
+            {
+                var queryString = string.Empty;
+
+                for (int i = 0; i < itemArgs.Length; i++)
+                {
+                    var nameElement = itemArgs[i];
+                    var valueElement = valueArgs[i];
+
+                    queryString += $"{nameElement}={valueElement}";
+
+                    if ((i + 1) != itemArgs.Length)
+                    {
+                        queryString += "&";
+                    }
+                }
+                // ?test=1&test22=2
+
+                var response = await client.GetAsync(BaseURL + controllerEnum + "/" + api + "?" + queryString);
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var apiResult = JsonConvert.DeserializeObject<ApiResult<T>>(responseContent);
+                result = apiResult;
+            }
+            return result;
+        }
+
         /// <summary>
         /// API실행기
         /// </summary>
@@ -76,19 +109,6 @@ namespace MoneyNoteLibrary5.Common
         /// <returns></returns>
         public static async Task<ApiResult<T>> ApiLauncher<T>(this MoneyApi api, IApiRequest request, ControllerEnum controllerEnum = ControllerEnum.money)
         {
-            //ApiResult<T> result;
-            //using (var client = new HttpClient())
-            //{
-            //    var itemString = JsonConvert.SerializeObject(request);
-
-            //    var content = new StringContent(itemString, Encoding.UTF8, "application/json");
-            //    var response = await client.PostAsync(BaseURL + controllerEnum + "/" + api, content);
-
-            //    var responseContent = await response.Content.ReadAsStringAsync();
-            //    var apiResult = JsonConvert.DeserializeObject<ApiResult<T>>(responseContent);
-            //    result = apiResult;
-            //}
-            //return result;
             var itemString = JsonConvert.SerializeObject(request);
             var result = await SendPostAsync<T>(api, itemString, controllerEnum);
             return result;
@@ -96,20 +116,6 @@ namespace MoneyNoteLibrary5.Common
 
         public static async Task<ApiResult<T>> ApiStringLauncher<T>(this MoneyApi api, string request, ControllerEnum controllerEnum = ControllerEnum.money)
         {
-            //ApiResult<T> result;
-            //using (var client = new HttpClient())
-            //{
-            //    var itemString = JsonConvert.SerializeObject(request);
-
-            //    var content = new StringContent(itemString, Encoding.UTF8, "application/json");
-            //    var response = await client.PostAsync(BaseURL + controllerEnum + "/" + api, content);
-
-            //    var responseContent = await response.Content.ReadAsStringAsync();
-            //    var apiResult = JsonConvert.DeserializeObject<ApiResult<T>>(responseContent);
-            //    result = apiResult;
-            //}
-            //return result;
-         
             var itemString = request;// JsonConvert.SerializeObject(request);
             var result = await SendPostAsync<T>(api, itemString, controllerEnum);
             return result;

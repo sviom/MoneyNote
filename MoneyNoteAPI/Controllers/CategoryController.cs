@@ -35,14 +35,15 @@ namespace MoneyNoteAPI.Controllers
             return result;
         }
 
-        [HttpPost]
-        public ApiResult<List<SubCategory>> GetSubCategories([FromBody] ApiRequest<Guid> mainCategory)
+        //[HttpPost]
+        [HttpGet]
+        public ApiResult<List<SubCategory>> GetSubCategories(string guid)
         {
             var result = new ApiResult<List<SubCategory>>();
             try
             {
                 var service = new CategoryService();
-                var categoryList = service.GetSubCategories(x => x.MainCategoryId == mainCategory.Content);
+                var categoryList = service.GetSubCategories(x => x.MainCategoryId == new Guid(guid));
 
                 result.Content = categoryList;
                 result.Result = categoryList != null;
