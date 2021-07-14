@@ -3,17 +3,18 @@
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 
-<h3>MoneyList</h3>
-
 @if (ViewModel == null || ViewModel.IsRunProgressRing)
 {
     <p>가져오는 중...</p>
 }
 else
 {
-    <div>
-
+    <div class="row">
+        <div class="col align-middle">
+            <h3 class="display-6">사용 내역</h3>
+        </div>
     </div>
+
     <div class="row">
         <div class="col-9">
             <button class="btn btn-outline-primary" @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">왼쪽</button>
@@ -91,6 +92,4 @@ else
     .write_btn {
         text-align: right;
     }
-
-
 </style>
