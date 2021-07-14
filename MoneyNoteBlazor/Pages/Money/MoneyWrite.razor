@@ -17,13 +17,13 @@ else
         </div>
     </main>
 
-    <div class="row">
-        <div class="col-lg-3 col-md-12 col-sm-12 form-check mx-auto justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col col-lg-2 form-check">
             <input type="radio" name="isIncomeRadio" value="expense" class="form-check-input"
                    checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
             <label class="form-check-label">지출</label>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 form-check mx-auto  justify-content-center">
+        <div class="col col-lg-2 form-check">
             <input type="radio" name="isIncomeRadio" value="income" class="form-check-input"
                    checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
             <label class="form-check-label">수입</label>
@@ -31,8 +31,8 @@ else
     </div>
 
     <div class="row">
-        <label class="col-2 col-form-label">자산종류</label>
-        <div class="col-10">
+        <label class="col-4 col-lg-2 col-form-label">자산종류</label>
+        <div class="col-8 col-lg-10">
             <select class="form-select" value="@ViewModel.SelectedBankBookId" @onchange="SetBankBook">
                 @foreach (var item in BankBookViewModel.BankBooks)
                 {
@@ -43,31 +43,31 @@ else
 
     </div>
     <div class="row">
-        <label class="col-lg-2 col-sm-4 col-form-label">제목</label>
-        <div class="col-lg-10 col-sm-8">
+        <label class="col-4 col-lg-2 col-form-label">제목</label>
+        <div class="col-8 col-lg-10">
             <input type="text" class="form-control" @bind="ViewModel.Title" />
         </div>
 
     </div>
 
     <div class="row">
-        <label class="col-2 col-form-label">금액</label>
-        <div class="col-10">
+        <label class="col-4 col-lg-2 col-form-label">금액</label>
+        <div class="col-8 col-lg-10">
             <input type="number" class="form-control" @bind="ViewModel.MoneyText" />
         </div>
 
     </div>
 
     <div class="row">
-        <label class="col-2 col-form-label">설명</label>
-        <div class="col-10">
+        <label class="col-4 col-lg-2 col-form-label">설명</label>
+        <div class="col-8 col-lg-10">
             <input type="text" class="form-control" @bind="ViewModel.Description" />
         </div>
     </div>
 
     <div class="row">
-        <label class="col-2 col-form-label">대분류</label>
-        <div class="col-10">
+        <label class="col-4 col-lg-2 col-form-label">대분류</label>
+        <div class="col-8 col-lg-10">
             <select class="form-select" value="@ViewModel.MainCategoryId" @onchange="GetSubCategories">
                 @foreach (var item in ViewModel.MainCategories)
                 {
@@ -79,8 +79,8 @@ else
     </div>
 
     <div class="row">
-        <label class="col-2 col-form-label">소분류</label>
-        <div class="col-10">
+        <label class="col-4 col-lg-2 col-form-label">소분류</label>
+        <div class="col-8 col-lg-10">
             <select class="form-select" @bind="ViewModel.SubCategoryId">
                 @foreach (var item in ViewModel.SubCategories)
                 {
