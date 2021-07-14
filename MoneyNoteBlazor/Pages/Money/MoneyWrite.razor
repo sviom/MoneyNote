@@ -3,7 +3,9 @@
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 
-@if (ViewModel == null || ViewModel.IsRunProgressRing)
+
+@*|| ViewModel.IsRunProgressRing*@
+@if (ViewModel == null)
 {
     <h2>가져오는 중...</h2>
 }
@@ -118,7 +120,6 @@ else
                 </div>
             }
         </div>
-
     </div>
 
 }
