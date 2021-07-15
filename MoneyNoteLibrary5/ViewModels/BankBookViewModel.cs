@@ -176,6 +176,8 @@ namespace MoneyNoteLibrary5.ViewModels
             Name = SelectedItem.Name;
             AssetsText = SelectedItem.Assets.ToString();
 
+            SelectedItem.User = LoginedUser;
+
             ValidCheck();
         }
 
@@ -262,7 +264,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
             SelectedItem.Name = Name;
             SelectedItem.Assets = assets;
-            SelectedItem.User = LoginedUser;
+            //SelectedItem.User = LoginedUser;
 
             var result = await MoneyApi.ModifyBankBook.ApiLauncher<BankBook, BankBook>(SelectedItem, ControllerEnum.bankbook);
             if (!result.Result)
@@ -282,6 +284,8 @@ namespace MoneyNoteLibrary5.ViewModels
                 return false;
 
             IsRunProgressRing = true;
+
+            //SelectedItem.User = LoginedUser;
 
             var result = await MoneyApi.DeleteBankBook.ApiLauncher<BankBook, bool>(SelectedItem, ControllerEnum.bankbook);
             if (!result.Result)
