@@ -216,7 +216,8 @@ namespace MoneyNoteLibrary5.Migrations
                 {
                     b.HasOne("MoneyNoteLibrary5.Models.BankBook", "BankBook")
                         .WithMany()
-                        .HasForeignKey("BankBookId");
+                        .HasForeignKey("BankBookId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MoneyNoteLibrary5.Models.MainCategory", "MainCategory")
                         .WithMany()
