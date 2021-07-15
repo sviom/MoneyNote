@@ -103,6 +103,7 @@ else
 
     public async Task GetMoneyListWithDate(MouseEventArgs e, DateTime selectedDate)
     {
+        ParamDate = string.Empty;
         await ViewModel.GetMoneyList(selectedDate);
     }
 
