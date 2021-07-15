@@ -42,9 +42,9 @@ namespace MoneyNoteLibrary5.Models
 
         public SubCategory SubCategory { get; set; }
         
-        public BankBook BankBook { get; set; }
+        public BankBook? BankBook { get; set; }
 
-        public Guid BankBookId { get; set; }
+        public Guid? BankBookId { get; set; }
 
         public MoneyItem ShallowCopy()
         {
