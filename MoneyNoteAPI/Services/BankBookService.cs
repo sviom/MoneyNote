@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using MoneyNoteAPI.Context;
+//using MoneyNoteAPI.Context;
+using MoneyNoteLibrary5.Context;
 using MoneyNoteLibrary5;
 using MoneyNoteLibrary5.Models;
 using System;
