@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyNoteLibrary5.Context;
 
 namespace MoneyNoteLibrary5.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20210715140624_removeBankBookRequired3")]
+    partial class removeBankBookRequired3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,8 +217,9 @@ namespace MoneyNoteLibrary5.Migrations
             modelBuilder.Entity("MoneyNoteLibrary5.Models.MoneyItem", b =>
                 {
                     b.HasOne("MoneyNoteLibrary5.Models.BankBook", "BankBook")
-                        .WithMany()
-                        .HasForeignKey("BankBookId");
+                        .WithMany("MoneyItems")
+                        .HasForeignKey("BankBookId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("MoneyNoteLibrary5.Models.MainCategory", "MainCategory")
                         .WithMany()
@@ -250,6 +253,11 @@ namespace MoneyNoteLibrary5.Migrations
                         .HasForeignKey("MainCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MoneyNoteLibrary5.Models.BankBook", b =>
+                {
+                    b.Navigation("MoneyItems");
                 });
 
             modelBuilder.Entity("MoneyNoteLibrary5.Models.MainCategory", b =>

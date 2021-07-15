@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyNoteLibrary5.Context;
 
 namespace MoneyNoteLibrary5.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20210715141229_removeBankBookRequired4")]
+    partial class removeBankBookRequired4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

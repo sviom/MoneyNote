@@ -69,7 +69,7 @@ namespace MoneyNoteLibrary5.Context
                 .HasOne(x => x.BankBook)
                 .WithMany()
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             //modelBuilder.Entity<MainCategory>()
             //    .HasOne(x => x.User)
