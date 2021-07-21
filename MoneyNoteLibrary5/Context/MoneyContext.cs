@@ -67,9 +67,9 @@ namespace MoneyNoteLibrary5.Context
 
             modelBuilder.Entity<MoneyItem>()
                 .HasOne(x => x.BankBook)
-                .WithMany(y => y.MoneyItems)
+                .WithMany()
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             //modelBuilder.Entity<MainCategory>()
             //    .HasOne(x => x.User)

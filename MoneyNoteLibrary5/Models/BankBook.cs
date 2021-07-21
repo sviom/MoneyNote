@@ -28,7 +28,10 @@ namespace MoneyNoteLibrary5.Models
 
         public Guid UserId { get; set; }
 
-        public List<MoneyItem> MoneyItems { get; set; } = new List<MoneyItem>();
+        // Introducing FOREIGN KEY constraint 'FK_MoneyItems_BankBooks_BankBookId' on table 'MoneyItems' may cause cycles or multiple cascade paths.
+        // Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints.
+        // 위의 문제로 수동으로 null 처리
+        // public List<MoneyItem> MoneyItems { get; set; } = new List<MoneyItem>();
 
     }
 }
