@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyNoteLibrary5.Context;
 
 namespace MoneyNoteLibrary5.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    partial class MoneyContextModelSnapshot : ModelSnapshot
+    [Migration("20210721133423_removeBankBookRequired7")]
+    partial class removeBankBookRequired7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,6 +88,9 @@ namespace MoneyNoteLibrary5.Migrations
                     b.Property<Guid?>("BankBookId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("BankBookId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset>("CreatedTime")
                         .HasColumnType("datetimeoffset");
 
@@ -117,6 +122,8 @@ namespace MoneyNoteLibrary5.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BankBookId");
+
+                    b.HasIndex("BankBookId1");
 
                     b.HasIndex("MainCategoryId");
 
@@ -215,9 +222,12 @@ namespace MoneyNoteLibrary5.Migrations
             modelBuilder.Entity("MoneyNoteLibrary5.Models.MoneyItem", b =>
                 {
                     b.HasOne("MoneyNoteLibrary5.Models.BankBook", "BankBook")
+                        .WithMany()
+                        .HasForeignKey("BankBookId");
+
+                    b.HasOne("MoneyNoteLibrary5.Models.BankBook", null)
                         .WithMany("MoneyItems")
-                        .HasForeignKey("BankBookId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("BankBookId1");
 
                     b.HasOne("MoneyNoteLibrary5.Models.MainCategory", "MainCategory")
                         .WithMany()

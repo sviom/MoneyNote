@@ -35,6 +35,8 @@ namespace MoneyNoteAPI.Services
 
             try
             {
+                // money item에 있는 bankbook id null로 만들어야 함
+
                 var deleteResult = SqlLauncher.Delete(bankbook);
                 return deleteResult;
             }
