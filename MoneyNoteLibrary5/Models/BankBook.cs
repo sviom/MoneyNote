@@ -28,7 +28,7 @@ namespace MoneyNoteLibrary5.Models
 
         public Guid UserId { get; set; }
 
-        public List<MoneyItem>? MoneyItems { get; set; }
+        public List<MoneyItem> MoneyItems { get; set; } = new List<MoneyItem>();
 
     }
 }

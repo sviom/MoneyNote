@@ -34,7 +34,7 @@ namespace MoneyNoteLibrary5.Context
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString).Result);
-                optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString).Result, x=>x.MigrationsAssembly("MoneyNoteLibrary5"));
+                optionsBuilder.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString).Result, x => x.MigrationsAssembly("MoneyNoteLibrary5"));
             }
         }
 
@@ -67,7 +67,7 @@ namespace MoneyNoteLibrary5.Context
 
             modelBuilder.Entity<MoneyItem>()
                 .HasOne(x => x.BankBook)
-                .WithMany()
+                .WithMany(y => y.MoneyItems)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
 
@@ -76,10 +76,10 @@ namespace MoneyNoteLibrary5.Context
             //    .WithMany(y => y.MainCategories)
             //    .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<BankBook>()
-                .HasMany(x => x.MoneyItems)
-                .WithOne(y => y.BankBook)
-                .OnDelete(DeleteBehavior.SetNull);
+            //modelBuilder.Entity<BankBook>()
+            //    .HasMany(x => x.MoneyItems)
+            //    .WithOne(y => y.BankBook)
+            //    .OnDelete(DeleteBehavior.SetNull);
 
             //base.OnModelCreating(modelBuilder);
         }

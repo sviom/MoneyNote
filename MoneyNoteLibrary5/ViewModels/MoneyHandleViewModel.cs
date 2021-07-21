@@ -431,7 +431,7 @@ namespace MoneyNoteLibrary5.ViewModels
             PreMoneyItem.Description = Description;
             PreMoneyItem.Money = mo;
             PreMoneyItem.BankBook = SelectedBankBook;
-            PreMoneyItem.BankBookId = SelectedBankBook.Id;
+            //PreMoneyItem.BankBookId = SelectedBankBook.Id;
             PreMoneyItem.Division = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
             PreMoneyItem.MainCategory = MainCategory;
             PreMoneyItem.MainCategoryId = MainCategoryId;

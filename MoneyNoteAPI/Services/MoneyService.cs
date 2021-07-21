@@ -99,11 +99,11 @@ namespace MoneyNoteAPI.Services
                 var changeMoneyItem = new MoneyItem()
                 {
                     Money = Math.Abs(money),
-                    BankBook = moneyItem.BankBook,
-                    BankBookId = moneyItem.BankBookId,
+                    BankBook = moneyItem.BankBook,                    
                     Division = moneyItem.Division
                 };
 
+                //BankBookId = moneyItem.BankBookId,
 
                 var bankBookResult = UpdateBankBookWithMoney(changeMoneyItem);
                 if (!bankBookResult)
@@ -143,7 +143,8 @@ namespace MoneyNoteAPI.Services
         {
             using var db = new MoneyContext();
             var bankService = new BankBookService();
-            var nowBankBook = db.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
+            //var nowBankBook = db.BankBooks.Where(y => y.Id == moneyItem.BankBookId).FirstOrDefault();
+            var nowBankBook = db.BankBooks.Where(y => y.Id == moneyItem.BankBook.Id).FirstOrDefault();
             if (nowBankBook == null)
                 return false;
 
