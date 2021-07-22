@@ -44,7 +44,7 @@ namespace MoneyNoteLibrary5.Models
         
         public BankBook? BankBook { get; set; }
 
-        public Guid? BankBookId { get; set; }
+        //public Guid? BankBookId { get; set; }
 
         public MoneyItem ShallowCopy()
         {
