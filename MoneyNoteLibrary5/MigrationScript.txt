@@ -26,5 +26,5 @@ Update-Database -Project MoneyNoteLibrary5 -StartupProject MoneyNoteAPI -Context
 Add-Migration removeBankBookRequired2 -Project MoneyNoteLibrary5 -StartupProject MoneyNoteAPI -c MoneyNoteLibrary5.Context.MoneyContext
 Update-Database -Project MoneyNoteLibrary5 -StartupProject MoneyNoteAPI -Context MoneyNoteLibrary5.Context.MoneyContext
 
-Add-Migration removeBankBookRequired6 -Project MoneyNoteLibrary5 -StartupProject MoneyNoteAPI -c MoneyNoteLibrary5.Context.MoneyContext
+Add-Migration removeBankBookRequired3 -Project MoneyNoteLibrary5 -StartupProject MoneyNoteAPI -c MoneyNoteLibrary5.Context.MoneyContext
 Update-Database -Project MoneyNoteLibrary5 -StartupProject MoneyNoteAPI -Context MoneyNoteLibrary5.Context.MoneyContext
