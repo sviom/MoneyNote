@@ -3,8 +3,39 @@
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 
-<h3>CategoryList</h3>
+@if (ViewModel == null)
+{
+    <p>가져오는 중...</p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <ul>
+                @foreach (var item in ViewModel.MainCategories)
+                {
+                    <li>@item.Title</li>
+                }
+            </ul>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+}
 
 @code {
+    public MainCategoryViewModel ViewModel { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (SharedClass.SharedUser == null)
+            SharedClass.SharedUser = await SharedClass.GetUserInfo(JS);
+
+        if (SharedClass.SharedUser != null)
+        {
+            ViewModel = new MainCategoryViewModel(SharedClass.SharedUser, MoneyNoteLibrary5.Enums.MoneyEnum.MoneyCategory.Expense);
+            await ViewModel.Initialize();
+        }
+        //return base.OnInitializedAsync();
+    }
 }

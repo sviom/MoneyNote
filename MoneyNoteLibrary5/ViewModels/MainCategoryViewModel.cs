@@ -148,10 +148,10 @@ namespace MoneyNoteLibrary5.ViewModels
         {
             LoginedUser = user;
             Division = div;
-            Initialize();
+            //Initialize();
         }
 
-        public async void Initialize()
+        public async Task Initialize()
         {
             MainCategories = new ObservableCollection<MainCategory>();
             SubCategories = new ObservableCollection<SubCategory>();
