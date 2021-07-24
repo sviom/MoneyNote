@@ -27,8 +27,10 @@ else
                             <td>
                                 @(i+1)
                             </td>
-                            <td>
-                                <button type="button" @onclick="e=> Test(e, item)">@item.Title</button>
+                            <td @onclick="e=> Test(e, item)">
+                                <input type="text" value="@item.Title" />
+                                <button type="button">수정</button>
+                                <button type="button">삭제</button>
                             </td>
                         </tr>
                     }
@@ -53,7 +55,9 @@ else
                                 @(i+1)
                             </td>
                             <td>
-                                <button type="button">@item.Title</button>
+                                <input type="text" value="@item.Title" />
+                                <button type="button">수정</button>
+                                <button type="button">삭제</button>
                             </td>
                         </tr>
                     }
