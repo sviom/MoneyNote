@@ -112,7 +112,7 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-        private ObservableCollection<MainCategory> _MainCategories;
+        private ObservableCollection<MainCategory> _MainCategories = new ObservableCollection<MainCategory>();
         public ObservableCollection<MainCategory> MainCategories
         {
             get { return _MainCategories; }
@@ -126,7 +126,7 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-        private ObservableCollection<SubCategory> _SubCategories;
+        private ObservableCollection<SubCategory> _SubCategories = new ObservableCollection<SubCategory>();
         public ObservableCollection<SubCategory> SubCategories
         {
             get { return _SubCategories; }
@@ -172,9 +172,14 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public async Task GetSubCategory(MainCategory selectedCategory)
         {
+            if (selectedCategory == null)
+                return;
+
+
             IsRunProgressRing = true;
             SubCategories = new ObservableCollection<SubCategory>();
-            var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, List<SubCategory>>(selectedCategory, ControllerEnum.category);
+            //var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, List<SubCategory>>(selectedCategory, ControllerEnum.category);
+            var result = await MoneyApi.GetSubCategories.ApiGetLauncher<ObservableCollection<SubCategory>>($"guid={selectedCategory.Id}", ControllerEnum.category);
             if (result.Result)
             {
                 foreach (var item in result.Content)

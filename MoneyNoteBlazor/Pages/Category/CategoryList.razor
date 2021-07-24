@@ -36,6 +36,29 @@ else
             </table>
         </div>
         <div class="col-lg-6 col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>순번</th>
+                        <th>내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < ViewModel.SubCategories.Count; i++)
+                    {
+                        var item = ViewModel.SubCategories[i];
+
+                        <tr>
+                            <td>
+                                @(i+1)
+                            </td>
+                            <td>
+                                <button type="button">@item.Title</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 }
