@@ -57,12 +57,12 @@ else
                                                 <input type="text" class="form-control" value="@item.Title" readonly="@(IsNotEqualSelectedItemTitle(item) ? true : false)" />
                                             </div>
                                             <div class="d-grid gap-0 col-lg-2 col">
-                                                <button type="button" class="btn btn-secondary d-block" @onclick="e=> UpdateMainCategory(e, item)">
+                                                <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateMainCategory(e, item)">
                                                     @(IsNotEqualSelectedItemTitle(item) ? "🛠" : "💾")
                                                 </button>
                                             </div>
                                             <div class="d-grid gap-0 col-lg-2 col">
-                                                <button type="button" class="btn btn-danger d-block">🗑</button>
+                                                <button type="button" class="btn btn-danger d-block" @onclick="DeleteMainCategory">🗑</button>
                                             </div>
                                         </div>
                                     </td>
@@ -184,5 +184,12 @@ else
         }
 
         ViewModel.SelectedCategory = item;
+    }
+
+    public async Task DeleteMainCategory(EventArgs e)
+    {
+        // alert 띄워주기
+
+        await ViewModel?.DeleteCategory();
     }
 }
