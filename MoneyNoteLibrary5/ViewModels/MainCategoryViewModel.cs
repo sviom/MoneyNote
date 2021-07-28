@@ -197,7 +197,7 @@ namespace MoneyNoteLibrary5.ViewModels
             OnPropertyChanged(nameof(IsSaveButtonEnabled));
         }
 
-        public async Task<bool> SaveCategory()
+        public async Task<bool> SaveCategoryWithText()
         {
             if (string.IsNullOrEmpty(CategoryText))
                 return false;
@@ -212,7 +212,26 @@ namespace MoneyNoteLibrary5.ViewModels
                 User = LoginedUser,
             };
 
-            var result = await MoneyApi.SaveMainCategory.ApiLauncher<MainCategory, MainCategory>(category, ControllerEnum.category);
+            return await SaveCategory(category);
+        }
+
+        public async Task<bool> SaveCategoryWithClass(MainCategory mainCategory)
+        {
+            if (mainCategory == null)
+                return false;
+
+            if (LoginedUser == null)
+                return false;
+
+            mainCategory.Division = Division;
+            mainCategory.User = LoginedUser;
+
+            return await SaveCategory(mainCategory);
+        }
+
+        private async Task<bool> SaveCategory(MainCategory mainCategory)
+        {
+            var result = await MoneyApi.SaveMainCategory.ApiLauncher<MainCategory, MainCategory>(mainCategory, ControllerEnum.category);
 
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
