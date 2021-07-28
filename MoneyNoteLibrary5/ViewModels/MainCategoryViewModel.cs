@@ -289,8 +289,8 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public async Task<bool> UpdateCategory()
         {
-            if (string.IsNullOrEmpty(CategoryText))
-                return false;
+            //if (string.IsNullOrEmpty(CategoryText))
+            //    return false;
 
             if (LoginedUser == null)
                 return false;
@@ -300,7 +300,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
             var mainCategory = SelectedCategory;
 
-            SelectedCategory.Title = CategoryText;
+            //SelectedCategory.Title = CategoryText;
 
             var result = await MoneyApi.UpdateMainCategory.ApiLauncher<MainCategory, MainCategory>(SelectedCategory, ControllerEnum.category);
 

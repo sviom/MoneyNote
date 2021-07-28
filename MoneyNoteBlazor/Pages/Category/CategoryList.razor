@@ -54,10 +54,12 @@ else
                                     <td @onclick="e=> GetSubCategories(e, item)">
                                         <div class="row">
                                             <div class="d-grid gap-0 col-lg-8 col">
-                                                <input type="text" class="form-control" value="@item.Title" readonly="@(ViewModel.SelectedCategory.Title != item.Title ? true : false)" />
+                                                <input type="text" class="form-control" value="@item.Title" readonly="@(IsNotEqualSelectedItemTitle(item) ? true : false)" />
                                             </div>
                                             <div class="d-grid gap-0 col-lg-2 col">
-                                                <button type="button" class="btn btn-secondary d-block" @onclick="e=> SetSelectedMainCategory(e, item)">🛠</button>
+                                                <button type="button" class="btn btn-secondary d-block" @onclick="e=> SetSelectedMainCategory(e, item)">
+                                                    @(IsNotEqualSelectedItemTitle(item) ? "🛠" : "💾")
+                                                </button>
                                             </div>
                                             <div class="d-grid gap-0 col-lg-2 col">
                                                 <button type="button" class="btn btn-danger d-block">🗑</button>
@@ -126,6 +128,11 @@ else
 @code {
     public MainCategoryViewModel ViewModel { get; set; }
 
+    public bool IsNotEqualSelectedItemTitle(ICategory item)
+    {
+        return ViewModel.SelectedCategory.Title != item.Title;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         if (SharedClass.SharedUser == null)
@@ -165,12 +172,19 @@ else
         await ViewModel?.Initialize();
     }
 
-    public void SetSelectedMainCategory(EventArgs e, MainCategory item)
+    public async Task SetSelectedMainCategory(EventArgs e, MainCategory item)
     {
         if (ViewModel == null)
             return;
 
-        ViewModel.SelectedCategory = item;
+        if (!IsNotEqualSelectedItemTitle(item))
+        {
+            await ViewModel?.UpdateCategory();
 
+            ViewModel.SelectedCategory = new MainCategory();
+            return;
+        }
+
+        ViewModel.SelectedCategory = item;
     }
 }
