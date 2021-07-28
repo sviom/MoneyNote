@@ -1,6 +1,7 @@
 ﻿@page "/category/categoryList"
 @using MoneyNoteLibrary5.ViewModels;
 @using MoneyNoteLibrary5.Models;
+@using MoneyNoteLibrary5.Enums;
 @inject IJSRuntime JS;
 
 @if (ViewModel == null)
@@ -11,11 +12,15 @@ else
 {
     <div class="row">
         <div class="col-lg-3 col form-check">
-            <input type="radio" name="categoryDivision" value="true" class="form-check-input" checked="@ViewModel.Division" />
+            <input type="radio" name="categoryDivision" value="expense" class="form-check-input"
+                   checked="@(ViewModel.Division == MoneyEnum.MoneyCategory.Expense)"
+                   @onchange="GetMainCategoryWithType" />
             <label class="form-check-label">지출</label>
         </div>
         <div class="col-lg-3 col form-check">
-            <input type="radio" name="categoryDivision" value="false" class="form-check-input" checked="@ViewModel.Division" />
+            <input type="radio" name="categoryDivision" value="income" class="form-check-input"
+                   checked="@(ViewModel.Division == MoneyEnum.MoneyCategory.Income)"
+                   @onchange="GetMainCategoryWithType" />
             <label class="form-check-label">수입</label>
         </div>
     </div>
@@ -120,9 +125,24 @@ else
         await ViewModel?.GetSubCategory(item);
     }
 
-    public async Task GetMainCategoryWithType(ChangeEventArgs e, string typeValue)
+    public async Task GetMainCategoryWithType(ChangeEventArgs e)
     {
-        ViewModel.Division = MoneyNoteLibrary5.Enums.MoneyEnum.MoneyCategory.Expense;
+        if (ViewModel == null)
+            return;
+
+        var valueString = e.Value.ToString();
+        switch (valueString)
+        {
+            case "income":
+                ViewModel.Division = MoneyEnum.MoneyCategory.Income;
+                break;
+            case "expense":
+                ViewModel.Division = MoneyEnum.MoneyCategory.Expense;
+                break;
+            default:
+                return;
+        }
+
         await ViewModel?.Initialize();
     }
 }
