@@ -278,7 +278,7 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public void ClearSelectedCategory()
         {
-            SelectedCategory = null;
+            SelectedCategory = new MainCategory();
             IsShowSubCategory = false;
         }
 

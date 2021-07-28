@@ -57,7 +57,7 @@ else
                                                 <input type="text" class="form-control" value="@item.Title" readonly="@(IsNotEqualSelectedItemTitle(item) ? true : false)" />
                                             </div>
                                             <div class="d-grid gap-0 col-lg-2 col">
-                                                <button type="button" class="btn btn-secondary d-block" @onclick="e=> SetSelectedMainCategory(e, item)">
+                                                <button type="button" class="btn btn-secondary d-block" @onclick="e=> UpdateMainCategory(e, item)">
                                                     @(IsNotEqualSelectedItemTitle(item) ? "🛠" : "💾")
                                                 </button>
                                             </div>
@@ -172,7 +172,7 @@ else
         await ViewModel?.Initialize();
     }
 
-    public async Task SetSelectedMainCategory(EventArgs e, MainCategory item)
+    public async Task UpdateMainCategory(EventArgs e, MainCategory item)
     {
         if (ViewModel == null)
             return;
@@ -180,8 +180,6 @@ else
         if (!IsNotEqualSelectedItemTitle(item))
         {
             await ViewModel?.UpdateCategory();
-
-            ViewModel.SelectedCategory = new MainCategory();
             return;
         }
 
