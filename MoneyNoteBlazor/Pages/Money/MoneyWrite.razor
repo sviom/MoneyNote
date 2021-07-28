@@ -25,14 +25,14 @@ else
 
     <div class="row justify-content-center">
         <div class="col col-lg-2 form-check">
-            <input type="radio" name="isIncomeRadio" value="expense" class="form-check-input"
+            <input type="radio" id="expenseRadio" name="isIncomeRadio" value="expense" class="form-check-input"
                    checked="@ViewModel.IsExpense" @onchange="DivisionChanged" />
-            <label class="form-check-label">지출</label>
+            <label class="form-check-label" for="expenseRadio">지출</label>
         </div>
         <div class="col col-lg-2 form-check">
-            <input type="radio" name="isIncomeRadio" value="income" class="form-check-input"
+            <input type="radio" id="incomeRadio" name="isIncomeRadio" value="income" class="form-check-input"
                    checked="@ViewModel.IsIncome" @onchange="DivisionChanged" />
-            <label class="form-check-label">수입</label>
+            <label class="form-check-label" for="incomeRadio`">수입</label>
         </div>
     </div>
 

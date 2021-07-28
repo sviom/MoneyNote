@@ -12,16 +12,16 @@ else
 {
     <div class="row">
         <div class="col-lg-3 col form-check">
-            <input type="radio" name="categoryDivision" value="expense" class="form-check-input"
+            <input type="radio" id="expenseRadio" name="categoryDivision" value="expense" class="form-check-input"
                    checked="@(ViewModel.Division == MoneyEnum.MoneyCategory.Expense)"
                    @onchange="GetMainCategoryWithType" />
-            <label class="form-check-label">지출</label>
+            <label class="form-check-label" for="expenseRadio">지출</label>
         </div>
         <div class="col-lg-3 col form-check">
-            <input type="radio" name="categoryDivision" value="income" class="form-check-input"
+            <input type="radio" id="incomeRadio" name="categoryDivision" value="income" class="form-check-input"
                    checked="@(ViewModel.Division == MoneyEnum.MoneyCategory.Income)"
                    @onchange="GetMainCategoryWithType" />
-            <label class="form-check-label">수입</label>
+            <label class="form-check-label" for="incomeRadio">수입</label>
         </div>
     </div>
 
