@@ -52,14 +52,28 @@ else
                                         @(i+1)
                                     </td>
                                     <td @onclick="e=> GetSubCategories(e, item)">
-                                        <input type="text" value="@item.Title" />
-                                        <button type="button">수정</button>
-                                        <button type="button">삭제</button>
+                                        <div class="row">
+                                            <div class="d-grid gap-0 col-lg-8 col">
+                                                <input type="text" class="form-control" value="@item.Title" readonly="@(ViewModel.SelectedCategory.Title != item.Title ? true : false)" />
+                                            </div>
+                                            <div class="d-grid gap-0 col-lg-2 col">
+                                                <button type="button" class="btn btn-secondary d-block" @onclick="e=> SetSelectedMainCategory(e, item)">🛠</button>
+                                            </div>
+                                            <div class="d-grid gap-0 col-lg-2 col">
+                                                <button type="button" class="btn btn-danger d-block">🗑</button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" />
+                    <button type="button">추가</button>
                 </div>
             </div>
 
@@ -89,9 +103,9 @@ else
                                         @(i+1)
                                     </td>
                                     <td>
-                                        <input type="text" value="@item.Title" />
-                                        <button type="button">수정</button>
-                                        <button type="button">삭제</button>
+                                        <input type="text" class="form-control" value="@item.Title" />
+                                        <button type="button" class="btn">수정</button>
+                                        <button type="button" class="btn btn-danger">삭제</button>
                                     </td>
                                 </tr>
                             }
@@ -99,7 +113,12 @@ else
                     </table>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" />
+                    <button type="button">추가</button>
+                </div>
+            </div>
         </div>
     </div>
 }
@@ -144,5 +163,14 @@ else
         }
 
         await ViewModel?.Initialize();
+    }
+
+    public void SetSelectedMainCategory(EventArgs e, MainCategory item)
+    {
+        if (ViewModel == null)
+            return;
+
+        ViewModel.SelectedCategory = item;
+
     }
 }

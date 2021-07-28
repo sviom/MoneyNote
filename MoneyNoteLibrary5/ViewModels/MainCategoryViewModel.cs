@@ -74,7 +74,7 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-        private MainCategory _SelectedCategory;
+        private MainCategory _SelectedCategory = new MainCategory();
         public MainCategory SelectedCategory
         {
             get { return _SelectedCategory; }
@@ -93,7 +93,7 @@ namespace MoneyNoteLibrary5.ViewModels
             }
         }
 
-        private SubCategory _SelectedSubCategory;
+        private SubCategory _SelectedSubCategory = new SubCategory();
         public SubCategory SelectedSubCategory
         {
             get { return _SelectedSubCategory; }
