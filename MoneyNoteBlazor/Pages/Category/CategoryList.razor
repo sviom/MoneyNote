@@ -10,59 +10,91 @@
 else
 {
     <div class="row">
-        <div class="col-lg-6 col">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>순번</th>
-                        <th>내용</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < ViewModel.MainCategories.Count; i++)
-                    {
-                        var item = ViewModel.MainCategories[i];
+        <div class="col-lg-3 col form-check">
+            <input type="radio" name="categoryDivision" value="true" class="form-check-input" checked="@ViewModel.Division" />
+            <label class="form-check-label">지출</label>
+        </div>
+        <div class="col-lg-3 col form-check">
+            <input type="radio" name="categoryDivision" value="false" class="form-check-input" checked="@ViewModel.Division" />
+            <label class="form-check-label">수입</label>
+        </div>
+    </div>
 
-                        <tr>
-                            <td>
-                                @(i+1)
-                            </td>
-                            <td @onclick="e=> Test(e, item)">
-                                <input type="text" value="@item.Title" />
-                                <button type="button">수정</button>
-                                <button type="button">삭제</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-lg-6 col">
+            <div class="row">
+                <div class="col">
+                    <h4>상위 카테고리</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>순번</th>
+                                <th>내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < ViewModel.MainCategories.Count; i++)
+                            {
+                                var item = ViewModel.MainCategories[i];
+
+                                <tr>
+                                    <td>
+                                        @(i+1)
+                                    </td>
+                                    <td @onclick="e=> GetSubCategories(e, item)">
+                                        <input type="text" value="@item.Title" />
+                                        <button type="button">수정</button>
+                                        <button type="button">삭제</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
         <div class="col-lg-6 col">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>순번</th>
-                        <th>내용</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < ViewModel.SubCategories.Count; i++)
-                    {
-                        var item = ViewModel.SubCategories[i];
+            <div class="row">
+                <div class="col">
+                    <h4>하위 카테고리</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>순번</th>
+                                <th>내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < ViewModel.SubCategories.Count; i++)
+                            {
+                                var item = ViewModel.SubCategories[i];
 
-                        <tr>
-                            <td>
-                                @(i+1)
-                            </td>
-                            <td>
-                                <input type="text" value="@item.Title" />
-                                <button type="button">수정</button>
-                                <button type="button">삭제</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                                <tr>
+                                    <td>
+                                        @(i+1)
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@item.Title" />
+                                        <button type="button">수정</button>
+                                        <button type="button">삭제</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 }
@@ -83,8 +115,14 @@ else
         //return base.OnInitializedAsync();
     }
 
-    public async Task Test(EventArgs e, MainCategory item)
+    public async Task GetSubCategories(EventArgs e, MainCategory item)
     {
         await ViewModel?.GetSubCategory(item);
+    }
+
+    public async Task GetMainCategoryWithType(ChangeEventArgs e, string typeValue)
+    {
+        ViewModel.Division = MoneyNoteLibrary5.Enums.MoneyEnum.MoneyCategory.Expense;
+        await ViewModel?.Initialize();
     }
 }
