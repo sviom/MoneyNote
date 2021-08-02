@@ -107,9 +107,19 @@ else
                                         @(i+1)
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" value="@item.Title" />
-                                        <button type="button" class="btn">수정</button>
-                                        <button type="button" class="btn btn-danger">삭제</button>
+                                        <div class="row">
+                                            <div class="d-grid gap-0 col-lg-8 col">
+                                                <input type="text" class="form-control" value="@item.Title" readonly="@(IsNotEqualSelectedItemTitle(item) ? true : false)" />
+                                            </div>
+                                            <div class="d-grid gap-0 col-lg-2 col">
+                                                <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateSubCategory(e, item)">
+                                                    @(IsNotEqualSelectedItemTitle(item) ? "🛠" : "💾")
+                                                </button>
+                                            </div>
+                                            <div class="d-grid gap-0 col-lg-2 col">
+                                                <button type="button" class="btn btn-danger d-block" @onclick="DeleteMainCategory">🗑</button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -118,9 +128,11 @@ else
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" />
-                    <button type="button">추가</button>
+                <div class="d-grid gap-0 col-lg-10 col">
+                    <input type="text" class="form-control" placeholder="새로운 카테고리 이름을 입력하세요." @bind="ViewModel.CategoryText" />
+                </div>
+                <div class="d-grid gap-0 col-lg-2 col">
+                    <button type="button" class="btn btn-primary" @onclick="SaveNewCategory">추가</button>
                 </div>
             </div>
         </div>
@@ -218,6 +230,11 @@ else
         }
 
         ViewModel.SelectedCategory = item;
+    }
+
+    public async Task UpdateSubCategory(EventArgs e, SubCategory item)
+    {
+        await ViewModel?.UpdateSubCategory();
     }
 
     public async Task DeleteMainCategory(EventArgs e)
