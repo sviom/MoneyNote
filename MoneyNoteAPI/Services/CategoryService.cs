@@ -56,18 +56,18 @@ namespace MoneyNoteAPI.Services
             }
         }
 
-        public ICategory SaveCategory(ICategory inputObject)
+        public ICategory SaveCategory<T>(ICategory inputObject) where T : class
         {
             try
             {
-                var saveResult = SqlLauncher.Insert(inputObject);
-                return saveResult;
+                var input = (T)inputObject;
+                var saveResult = SqlLauncher.Insert(input);
+                return (ICategory)saveResult;
             }
             catch (Exception ex)
             {
                 throw;
             }
-            return default;
         }
 
         public ICategory UpdateCategory(ICategory inputObject)

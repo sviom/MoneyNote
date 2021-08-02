@@ -63,7 +63,7 @@ namespace MoneyNoteAPI.Controllers
             {
                 var service = new CategoryService();
 
-                var saveResult = service.SaveCategory(item.Content);
+                var saveResult = service.SaveCategory<MainCategory>(item.Content);
 
                 result.Content = (MainCategory)saveResult;
                 result.Result = true;
@@ -83,7 +83,7 @@ namespace MoneyNoteAPI.Controllers
             {
                 var service = new CategoryService();
 
-                var saveResult = service.SaveCategory(item.Content);
+                var saveResult = service.SaveCategory<SubCategory>(item.Content);
 
                 result.Content = (SubCategory)saveResult;
                 result.Result = true;
