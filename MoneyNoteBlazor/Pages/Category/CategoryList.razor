@@ -47,11 +47,11 @@ else
                             {
                                 var item = ViewModel.MainCategories[i];
 
-                                <tr>
+                                <tr @onclick="e=> GetSubCategories(e, item)">
                                     <td>
                                         @(i+1)
                                     </td>
-                                    <td @onclick="e=> GetSubCategories(e, item)">
+                                    <td>
                                         <div class="row">
                                             <div class="d-grid gap-0 col-lg-8 col">
                                                 <input type="text" class="form-control" value="@item.Title" readonly="@(IsNotEqualSelectedItemTitle(item) ? true : false)" />
