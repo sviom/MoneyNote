@@ -73,9 +73,11 @@ else
                 </div>
             </div>
             <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" />
-                    <button type="button">추가</button>
+                <div class="d-grid gap-0 col-lg-10 col">
+                    <input type="text" class="form-control" placeholder="새로운 카테고리 이름을 입력하세요." @bind="ViewModel.CategoryText" />
+                </div>
+                <div class="d-grid gap-0 col-lg-2 col">
+                    <button type="button" class="btn btn-primary" @onclick="SaveNewCategory">추가</button>
                 </div>
             </div>
 
@@ -123,10 +125,42 @@ else
             </div>
         </div>
     </div>
+
+
+    @if (ShowDeleteAlert)
+    {
+
+    }
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Launch static backdrop modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    I will not close if you click outside me. Don't even try to press escape key.^
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
 
 @code {
     public MainCategoryViewModel ViewModel { get; set; }
+
+    public bool ShowDeleteAlert { get; set; }
 
     public bool IsNotEqualSelectedItemTitle(ICategory item)
     {
@@ -189,7 +223,18 @@ else
     public async Task DeleteMainCategory(EventArgs e)
     {
         // alert 띄워주기
+        if (!ShowDeleteAlert)
+        {
+            ShowDeleteAlert = true;
+            return;
+        }
 
-        await ViewModel?.DeleteCategory();
+
+        // await ViewModel?.DeleteCategory();
+    }
+
+    public async Task SaveNewCategory(EventArgs e)
+    {
+        await ViewModel?.SaveCategoryWithText();
     }
 }
