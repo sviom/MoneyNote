@@ -1,0 +1,40 @@
+﻿@using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
+@using MoneyNoteLibrary5.Enums;
+
+<div class="row">
+    <div class="d-grid gap-0 col-lg-8 col">
+        <input type="text" class="form-control" value="@CategoryItem.Title" readonly="@(IsNotEqualSelectedItemTitle(CategoryItem) ? true : false)" />
+    </div>
+    <div class="d-grid gap-0 col-lg-2 col">
+        <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateMainCategory(e, CategoryItem)">
+            @(IsNotEqualSelectedItemTitle(CategoryItem) ? "🛠" : "💾")
+        </button>
+    </div>
+    <div class="d-grid gap-0 col-lg-2 col">
+        <button type="button" class="btn btn-danger d-block" @onclick="DeleteMainCategory">🗑</button>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public ICategory CategoryItem { get; set; }
+
+    [Parameter]
+    public MainCategoryViewModel ViewModel { get; set; }
+
+    [Parameter]
+    public EventCallback<ICategory> UpdateCategoryEvent { get; set; }
+
+    public bool IsNotEqualSelectedItemTitle(ICategory item)
+    {
+        return ViewModel?.SelectedCategory.Title != item.Title;
+    }
+
+    public async Task UpdateCategory(ICategory category)
+    {
+        await UpdateCategoryEvent.InvokeAsync(category);
+    }
+
+}
