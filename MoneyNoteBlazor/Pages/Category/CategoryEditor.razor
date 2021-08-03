@@ -7,12 +7,12 @@
         <input type="text" class="form-control" value="@CategoryItem.Title" readonly="@(IsNotEqualSelectedItemTitle(CategoryItem) ? true : false)" />
     </div>
     <div class="d-grid gap-0 col-lg-2 col">
-        <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateMainCategory(e, CategoryItem)">
+        <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateCategory(e, CategoryItem)">
             @(IsNotEqualSelectedItemTitle(CategoryItem) ? "🛠" : "💾")
         </button>
     </div>
     <div class="d-grid gap-0 col-lg-2 col">
-        <button type="button" class="btn btn-danger d-block" @onclick="DeleteMainCategory">🗑</button>
+        <button type="button" class="btn btn-danger d-block" @onclick="e => DeleteCategory(e, CategoryItem)">🗑</button>
     </div>
 </div>
 
@@ -27,14 +27,21 @@
     [Parameter]
     public EventCallback<ICategory> UpdateCategoryEvent { get; set; }
 
+    [Parameter]
+    public EventCallback<ICategory> DeleteCategoryEvent { get; set; }
+
     public bool IsNotEqualSelectedItemTitle(ICategory item)
     {
         return ViewModel?.SelectedCategory.Title != item.Title;
     }
 
-    public async Task UpdateCategory(ICategory category)
+    public async Task UpdateCategory(EventArgs e, ICategory category)
     {
         await UpdateCategoryEvent.InvokeAsync(category);
     }
 
+    public async Task DeleteCategory(EventArgs e, ICategory category)
+    {
+        await DeleteCategoryEvent.InvokeAsync(category);
+    }
 }

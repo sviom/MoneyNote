@@ -52,9 +52,8 @@ else
                                         @(i+1)
                                     </td>
                                     <td>
-                                        <CategoryEditor ViewModel="ViewModel" CategoryItem="item" UpdateCategoryEvent="@UpdateMainCategory" />
-
-                                                                            
+                                        <CategoryEditor ViewModel="ViewModel" CategoryItem="item"
+                                                        UpdateCategoryEvent="@UpdateMainCategory" DeleteCategoryEvent="@DeleteMainCategory" />
                                     </td>
                                 </tr>
                             }
@@ -97,19 +96,8 @@ else
                                         @(i+1)
                                     </td>
                                     <td>
-                                        <div class="row">
-                                            <div class="d-grid gap-0 col-lg-8 col">
-                                                <input type="text" class="form-control" value="@item.Title" readonly="@(IsNotEqualSelectedItemTitle(item) ? true : false)" />
-                                            </div>
-                                            <div class="d-grid gap-0 col-lg-2 col">
-                                                <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateSubCategory(e, item)">
-                                                    @(IsNotEqualSelectedItemTitle(item) ? "🛠" : "💾")
-                                                </button>
-                                            </div>
-                                            <div class="d-grid gap-0 col-lg-2 col">
-                                                <button type="button" class="btn btn-danger d-block" @onclick="DeleteMainCategory">🗑</button>
-                                            </div>
-                                        </div>
+                                        <CategoryEditor ViewModel="ViewModel" CategoryItem="item"
+                                                        UpdateCategoryEvent="@UpdateSubCategory" DeleteCategoryEvent="@DeleteSubCategory" />
                                     </td>
                                 </tr>
                             }
@@ -208,20 +196,6 @@ else
         await ViewModel?.Initialize();
     }
 
-    //public async Task UpdateMainCategory(EventArgs e, MainCategory item)
-    //{
-    //    if (ViewModel == null)
-    //        return;
-
-    //    if (!IsNotEqualSelectedItemTitle(item))
-    //    {
-    //        await ViewModel?.UpdateCategory();
-    //        return;
-    //    }
-
-    //    ViewModel.SelectedCategory = item;
-    //}
-
     public async Task UpdateMainCategory(ICategory item)
     {
         if (ViewModel == null)
@@ -236,12 +210,25 @@ else
         ViewModel.SelectedCategory = (MainCategory)item;
     }
 
-    public async Task UpdateSubCategory(EventArgs e, SubCategory item)
+    public async Task UpdateSubCategory(ICategory item)
     {
         await ViewModel?.UpdateSubCategory();
     }
 
-    public async Task DeleteMainCategory(EventArgs e)
+    public async Task DeleteMainCategory(ICategory category)
+    {
+        // alert 띄워주기
+        if (!ShowDeleteAlert)
+        {
+            ShowDeleteAlert = true;
+            return;
+        }
+
+
+        // await ViewModel?.DeleteCategory();
+    }
+
+    public async Task DeleteSubCategory(ICategory category)
     {
         // alert 띄워주기
         if (!ShowDeleteAlert)
