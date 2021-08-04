@@ -170,16 +170,17 @@ namespace MoneyNoteLibrary5.ViewModels
             IsRunProgressRing = false;
         }
 
-        public async Task GetSubCategory(MainCategory selectedCategory)
+        public async Task GetSubCategory(MainCategory mainCategory)
         {
-            if (selectedCategory == null)
+            if (mainCategory == null)
                 return;
 
+            SelectedCategory = mainCategory;
 
             IsRunProgressRing = true;
             SubCategories = new ObservableCollection<SubCategory>();
             //var result = await MoneyApi.GetSubCategories.ApiLauncher<MainCategory, List<SubCategory>>(selectedCategory, ControllerEnum.category);
-            var result = await MoneyApi.GetSubCategories.ApiGetLauncher<ObservableCollection<SubCategory>>($"guid={selectedCategory.Id}", ControllerEnum.category);
+            var result = await MoneyApi.GetSubCategories.ApiGetLauncher<ObservableCollection<SubCategory>>($"guid={mainCategory.Id}", ControllerEnum.category);
             if (result.Result)
             {
                 foreach (var item in result.Content)
@@ -251,7 +252,7 @@ namespace MoneyNoteLibrary5.ViewModels
             if (LoginedUser == null)
                 return false;
 
-            if (SelectedCategory == null)
+            if (SelectedCategory == null || SelectedCategory.Id == Guid.Empty)
             {
                 ErrorMessage = "부모는 반드시 선택해주세요.";
                 return false;

@@ -105,14 +105,18 @@ else
                     </table>
                 </div>
             </div>
-            <div class="row">
-                <div class="d-grid gap-0 col-lg-8 col">
-                    <input type="text" class="form-control" placeholder="새로운 카테고리 이름을 입력하세요." @bind="ViewModel.CategoryText" />
+
+            @if (ViewModel.SelectedCategory != null && ViewModel.SelectedCategory.Id != Guid.Empty)
+            {
+                <div class="row">
+                    <div class="d-grid gap-0 col-lg-8 col">
+                        <input type="text" class="form-control" placeholder="새로운 카테고리 이름을 입력하세요." @bind="ViewModel.SubCategoryText" />
+                    </div>
+                    <div class="d-grid gap-0 col-lg-4 col">
+                        <button type="button" class="btn btn-primary" @onclick="ViewModel.SaveSubCategory">추가</button>
+                    </div>
                 </div>
-                <div class="d-grid gap-0 col-lg-4 col">
-                    <button type="button" class="btn btn-primary" @onclick="SaveNewCategory">추가</button>
-                </div>
-            </div>
+            }
         </div>
     </div>
 
