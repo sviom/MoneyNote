@@ -70,6 +70,20 @@ namespace MoneyNoteAPI.Services
             }
         }
 
+        public T UpdateCategory<T>(ICategory inputObject) where T : class
+        {
+            try
+            {
+                var result = SqlLauncher.Update<T>((T)inputObject);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public ICategory UpdateCategory(ICategory inputObject)
         {
             try
@@ -82,7 +96,6 @@ namespace MoneyNoteAPI.Services
             {
                 throw;
             }
-            return default;
         }
 
     }

@@ -102,7 +102,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new CategoryService();
-                var insertResult = service.UpdateCategory(item.Content);
+                var insertResult = service.UpdateCategory<MainCategory>(item.Content);
 
                 if (insertResult is MainCategory mainCategory)
                 {
@@ -124,7 +124,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new CategoryService();
-                var insertResult = service.UpdateCategory(item.Content);
+                var insertResult = service.UpdateCategory<SubCategory>(item.Content);
 
                 if (insertResult is SubCategory subCategory)
                 {
