@@ -198,6 +198,20 @@ namespace MoneyNoteLibrary5.ViewModels
             OnPropertyChanged(nameof(IsSaveButtonEnabled));
         }
 
+        public void ClearSelectedCategory()
+        {
+            SelectedCategory = new MainCategory();
+            IsShowSubCategory = false;
+        }
+
+        public void ClearSelectedSubCategory()
+        {
+            SelectedSubCategory = new SubCategory();
+            SubCategoryText = string.Empty;
+        }
+
+        #region 저장
+
         public async Task<bool> SaveCategoryWithText()
         {
             if (string.IsNullOrEmpty(CategoryText))
@@ -277,17 +291,9 @@ namespace MoneyNoteLibrary5.ViewModels
             return result.Result;
         }
 
-        public void ClearSelectedCategory()
-        {
-            SelectedCategory = new MainCategory();
-            IsShowSubCategory = false;
-        }
+        #endregion
 
-        public void ClearSelectedSubCategory()
-        {
-            SelectedSubCategory = new SubCategory();
-            SubCategoryText = string.Empty;
-        }
+        #region 업데이트
 
         public async Task<bool> UpdateCategory(MainCategory updateCategory)
         {
@@ -354,6 +360,10 @@ namespace MoneyNoteLibrary5.ViewModels
             return result.Result;
         }
 
+        #endregion
+
+        #region 삭제
+
         public async Task DeleteCategory()
         {
             if (LoginedUser == null)
@@ -396,5 +406,7 @@ namespace MoneyNoteLibrary5.ViewModels
             SubCategoryText = string.Empty;
             SubCategories.Remove(SelectedSubCategory);
         }
+
+        #endregion
     }
 }
