@@ -52,7 +52,7 @@ else
                                         @(i+1)
                                     </td>
                                     <td>
-                                        <CategoryEditor ViewModel="ViewModel" CategoryItem="item"
+                                        <CategoryEditor SelectedItem="ViewModel.SelectedCategory" CategoryItem="item"
                                                         UpdateCategoryEvent="@UpdateMainCategory" DeleteCategoryEvent="@DeleteMainCategory" />
                                     </td>
                                 </tr>
@@ -96,7 +96,7 @@ else
                                         @(i+1)
                                     </td>
                                     <td>
-                                        <CategoryEditor ViewModel="ViewModel" CategoryItem="item"
+                                        <CategoryEditor SelectedItem="ViewModel.SelectedSubCategory" CategoryItem="item"
                                                         UpdateCategoryEvent="@UpdateSubCategory" DeleteCategoryEvent="@DeleteSubCategory" />
                                     </td>
                                 </tr>
@@ -156,9 +156,12 @@ else
 
     public bool ShowDeleteAlert { get; set; }
 
-    public bool IsNotEqualSelectedItemTitle(ICategory item)
+    public bool IsNotEqualSelectedItemTitle(ICategory item, ICategory selectedCategory)
     {
-        return ViewModel.SelectedCategory.Title != item.Title;
+        if (item == null || selectedCategory == null)
+            return false;
+
+        return selectedCategory.Title != item.Title;
     }
 
     protected override async Task OnInitializedAsync()
@@ -205,9 +208,9 @@ else
         if (ViewModel == null)
             return;
 
-        if (!IsNotEqualSelectedItemTitle(item))
+        if (!IsNotEqualSelectedItemTitle(item, ViewModel.SelectedCategory))
         {
-            await ViewModel?.UpdateCategory();
+            await ViewModel?.UpdateCategory((MainCategory)item);
             return;
         }
 
@@ -216,7 +219,16 @@ else
 
     public async Task UpdateSubCategory(ICategory item)
     {
-        await ViewModel?.UpdateSubCategory();
+        if (ViewModel == null)
+            return;
+
+        if (!IsNotEqualSelectedItemTitle(item, ViewModel.SelectedSubCategory))
+        {
+            await ViewModel?.UpdateSubCategory((SubCategory)item);
+            return;
+        }
+
+        ViewModel.SelectedSubCategory = (SubCategory)item;
     }
 
     public async Task DeleteMainCategory(ICategory category)

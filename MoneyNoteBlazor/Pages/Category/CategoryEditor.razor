@@ -22,7 +22,7 @@
     public ICategory CategoryItem { get; set; }
 
     [Parameter]
-    public MainCategoryViewModel ViewModel { get; set; }
+    public ICategory SelectedItem { get; set; }
 
     [Parameter]
     public EventCallback<ICategory> UpdateCategoryEvent { get; set; }
@@ -32,7 +32,7 @@
 
     public bool IsNotEqualSelectedItemTitle(ICategory item)
     {
-        return ViewModel?.SelectedCategory.Title != item.Title;
+        return SelectedItem.Title != item.Title;
     }
 
     public async Task UpdateCategory(EventArgs e, ICategory category)

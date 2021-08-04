@@ -285,10 +285,11 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public void ClearSelectedSubCategory()
         {
-            SelectedSubCategory = null;
+            SelectedSubCategory = new SubCategory();
+            SubCategoryText = string.Empty;
         }
 
-        public async Task<bool> UpdateCategory()
+        public async Task<bool> UpdateCategory(MainCategory updateCategory)
         {
             //if (string.IsNullOrEmpty(CategoryText))
             //    return false;
@@ -317,7 +318,7 @@ namespace MoneyNoteLibrary5.ViewModels
             return result.Result;
         }
 
-        public async Task<bool> UpdateSubCategory()
+        public async Task<bool> UpdateSubCategory(SubCategory subCategory)
         {
             if (string.IsNullOrEmpty(SubCategoryText))
                 return false;
@@ -331,15 +332,15 @@ namespace MoneyNoteLibrary5.ViewModels
                 return false;
             }
 
-            var category = new SubCategory()
-            {
-                Division = Division,
-                Title = SubCategoryText,
-                MainCategoryId = SelectedCategory.Id
-            };
+            //var subCategory = new SubCategory()
+            //{
+            //    Division = Division,
+            //    Title = SubCategoryText,
+            //    MainCategoryId = SelectedCategory.Id
+            //};
 
-            category.Id = SelectedSubCategory.Id;
-            var result = await MoneyApi.UpdateSubCategory.ApiLauncher<SubCategory, SubCategory>(category, ControllerEnum.category);
+            subCategory.Id = SelectedSubCategory.Id;
+            var result = await MoneyApi.UpdateSubCategory.ApiLauncher<SubCategory, SubCategory>(subCategory, ControllerEnum.category);
 
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
@@ -348,6 +349,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 SubCategoryText = string.Empty;
                 SubCategories.Remove(SelectedSubCategory);
                 SubCategories.Add(result.Content);
+                ClearSelectedSubCategory();
             }
             return result.Result;
         }
