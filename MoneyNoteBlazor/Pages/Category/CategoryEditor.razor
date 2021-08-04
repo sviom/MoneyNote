@@ -4,7 +4,8 @@
 
 <div class="row">
     <div class="d-grid gap-0 col-lg-8 col">
-        <input type="text" class="form-control" value="@CategoryItem.Title" readonly="@(IsNotEqualSelectedItemTitle(CategoryItem) ? true : false)" />
+        <input type="text" class="form-control" @bind="CategoryItem.Title" 
+               readonly="@(IsNotEqualSelectedItemTitle(CategoryItem) ? true : false)" />
     </div>
     <div class="d-grid gap-0 col-lg-2 col">
         <button type="button" class="btn btn-secondary d-block" @onclick="e => UpdateCategory(e, CategoryItem)">
