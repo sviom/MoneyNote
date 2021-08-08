@@ -389,13 +389,16 @@ namespace MoneyNoteLibrary5.ViewModels
             ClearSelectedCategory();
         }
 
-        public async Task DeleteSubCategory()
+        public async Task DeleteSubCategory(SubCategory subCategory = null)
         {
             if (LoginedUser == null)
                 return;
 
-            if (SelectedSubCategory == null)
+            if (SelectedSubCategory == null && subCategory == null)
                 return;
+
+            if (subCategory != null)
+                SelectedSubCategory = subCategory;
 
             IsRunProgressRing = true;
             var deleteResult = await MoneyApi.DeleteSubCategory.ApiLauncher<SubCategory, bool>(SelectedSubCategory, ControllerEnum.category);

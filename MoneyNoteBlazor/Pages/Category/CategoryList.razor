@@ -239,9 +239,8 @@ else
         //    ShowDeleteAlert = true;
         //    return;
         //}
-
-
-        await ViewModel?.DeleteCategory((MainCategory)category);
+        if (category is MainCategory mainCategory)
+            await ViewModel?.DeleteCategory(mainCategory);
     }
 
     public async Task DeleteSubCategory(ICategory category)
@@ -253,8 +252,8 @@ else
         //    return;
         //}
 
-
-        await ViewModel?.DeleteSubCategory();
+        if (category is SubCategory subCategory)
+            await ViewModel?.DeleteSubCategory(subCategory);
     }
 
     public async Task SaveNewCategory(EventArgs e)
