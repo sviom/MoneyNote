@@ -234,27 +234,27 @@ else
     public async Task DeleteMainCategory(ICategory category)
     {
         // alert 띄워주기
-        if (!ShowDeleteAlert)
-        {
-            ShowDeleteAlert = true;
-            return;
-        }
+        //if (!ShowDeleteAlert)
+        //{
+        //    ShowDeleteAlert = true;
+        //    return;
+        //}
 
 
-        // await ViewModel?.DeleteCategory();
+        await ViewModel?.DeleteCategory((MainCategory)category);
     }
 
     public async Task DeleteSubCategory(ICategory category)
     {
         // alert 띄워주기
-        if (!ShowDeleteAlert)
-        {
-            ShowDeleteAlert = true;
-            return;
-        }
+        //if (!ShowDeleteAlert)
+        //{
+        //    ShowDeleteAlert = true;
+        //    return;
+        //}
 
 
-        // await ViewModel?.DeleteCategory();
+        await ViewModel?.DeleteSubCategory();
     }
 
     public async Task SaveNewCategory(EventArgs e)

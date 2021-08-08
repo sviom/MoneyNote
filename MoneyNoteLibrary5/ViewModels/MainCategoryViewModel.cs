@@ -364,13 +364,16 @@ namespace MoneyNoteLibrary5.ViewModels
 
         #region 삭제
 
-        public async Task DeleteCategory()
+        public async Task DeleteCategory(MainCategory mainCategory = null)
         {
             if (LoginedUser == null)
                 return;
 
-            if (SelectedCategory == null)
+            if (SelectedCategory == null && mainCategory == null)
                 return;
+
+            if (mainCategory != null)
+                SelectedCategory = mainCategory;
 
             IsRunProgressRing = true;
             var deleteResult = await MoneyApi.DeleteMainCategory.ApiLauncher<MainCategory, bool>(SelectedCategory, ControllerEnum.category);
