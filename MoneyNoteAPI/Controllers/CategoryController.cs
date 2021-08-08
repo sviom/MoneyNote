@@ -147,7 +147,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new CategoryService();
-                var deleteResult = service.DeleteCategory(item.Content);
+                var deleteResult = service.DeleteCategory<MainCategory>(item.Content);
 
                 result.Content = true;
                 result.Result = deleteResult;
@@ -167,7 +167,7 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 var service = new CategoryService();
-                var deleteResult = service.DeleteCategory(item.Content);
+                var deleteResult = service.DeleteCategory<SubCategory>(item.Content);
 
                 result.Content = deleteResult;
                 result.Result = deleteResult;

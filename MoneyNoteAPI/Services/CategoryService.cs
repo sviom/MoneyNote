@@ -43,11 +43,11 @@ namespace MoneyNoteAPI.Services
             }
         }
 
-        public bool DeleteCategory(ICategory categoryItem)
+        public bool DeleteCategory<T>(ICategory categoryItem) where T : class
         {
             try
             {
-                var result = SqlLauncher.Delete(categoryItem);
+                var result = SqlLauncher.Delete<T>((T)categoryItem);
                 return result;
             }
             catch (Exception ex)
