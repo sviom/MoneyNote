@@ -177,7 +177,9 @@ else
 
     public async Task SaveMoney(EventArgs e)
     {
-        await ViewModel.SaveMoney();
+        var result = await ViewModel.SaveMoney();
+        if (result)
+            MoveToList();
     }
 
     public async Task ModifyMoney(EventArgs e)
