@@ -75,10 +75,9 @@ namespace MoneyNoteAPI.Services
             try
             {
                 var result = SqlLauncher.Insert(moneyItem);
-                if (result == null) return null;
-
                 var bankBookResult = UpdateBankBookWithMoney(moneyItem);
-                if (!bankBookResult) return null;
+                if (!bankBookResult || result == null)
+                    return null;
 
                 return moneyItem;
             }
@@ -99,7 +98,7 @@ namespace MoneyNoteAPI.Services
                 var changeMoneyItem = new MoneyItem()
                 {
                     Money = Math.Abs(money),
-                    BankBook = moneyItem.BankBook,                    
+                    BankBook = moneyItem.BankBook,
                     Division = moneyItem.Division
                 };
 
