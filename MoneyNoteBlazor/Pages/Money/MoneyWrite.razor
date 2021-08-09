@@ -117,7 +117,13 @@ else
             {
                 <div class="row">
                     <div class="d-grid gap-0 col">
-                        <button class="btn btn-primary" @onclick="e => SaveMoney(e)" disabled="@(!ViewModel.IsEnableSave)">저장</button>
+                        <button class="btn btn-primary" type="button" @onclick="e => SaveMoney(e)" disabled="@(!ViewModel.IsEnableSave || ViewModel.IsRunProgressRing)">
+                            @if (ViewModel.IsRunProgressRing)
+                            {
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            }
+                            저장
+                        </button>
                     </div>
                 </div>
             }

@@ -393,6 +393,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 return false;
             try
             {
+                IsRunProgressRing = true;
                 double.TryParse(MoneyText, out double mo);
 
                 var item = new MoneyItem()
@@ -413,6 +414,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 if (!result.Result)
                     ErrorMessage = "에러가 발생했습니다.";
 
+                IsRunProgressRing = false;
                 return result.Result;
             }
             catch (Exception ex)
