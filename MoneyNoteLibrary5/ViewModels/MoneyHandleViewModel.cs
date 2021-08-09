@@ -389,8 +389,9 @@ namespace MoneyNoteLibrary5.ViewModels
 
         public async Task<bool> SaveMoney()
         {
-            if (LoginedUser == null)
+            if (LoginedUser == null || SelectedBankBook == null || MainCategory == null)
                 return false;
+
             try
             {
                 IsRunProgressRing = true;
@@ -479,6 +480,8 @@ namespace MoneyNoteLibrary5.ViewModels
                     if (item.Division == nowDivision)
                         MainCategories.Add(item);
                 }
+
+                MainCategoryId = MainCategories.FirstOrDefault().Id;
             }
 
             IsMainCategoryProgress = false;

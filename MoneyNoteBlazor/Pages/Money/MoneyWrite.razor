@@ -158,6 +158,7 @@ else
             ViewModel.RefViewModel = BankBookViewModel;
             await ViewModel.CategoryInitialize();
             await BankBookViewModel.GetBankBooks();
+            ViewModel.SelectedBankBook = BankBookViewModel.BankBooks.FirstOrDefault();
         }
         //return base.OnInitializedAsync();
     }
