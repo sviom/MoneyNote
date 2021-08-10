@@ -387,6 +387,63 @@ namespace MoneyNoteLibrary5.ViewModels
             OnPropertyChanged(nameof(IsEnableSave));
         }
 
+        #region 카테고리 관련 
+
+        public async Task GetMainCategories()
+        {
+            if (LoginedUser == null)
+                return;
+
+            MainCategories?.Clear();
+            SubCategories?.Clear();
+
+            IsRunProgressRing = true;
+            IsMainCategoryProgress = true;
+            var result = await MoneyApi.GetMainCategories.ApiLauncher<User, List<MainCategory>>(LoginedUser, ControllerEnum.category);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    var nowDivision = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+                    if (item.Division == nowDivision)
+                        MainCategories.Add(item);
+                }
+
+                MainCategoryId = MainCategories.FirstOrDefault().Id;
+            }
+
+            IsMainCategoryProgress = false;
+            IsRunProgressRing = false;
+        }
+
+        public async Task GetSubCategories()
+        {
+            if (MainCategoryId == Guid.Empty)
+                return;
+
+            if (LoginedUser == null)
+                return;
+
+            SubCategories?.Clear();
+
+            IsSubCategoryProgress = true;
+            IsRunProgressRing = true;
+            var result = await MoneyApi.GetSubCategories.ApiGetLauncher<ObservableCollection<SubCategory>>($"guid={MainCategoryId}", ControllerEnum.category);
+            if (result.Result)
+            {
+                foreach (var item in result.Content)
+                {
+                    var nowDivision = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
+                    if (item.Division == nowDivision)
+                        SubCategories.Add(item);
+                }
+            }
+            IsRunProgressRing = false;
+            IsSubCategoryProgress = false;
+        }
+
+        #endregion
+
         public async Task<bool> SaveMoney()
         {
             if (LoginedUser == null || SelectedBankBook == null || MainCategory == null)
@@ -443,75 +500,29 @@ namespace MoneyNoteLibrary5.ViewModels
             PreMoneyItem.UpdatedTime = DateTimeOffset.Now;
             PreMoneyItem.User = LoginedUser;
 
+            IsRunProgressRing = true;
+
+
             var result = await MoneyApi.UpdateMoney.ApiLauncher<MoneyItem, MoneyItem>(PreMoneyItem);
 
             if (!result.Result)
                 ErrorMessage = "에러가 발생했습니다.";
+
+            IsRunProgressRing = false;
 
             return result.Result;
         }
 
         public async Task<bool> DeleteMoney()
         {
+            IsRunProgressRing = true;
             PreMoneyItem.User = LoginedUser;
             var result = await MoneyApi.DeleteMoney.ApiLauncher<MoneyItem, bool>(PreMoneyItem);
             if (!result.Result)
                 ErrorMessage = "삭제 중 에러가 발생했습니다.";
 
+            IsRunProgressRing = false;
             return result.Content;
-        }
-
-        public async Task GetMainCategories()
-        {
-            if (LoginedUser == null)
-                return;
-
-            MainCategories?.Clear();
-            SubCategories?.Clear();
-
-            IsRunProgressRing = true;
-            IsMainCategoryProgress = true;
-            var result = await MoneyApi.GetMainCategories.ApiLauncher<User, List<MainCategory>>(LoginedUser, ControllerEnum.category);
-            if (result.Result)
-            {
-                foreach (var item in result.Content)
-                {
-                    var nowDivision = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
-                    if (item.Division == nowDivision)
-                        MainCategories.Add(item);
-                }
-
-                MainCategoryId = MainCategories.FirstOrDefault().Id;
-            }
-
-            IsMainCategoryProgress = false;
-            IsRunProgressRing = false;
-        }
-
-        public async Task GetSubCategories()
-        {
-            if (MainCategoryId == Guid.Empty)
-                return;
-
-            if (LoginedUser == null)
-                return;
-
-            SubCategories?.Clear();
-
-            IsSubCategoryProgress = true;
-            IsRunProgressRing = true;
-            var result = await MoneyApi.GetSubCategories.ApiGetLauncher<ObservableCollection<SubCategory>>($"guid={MainCategoryId}", ControllerEnum.category);
-            if (result.Result)
-            {
-                foreach (var item in result.Content)
-                {
-                    var nowDivision = IsIncome ? Enums.MoneyEnum.MoneyCategory.Income : Enums.MoneyEnum.MoneyCategory.Expense;
-                    if (item.Division == nowDivision)
-                        SubCategories.Add(item);
-                }
-            }
-            IsRunProgressRing = false;
-            IsSubCategoryProgress = false;
         }
     }
 }

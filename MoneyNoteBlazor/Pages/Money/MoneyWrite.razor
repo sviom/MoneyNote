@@ -106,10 +106,10 @@ else
             {
                 <div class="row">
                     <div class="d-grid gap-0 col-6">
-                        <button class="btn btn-primary d-block" type="button" @onclick="ModifyMoney">수정</button>
+                        <button class="btn btn-primary d-block" type="button" @onclick="ModifyMoney" disabled="@(ViewModel.IsRunProgressRing)">수정</button>
                     </div>
                     <div class="d-grid gap-0 col-6">
-                        <button class="btn btn-danger d-block" type="button" @onclick="DeleteMoney">삭제</button>
+                        <button class="btn btn-danger d-block" type="button" @onclick="DeleteMoney" disabled="@(ViewModel.IsRunProgressRing)">삭제</button>
                     </div>
                 </div>
             }
