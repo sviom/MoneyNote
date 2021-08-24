@@ -45,8 +45,10 @@ else
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>날짜</th>
                         <th>제목</th>
-                        <th>내용</th>
+                        <th>금액</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -54,10 +56,13 @@ else
                     {
                         <tr @onclick="e => MoveToModify(e, item.Id)">
                             <td>
+                                <span>@item.UpdatedTime.ToString("d")</span>
+                            </td>
+                            <td>
                                 <span>@(item != null ? item.Title : "없다")</span>
                             </td>
                             <td>
-                                <span>@(item != null ? item.Money : 0)</span>
+                                <span>@(item != null ? String.Format("{0:#,0}", item.Money) : 0)</span>
                             </td>
                         </tr>
 
