@@ -15,11 +15,9 @@ namespace MoneyNoteLibrary5.Migrations
                 name: "SubCategoryId",
                 table: "MoneyItems",
                 type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
+                nullable: true,
                 oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldNullable: true);
+                oldType: "uniqueidentifier");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MoneyItems_SubCategories_SubCategoryId",
@@ -27,7 +25,7 @@ namespace MoneyNoteLibrary5.Migrations
                 column: "SubCategoryId",
                 principalTable: "SubCategories",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.SetDefault);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -40,9 +38,11 @@ namespace MoneyNoteLibrary5.Migrations
                 name: "SubCategoryId",
                 table: "MoneyItems",
                 type: "uniqueidentifier",
-                nullable: true,
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
                 oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
+                oldType: "uniqueidentifier",
+                oldNullable: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MoneyItems_SubCategories_SubCategoryId",
@@ -50,7 +50,7 @@ namespace MoneyNoteLibrary5.Migrations
                 column: "SubCategoryId",
                 principalTable: "SubCategories",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

@@ -101,7 +101,7 @@ namespace MoneyNoteLibrary5.Migrations
                     b.Property<double>("Money")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("SubCategoryId")
+                    b.Property<Guid?>("SubCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -226,9 +226,7 @@ namespace MoneyNoteLibrary5.Migrations
 
                     b.HasOne("MoneyNoteLibrary5.Models.SubCategory", "SubCategory")
                         .WithMany()
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubCategoryId");
 
                     b.HasOne("MoneyNoteLibrary5.Models.User", "User")
                         .WithMany("MoneyItems")

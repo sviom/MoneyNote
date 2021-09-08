@@ -10,7 +10,7 @@ using MoneyNoteLibrary5.Context;
 namespace MoneyNoteLibrary5.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    [Migration("20210908141137_removeBankBookRequired3")]
+    [Migration("20210908142701_removeBankBookRequired3")]
     partial class removeBankBookRequired3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,7 +103,7 @@ namespace MoneyNoteLibrary5.Migrations
                     b.Property<double>("Money")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("SubCategoryId")
+                    b.Property<Guid?>("SubCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -228,9 +228,7 @@ namespace MoneyNoteLibrary5.Migrations
 
                     b.HasOne("MoneyNoteLibrary5.Models.SubCategory", "SubCategory")
                         .WithMany()
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SubCategoryId");
 
                     b.HasOne("MoneyNoteLibrary5.Models.User", "User")
                         .WithMany("MoneyItems")
