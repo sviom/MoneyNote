@@ -496,6 +496,7 @@ namespace MoneyNoteLibrary5.ViewModels
             PreMoneyItem.MainCategory = MainCategory;
             PreMoneyItem.MainCategoryId = MainCategoryId;
             PreMoneyItem.SubCategory = SubCategory;
+            PreMoneyItem.SubCategoryId = SubCategory.Id;
             PreMoneyItem.CreatedTime = CreatedTime;
             PreMoneyItem.UpdatedTime = DateTimeOffset.Now;
             PreMoneyItem.User = LoginedUser;
