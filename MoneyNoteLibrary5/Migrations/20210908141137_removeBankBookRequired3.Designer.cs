@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MoneyNoteAPI.Context;
+using MoneyNoteLibrary5.Context;
 
-namespace MoneyNoteAPI.Migrations
+namespace MoneyNoteLibrary5.Migrations
 {
     [DbContext(typeof(MoneyContext))]
-    [Migration("20210504144302_net5test")]
-    partial class net5test
+    [Migration("20210908141137_removeBankBookRequired3")]
+    partial class removeBankBookRequired3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("MoneyNoteLibrary5.Models.BankBook", b =>
@@ -85,7 +85,7 @@ namespace MoneyNoteAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BankBookId")
+                    b.Property<Guid?>("BankBookId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("CreatedTime")
@@ -103,7 +103,7 @@ namespace MoneyNoteAPI.Migrations
                     b.Property<double>("Money")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("SubCategoryId")
+                    b.Property<Guid>("SubCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -218,9 +218,7 @@ namespace MoneyNoteAPI.Migrations
                 {
                     b.HasOne("MoneyNoteLibrary5.Models.BankBook", "BankBook")
                         .WithMany()
-                        .HasForeignKey("BankBookId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("BankBookId");
 
                     b.HasOne("MoneyNoteLibrary5.Models.MainCategory", "MainCategory")
                         .WithMany()
@@ -230,7 +228,9 @@ namespace MoneyNoteAPI.Migrations
 
                     b.HasOne("MoneyNoteLibrary5.Models.SubCategory", "SubCategory")
                         .WithMany()
-                        .HasForeignKey("SubCategoryId");
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MoneyNoteLibrary5.Models.User", "User")
                         .WithMany("MoneyItems")

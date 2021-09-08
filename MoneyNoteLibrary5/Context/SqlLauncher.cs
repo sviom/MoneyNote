@@ -165,7 +165,7 @@ namespace MoneyNoteLibrary5.Context
             try
             {
                 using var db = new MoneyContext();
-                db.Entry(updateObject).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.Entry(updateObject).State = EntityState.Modified;
                 var set = db.Set<T>();
                 set.Update(updateObject);
                 int saveResult = db.SaveChanges();

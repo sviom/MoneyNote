@@ -94,6 +94,9 @@ namespace MoneyNoteAPI.Services
                 var result = SqlLauncher.Update(moneyItem);
                 if (result == null) return null;
 
+                var sss = SqlLauncher.Get<MoneyItem>(x => x.Id == moneyItem.Id);
+                var fff = GetMoney(x => x.Id == moneyItem.Id);
+
                 var money = oldMoney - moneyItem.Money;
                 var changeMoneyItem = new MoneyItem()
                 {
