@@ -26,7 +26,7 @@ namespace MoneyNoteAPI
 
         public IConfiguration Configuration { get; }
 
-        public string[] corsDomains => new string[] { "https://localhost:44327", "http://moneynote.azurewebsites.net" };
+        public string[] corsDomains => new string[] { "https://localhost:44327", "https://moneynote.azurewebsites.net" };
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
