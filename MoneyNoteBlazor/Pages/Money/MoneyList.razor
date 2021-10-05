@@ -3,43 +3,45 @@
 @using MoneyNoteLibrary5.Models;
 @inject IJSRuntime JS;
 
+
+<div class="row">
+    <div class="col align-middle">
+        <h3 class="display-6">사용 내역</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-9">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary"
+                    @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">
+                이전
+            </button>
+            <button type="button" class="btn btn-outline-primary">
+                @SelectedDate.ToString("yyyy-MM")
+            </button>
+            <button type="button" class="btn btn-outline-primary"
+                    @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(1))">
+                다음
+            </button>
+            <button type="button" class="btn btn-outline-primary"
+                    @onclick="e => GetMoneyListWithDate(e, DateTime.Now)">
+                오늘
+            </button>
+        </div>
+    </div>
+    <div class="col-3">
+        <NavLink href="/money/moneywrite" class="btn btn-outline-primary float-end">작성하기</NavLink>
+    </div>
+</div>
+
+
 @if (ViewModel == null || ViewModel.IsRunProgressRing)
 {
     <p>가져오는 중...</p>
 }
 else
 {
-    <div class="row">
-        <div class="col align-middle">
-            <h3 class="display-6">사용 내역</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-9">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary"
-                        @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(-1))">
-                    이전
-                </button>
-                <button type="button" class="btn btn-outline-primary">
-                    @SelectedDate.ToString("yyyy-MM")
-                </button>
-                <button type="button" class="btn btn-outline-primary"
-                        @onclick="e => GetMoneyListWithDate(e, SelectedDate.Date.AddMonths(1))">
-                    다음
-                </button>
-                <button type="button" class="btn btn-outline-primary"
-                        @onclick="e => GetMoneyListWithDate(e, DateTime.Now)">
-                    오늘
-                </button>
-            </div>
-        </div>
-        <div class="col-3">
-            <NavLink href="/money/moneywrite" class="btn btn-outline-primary float-end">작성하기</NavLink>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col">
             <table class="table table-hover">
