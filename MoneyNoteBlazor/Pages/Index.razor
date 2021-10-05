@@ -27,6 +27,8 @@
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="button" @onclick="Login">Sign in</button>
+        @*<button class="w-100 btn btn-lg btn-secondary" type="button">Sign Up</button>*@
+        <a href="/Users/SignUp" class="btn btn-link">Sign Up</a>
         <p class="mt-5 mb-3 text-muted">&copy; 2017–@DateTime.Now.Year</p>
     </form>
 </main>
@@ -97,7 +99,7 @@
             if (userInfo == "'null'" || userInfo == null)
                 return;
 
-            var user = JsonConvert.DeserializeObject<User>(userInfo);
+            var user = JsonConvert.DeserializeObject<MoneyNoteLibrary5.Models.User>(userInfo);
 
 
             if (user.Id != Guid.Empty)
