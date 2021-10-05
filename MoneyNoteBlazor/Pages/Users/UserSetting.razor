@@ -2,30 +2,76 @@
 @using MoneyNoteLibrary5.ViewModels;
 @using MoneyNoteLibrary5.Models;
 @using MoneyNoteLibrary5.Enums;
+@using MoneyNoteBlazor.Components;
 @inject IJSRuntime JS;
 
 <h3>사용자 설정</h3>
 
+<ModalAlert @ref="ClearModal" ConfirmEvent="ClearUserData" Title="초기화" Body="초기화 하시겠습니까?"></ModalAlert>
+
+<ModalAlert @ref="DeleteModal" ConfirmEvent="DeleteUser" Title="탈퇴" Body="정말로 회원 탈퇴 하시겠습니까?"></ModalAlert>
+
 <div class="row">
     <div class="col">
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-danger">삭제</button>
-            <button type="button" class="btn btn-warning">초기화</button>
+            <button type="button" class="btn btn-danger" @onclick="() => DeleteModal.Open()">삭제</button>
+            <button type="button" class="btn btn-warning" @onclick="() => ClearModal.Open()">초기화</button>
         </div>
     </div>
 </div>
 
 @code {
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    public SettingViewModel ViewModel { get; set; }
+
+    private ModalAlert DeleteModal { get; set; }
+
+    private ModalAlert ClearModal { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         if (SharedClass.SharedUser == null)
             SharedClass.SharedUser = await SharedClass.GetUserInfo(JS);
 
-        if (SharedClass.SharedUser != null)
+        if (SharedClass.SharedUser == null)
         {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            ViewModel = new SettingViewModel();
             //ViewModel = new MainCategoryViewModel(SharedClass.SharedUser, MoneyNoteLibrary5.Enums.MoneyEnum.MoneyCategory.Expense);
             //await ViewModel.Initialize();
         }
         //return base.OnInitializedAsync();
+    }
+
+    public async Task ClearUserData()
+    {
+        return;
+        if (SharedClass.SharedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+
+        var result = await ViewModel.ClearUserData(SharedClass.SharedUser);
+        if (result)
+            NavigationManager.NavigateTo("/");
+    }
+
+    public async Task DeleteUser()
+    {
+        return;
+        if (SharedClass.SharedUser == null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+
+        var result = await ViewModel.ClearUserData(SharedClass.SharedUser);
+        if (result)
+            NavigationManager.NavigateTo("/");
     }
 }
