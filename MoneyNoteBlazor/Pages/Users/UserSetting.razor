@@ -1,0 +1,31 @@
+﻿@page "/users/usersetting"
+@using MoneyNoteLibrary5.ViewModels;
+@using MoneyNoteLibrary5.Models;
+@using MoneyNoteLibrary5.Enums;
+@inject IJSRuntime JS;
+
+<h3>사용자 설정</h3>
+
+<div class="row">
+    <div class="col">
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-danger">삭제</button>
+            <button type="button" class="btn btn-warning">초기화</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (SharedClass.SharedUser == null)
+            SharedClass.SharedUser = await SharedClass.GetUserInfo(JS);
+
+        if (SharedClass.SharedUser != null)
+        {
+            //ViewModel = new MainCategoryViewModel(SharedClass.SharedUser, MoneyNoteLibrary5.Enums.MoneyEnum.MoneyCategory.Expense);
+            //await ViewModel.Initialize();
+        }
+        //return base.OnInitializedAsync();
+    }
+}
