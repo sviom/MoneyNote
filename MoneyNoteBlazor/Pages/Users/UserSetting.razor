@@ -16,7 +16,14 @@
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-danger" @onclick="() => DeleteModal.Open()">삭제</button>
             <button type="button" class="btn btn-warning" @onclick="() => ClearModal.Open()">초기화</button>
+            <button type="button" class="btn btn-close" @onclick="ToggleChangePassword">@ChangePasswordButtonText</button>
         </div>
+    </div>
+</div>
+
+<div class="row" style="@ChangePasswordHtmlStyle">
+    <div class="col">
+        <input type="text" />
     </div>
 </div>
 
@@ -30,6 +37,12 @@
     private ModalAlert DeleteModal { get; set; }
 
     private ModalAlert ClearModal { get; set; }
+
+    public bool isOpenChangePassword { get; set; }
+
+    public string ChangePasswordButtonText => isOpenChangePassword ? "변경창 닫기" : "비밀번호 변경";
+
+    public string ChangePasswordHtmlStyle => isOpenChangePassword ? "" : "display:none;";
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,5 +86,10 @@
         var result = await ViewModel.ClearUserData(SharedClass.SharedUser);
         if (result)
             NavigationManager.NavigateTo("/");
+    }
+
+    public void ToggleChangePassword()
+    {
+        isOpenChangePassword = !isOpenChangePassword;
     }
 }
