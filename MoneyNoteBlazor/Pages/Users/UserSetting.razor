@@ -16,16 +16,53 @@
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-danger" @onclick="() => DeleteModal.Open()">삭제</button>
             <button type="button" class="btn btn-warning" @onclick="() => ClearModal.Open()">초기화</button>
-            <button type="button" class="btn btn-close" @onclick="ToggleChangePassword">@ChangePasswordButtonText</button>
+            <button type="button" class="btn" @onclick="ToggleChangePassword">@ChangePasswordButtonText</button>
         </div>
     </div>
 </div>
 
-<div class="row" style="@ChangePasswordHtmlStyle">
-    <div class="col">
-        <input type="text" />
+
+<template style="@ChangePasswordHtmlStyle">
+
+    <div class="row">
+        <label class="col-4 col-lg-2 col-form-label">이전 비밀번호</label>
+        <div class="col-8 col-lg-10">
+            <input type="password" class="form-control" />
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <label class="col-4 col-lg-2 col-form-label">새로운 비밀번호</label>
+        <div class="col-8 col-lg-10">
+            <input type="password" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-4 col-lg-2 col-form-label">새로운 비밀번호 확인</label>
+        <div class="col-8 col-lg-10">
+            <input type="password" class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 mx-auto text-center">
+            <div class="row">
+                <div class="d-grid gap-0 col">
+                    <button class="btn btn-primary" type="button" @onclick="ChangePassword" disabled="@(ViewModel.IsRunProgressRing)">
+                        @if (ViewModel.IsRunProgressRing)
+                        {
+                            <ProgressSpiner />
+                        }
+                        저장
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
 
 @code {
 
@@ -86,6 +123,11 @@
         var result = await ViewModel.ClearUserData(SharedClass.SharedUser);
         if (result)
             NavigationManager.NavigateTo("/");
+    }
+
+    public async Task ChangePassword()
+    {
+
     }
 
     public void ToggleChangePassword()
