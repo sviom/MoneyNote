@@ -124,7 +124,11 @@ namespace MoneyNoteLibrary5.Enums
             /// <summary>
             /// 금액 상세 정보 가져오기
             /// </summary>
-            GetMoneyItem
+            GetMoneyItem,
+            /// <summary>
+            /// 비밀번호 변경
+            /// </summary>
+            ChangePassword
         }
 
         /// <summary>

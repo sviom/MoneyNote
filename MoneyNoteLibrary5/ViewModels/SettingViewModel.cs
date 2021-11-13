@@ -23,7 +23,7 @@ namespace MoneyNoteLibrary5.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public async Task<bool> LeaveApp(User signinedUser)
         {
             if (signinedUser == null)
@@ -59,20 +59,40 @@ namespace MoneyNoteLibrary5.ViewModels
             ErrorMessage = "초기화 과정에 오류가 발생했습니다.";
             return false;
         }
-        
-        public async Task<bool> ChangePassword(User user)
+
+        public bool CheckEqualConfirmPassword(string newPassword, string newConfirmPassword)
+        {
+            if (newPassword.Equals(newConfirmPassword))
+            {
+                return true;
+            }
+
+            ErrorMessage = "입력한 비밀번호가 일치하지 않습니다.";
+            return false;
+        }
+
+        public async Task<bool> ChangePassword(User user, string oldPassword, string newPassword, string newConfirmPassword)
         {
             if (user == null)
                 return false;
+                   
+            if (!CheckEqualConfirmPassword(newPassword, newConfirmPassword))
+                return false;
+
 
             IsRunProgressRing = true;
 
-            var result = await MoneyApi.ClearUser.ApiLauncher<User, bool>(user, ControllerEnum.user);
+            user.ConfirmPassword = newPassword;
+
+            var result = await MoneyApi.ChangePassword.ApiLauncher<User, bool>(user, ControllerEnum.user);
 
             IsRunProgressRing = false;
 
             if (result.Result)
+            {
+                ErrorMessage = string.Empty;
                 return true;
+            }
 
             ErrorMessage = "초기화 과정에 오류가 발생했습니다.";
             return false;
