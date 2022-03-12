@@ -16,7 +16,7 @@
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" @bind="ViewModel.Password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" @bind="ViewModel.Password" @onkeypress="PasswordOnKeyPress">
             <label for="floatingPassword">Password</label>
         </div>
 
@@ -88,7 +88,7 @@
     protected override async Task OnInitializedAsync()
     {
 #if DEBUG
-        await Task.Delay(1000);
+    await Task.Delay(1000);
 #endif
 
         var result = await SharedClass.GetItemInLocalStorage<string>(JS, SharedClass.Keys.KeepLogin);
@@ -132,6 +132,14 @@
 
 
             NavigationManager?.NavigateTo("/Money/MoneyList");
+        }
+    }
+
+    public async Task PasswordOnKeyPress(KeyboardEventArgs keyboardEventArgs)
+    {
+        if (keyboardEventArgs.Key == "Enter")
+        {
+            await Login();
         }
     }
 }
