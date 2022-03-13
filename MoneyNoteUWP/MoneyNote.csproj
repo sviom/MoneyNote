@@ -325,12 +325,6 @@
       <Version>6.8.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MoneyNoteLibrary\MoneyNoteLibrary.csproj">
-      <Project>{F6ABDC95-5DA5-43F8-B834-545380AF1EBA}</Project>
-      <Name>MoneyNoteLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
