@@ -54,21 +54,31 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in ViewModel?.MoneyList)
+                    @if (ViewModel?.MoneyList.Count > 0)
                     {
-                        <tr @onclick="e => MoveToModify(e, item.Id)">
-                            <td>
-                                <span>@item.UpdatedTime.ToString("d")</span>
-                            </td>
-                            <td>
-                                <span>@(item != null ? item.Title : "없다")</span>
-                            </td>
-                            <td>
-                                <span>@(item != null ? String.Format("{0:#,0}", item.Money) : 0)</span>
-                            </td>
-                        </tr>
+                        @foreach (var item in ViewModel?.MoneyList)
+                        {
+                            <tr @onclick="e => MoveToModify(e, item.Id)">
+                                <td>
+                                    <span>@item.UpdatedTime.ToString("d")</span>
+                                </td>
+                                <td>
+                                    <span>@(item != null ? item.Title : "없다")</span>
+                                </td>
+                                <td>
+                                    <span>@(item != null ? String.Format("{0:#,0}", item.Money) : 0)</span>
+                                </td>
+                            </tr>
 
+                        }
                     }
+                    else
+                    {
+                        <tr>
+                            <td colspan=3>리스트가 비었습니다.</td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>

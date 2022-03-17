@@ -28,18 +28,28 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in ViewModel?.BankBooks)
+                    @if (ViewModel?.BankBooks.Count > 0)
                     {
-                        <tr @onclick="e => MoveToModify(e, item.Id)">
-                            <td>
-                                <span>@(item != null ? item.Name : "없다")</span>
-                            </td>
-                            <td>
-                                <span>@(item != null ? item.Assets : 0)</span>
-                            </td>
-                        </tr>
+                        @foreach (var item in ViewModel?.BankBooks)
+                        {
+                            <tr @onclick="e => MoveToModify(e, item.Id)">
+                                <td>
+                                    <span>@(item != null ? item.Name : "없다")</span>
+                                </td>
+                                <td>
+                                    <span>@(item != null ? item.Assets : 0)</span>
+                                </td>
+                            </tr>
 
+                        }
                     }
+                    else
+                    {
+                        <tr>
+                            <td colspan=3>리스트가 비었습니다.</td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>
