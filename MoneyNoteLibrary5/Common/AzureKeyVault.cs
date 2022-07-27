@@ -26,16 +26,16 @@ namespace MoneyNoteLibrary5.Common
                 switch (secretName)
                 {
                     case KeyVaultName.MoneyNoteConnectionString:
-                        secretValue = "Server=tcp:todaylunch.database.windows.net,1433;Initial Catalog=moneynotedb;Persist Security Info=False;User ID=lunchadmin;Password=0vnrvjwuTek!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";//ex.Message;
+                        secretValue = "";
                         break;
                     case KeyVaultName.SaltPassword:
-                        secretValue = "gksqufvotmdnjem";
+                        secretValue = "";
                         break;
                     case KeyVaultName.MoneyNoteTestConnection:
                         secretValue = "";
                         break;
                     case KeyVaultName.MainEmailKey:
-                        secretValue = "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";
+                        secretValue = "";
                         break;
                     default:
                         secretValue = string.Empty;
