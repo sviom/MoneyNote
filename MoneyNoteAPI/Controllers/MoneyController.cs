@@ -12,7 +12,8 @@ using MoneyNoteLibrary5.Models;
 
 namespace MoneyNoteAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    // /[action]
+    [Route("api/[controller]")]
     [ApiController]
     public class MoneyController : ControllerBase
     {
@@ -38,79 +39,21 @@ namespace MoneyNoteAPI.Controllers
             return result;
         }
 
-        [HttpPost]
-        public ApiResult<List<MoneyItem>> GetMoneyListWithDate([FromBody] ApiRequest<User, DateTimeOffset> request)
+        [HttpGet]
+        public ApiResult<List<MoneyItem>> GetMoneyListWithDate(DateTimeOffset date)
         {
             var result = new ApiResult<List<MoneyItem>>();
 
             try
             {
-                var userInfo = request.Content;
-                var standardDate = request.SubContent;
+                // 사용자는 추후 쿠키나 세션 등에서 토큰으로 처리하도록 해야 함
+                var userInfo = new User(); // request.Content;
+                var standardDate = date;
 
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
                 var service = new MoneyService();
                 var moneyList = service.GetMoneyList(x => x.UserId.ToString() == userInfo.Id.ToString() && x.CreatedTime.Year == standardDate.Year && x.CreatedTime.Month == standardDate.Month);
                 result.Content = moneyList;
-                result.Result = true;
-            }
-            catch
-            {
-                result.Result = false;
-            }
-            return result;
-        }
-
-        [HttpPost]
-        public ApiResult<MoneyItem> SaveMoney([FromBody] ApiRequest<MoneyItem> item)
-        {
-            var result = new ApiResult<MoneyItem>();
-            try
-            {
-                var service = new MoneyService();
-                var insertResult = service.SaveMoney(item.Content);
-                result.Content = insertResult;
-                result.Result = true;
-            }
-            catch
-            {
-                result.Result = false;
-            }
-            return result;
-        }
-
-        [HttpPost]
-        public ApiResult<MoneyItem> UpdateMoney([FromBody] ApiRequest<MoneyItem> item)
-        {
-            var result = new ApiResult<MoneyItem>();
-            try
-            {
-                var service = new MoneyService();
-                var oldMoneyItem = service.GetMoney(x => x.Id == item.Content.Id);
-                var updateResult = service.UpdateMoney(oldMoneyItem.Money, item.Content);
-
-                //var updateResult = SqlLauncher.Update(item.Content);
-                result.Content = updateResult;
-                result.Result = true;
-            }
-            catch
-            {
-                result.Result = false;
-            }
-            return result;
-        }
-
-        [HttpPost]
-        public ApiResult<bool> DeleteMoney([FromBody] ApiRequest<MoneyItem> item)
-        {
-            var result = new ApiResult<bool>();
-            try
-            {
-                var service = new MoneyService();
-                var updateResult = service.DeleteMoney(item.Content);
-
-                //var updateResult = SqlLauncher.Update(item.Content);
-                result.Content = updateResult;
                 result.Result = true;
             }
             catch
@@ -144,5 +87,65 @@ namespace MoneyNoteAPI.Controllers
             }
             return result;
         }
+
+        [HttpPost]
+        public ApiResult<MoneyItem> SaveMoney([FromBody] ApiRequest<MoneyItem> item)
+        {
+            var result = new ApiResult<MoneyItem>();
+            try
+            {
+                var service = new MoneyService();
+                var insertResult = service.SaveMoney(item.Content);
+                result.Content = insertResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpPatch]
+        public ApiResult<MoneyItem> UpdateMoney([FromBody] ApiRequest<MoneyItem> item)
+        {
+            var result = new ApiResult<MoneyItem>();
+            try
+            {
+                var service = new MoneyService();
+                var oldMoneyItem = service.GetMoney(x => x.Id == item.Content.Id);
+                var updateResult = service.UpdateMoney(oldMoneyItem.Money, item.Content);
+
+                //var updateResult = SqlLauncher.Update(item.Content);
+                result.Content = updateResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+
+        [HttpDelete]
+        public ApiResult<bool> DeleteMoney([FromBody] ApiRequest<MoneyItem> item)
+        {
+            var result = new ApiResult<bool>();
+            try
+            {
+                var service = new MoneyService();
+                var updateResult = service.DeleteMoney(item.Content);
+
+                //var updateResult = SqlLauncher.Update(item.Content);
+                result.Content = updateResult;
+                result.Result = true;
+            }
+            catch
+            {
+                result.Result = false;
+            }
+            return result;
+        }
+   
     }
 }
