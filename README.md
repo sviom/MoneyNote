@@ -1,16 +1,12 @@
 MoneyNote
 ===========
 
- 가계부 어플리케이션입니다.
- 개인적으로 사용하기 위해 개발되었습니다.
- 
- - Azure SQL Server
- - UWP
- - c# 7.0
- - .Net Standard 2.0
- 
-위를 기반으로 작성되었으며, 스토어에는 나중에 배포될 예정입니다.
+개인적으로 사용되기 위한 가계부 어플리케이션 개발 프로젝트.
 
-Trello Link : https://trello.com/b/HRoOE9R2/moneynote
+.NET 6 기반
 
-Store link : https://www.microsoft.com/store/apps/9WZDNCRDCPW1
+API : ASP.NET Core 6
+웹 : ASP.NET Core Blazor (WASM)
+앱 : MAUI (Not started yet)
+
+공통 라이브러리 : .NET 6 Stardard Library
