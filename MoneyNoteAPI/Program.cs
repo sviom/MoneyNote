@@ -56,4 +56,6 @@ app.UseCors();
 
 app.MapRazorPages();
 
+app.MapControllers();
+
 app.Run();
