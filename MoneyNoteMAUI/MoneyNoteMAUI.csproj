@@ -45,4 +45,7 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\MoneyNoteLibrary5\MoneyNoteLibrary5.csproj" />
+	</ItemGroup>
 </Project>
