@@ -21,6 +21,10 @@
                 FontSize="32"
                 HorizontalOptions="Center" />
 
+            <!--<InputView Text="Input your id or email address." />-->
+            <Editor Placeholder="Input your id or email address" />
+
+
             <Label
                 Text="Welcome to .NET Multi-platform App UI"
                 SemanticProperties.HeadingLevel="Level2"
