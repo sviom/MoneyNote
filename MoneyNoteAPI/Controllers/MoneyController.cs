@@ -18,13 +18,14 @@ namespace MoneyNoteAPI.Controllers
     public class MoneyController : ControllerBase
     {
 
-        [HttpPost]
-        public ApiResult<List<MoneyItem>> GetAllMoney([FromBody] ApiRequest<string> user)
+        [HttpGet]
+        public ApiResult<List<MoneyItem>> Money()
         {
             var result = new ApiResult<List<MoneyItem>>();
 
             try
             {
+                // userid는 jwt 값으로 해결해야함
                 var baseId = user.Content;
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
                 var service = new MoneyService();
@@ -40,7 +41,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpGet]
-        public ApiResult<List<MoneyItem>> GetMoneyListWithDate(DateTimeOffset date)
+        public ApiResult<List<MoneyItem>> Money(DateTimeOffset date)
         {
             var result = new ApiResult<List<MoneyItem>>();
 
@@ -64,7 +65,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpGet]
-        public ApiResult<MoneyItem> GetMoneyItem(string guid)
+        public ApiResult<MoneyItem> Money(string guid)
         {
             var result = new ApiResult<MoneyItem>();
 
@@ -128,7 +129,7 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpDelete]
-        public ApiResult<bool> DeleteMoney([FromBody] ApiRequest<MoneyItem> item)
+        public ApiResult<bool> Money()
         {
             var result = new ApiResult<bool>();
             try
