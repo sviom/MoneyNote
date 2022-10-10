@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Demo22222',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,6 +27,23 @@ class MyApp extends StatelessWidget {
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
+  }
+}
+
+class WordWidget extends StatefulWidget {
+  // const WordWidget({Key? key}) : super(key: key);
+  // const RandomWords({super.key});
+  const WordWidget({super.key});
+
+  @override
+  State<WordWidget> createState() => _WordWidgetState();
+}
+
+class _WordWidgetState extends State<WordWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
+    return Text(wordPair.asPascalCase);
   }
 }
 
@@ -63,6 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final test = WordWidget();
+    const ss = Center(child: WordWidget());
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -95,9 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              'You have pushed the button this many times: ',
             ),
+            ss,
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
