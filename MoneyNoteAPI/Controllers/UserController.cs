@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using MoneyNoteAPI.Context;
+using MoneyNoteAPI.Models;
 using MoneyNoteAPI.Services;
 using MoneyNoteLibrary5;
 using MoneyNoteLibrary5.Common;
 using MoneyNoteLibrary5.Models;
+//using MoneyNoteLibrary5.Models;
 using Newtonsoft.Json;
 
 namespace MoneyNoteAPI.Controllers
@@ -20,9 +22,9 @@ namespace MoneyNoteAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public async Task<ApiResult<User>> SignUp([FromBody] ApiRequest<User> item)
+        public async Task<ApiActionResult<User>> SignUp([FromBody] ApiRequest<User> item)
         {
-            var result = new ApiResult<User>();
+            var result = new ApiActionResult<User>();
             try
             {
                 var service = new UserService();
@@ -69,6 +71,11 @@ namespace MoneyNoteAPI.Controllers
                 result.ResultMessage = "에러가 발생했습니다.";
                 result.Content = item.Content;
             }
+
+            var ss = StatusCode(500);
+
+            result.StatusCode(200);
+
             return result;
         }
 

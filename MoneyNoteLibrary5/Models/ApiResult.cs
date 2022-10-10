@@ -4,7 +4,14 @@ using System.Text;
 
 namespace MoneyNoteLibrary5.Models
 {
-    public class ApiResult<T>
+    public interface IApiResult
+    {
+        public bool Result { get; set; }
+        public string ResultMessage { get; set; }
+
+    }
+
+    public class ApiResult<T> : IApiResult
     {
         public ApiResult() { }
 
