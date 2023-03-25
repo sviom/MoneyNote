@@ -10,21 +10,18 @@ namespace MoneyNoteLibrary5.Models
 {
     public class SubCategory : ICommon, ICategory
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        [Required]
-        public string Title { get; set; }
-
-        [Required]
-        public MoneyCategory Division { get; set; }
-
-        [Required]
-        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
-
-        public DateTimeOffset UpdatedTime { get; set; } = DateTimeOffset.Now;
+        public MainCategory MainCategory { get; set; }
 
         public Guid MainCategoryId { get; set; }
+
+        public string Title { get; set; }
+
+        public MoneyCategory Division { get; set; }
+
+        public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
+
+        public DateTimeOffset UpdatedTime { get; set; }
     }
 }

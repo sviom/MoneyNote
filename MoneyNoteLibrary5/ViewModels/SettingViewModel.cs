@@ -83,7 +83,7 @@ namespace MoneyNoteLibrary5.ViewModels
             IsRunProgressRing = true;
 
             user.Password = UtilityLauncher.EncryptSHA256(newPassword);
-            user.ConfirmPassword = UtilityLauncher.EncryptSHA256(newConfirmPassword);
+            //user.ConfirmPassword = UtilityLauncher.EncryptSHA256(newConfirmPassword);
 
             var result = await MoneyApi.ChangePassword.ApiLauncher<User, bool>(user, ControllerEnum.user);
 
