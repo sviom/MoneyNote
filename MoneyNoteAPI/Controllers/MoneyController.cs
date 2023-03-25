@@ -26,11 +26,11 @@ namespace MoneyNoteAPI.Controllers
             try
             {
                 // userid는 jwt 값으로 해결해야함
-                var baseId = user.Content;
+                //var baseId = user.Content;
                 //UtilityLauncher.DecryptAES256(baseId, AzureKeyVault.SaltPassword);
-                var service = new MoneyService();
-                var moneyList = service.GetMoneyList(x => x.UserId.ToString() == baseId);
-                result.Content = moneyList;
+                //var service = new MoneyService();
+                //var moneyList = service.GetMoneyList(x => x.UserId.ToString() == baseId);
+                //result.Content = moneyList;
                 result.Result = true;
             }
             catch
@@ -129,16 +129,16 @@ namespace MoneyNoteAPI.Controllers
         }
 
         [HttpDelete]
-        public ApiResult<bool> Money()
+        public ApiResult<bool> DeleteMoney()
         {
             var result = new ApiResult<bool>();
             try
             {
                 var service = new MoneyService();
-                var updateResult = service.DeleteMoney(item.Content);
+                //var updateResult = service.DeleteMoney(item.Content);
 
                 //var updateResult = SqlLauncher.Update(item.Content);
-                result.Content = updateResult;
+                //result.Content = updateResult;
                 result.Result = true;
             }
             catch
