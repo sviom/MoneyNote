@@ -10,20 +10,27 @@ namespace MoneyNoteLibrary5.Models
 {
     public class MoneyItem : ICommon
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public string Title { get; set; }
 
+        [Required]
         public User User { get; set; }
 
+        [Required]
         public Guid UserId { get; set; }
 
+        [Required]
         public double Money { get; set; }
 
         public string Description { get; set; }
 
+        [Required]
         public MoneyCategory Division { get; set; }
 
+        [Required]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset UpdatedTime { get; set; }

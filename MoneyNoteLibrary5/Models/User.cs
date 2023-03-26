@@ -8,12 +8,17 @@ namespace MoneyNoteLibrary5.Models
 {
     public class User : ICommon
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
+        [Required]
         public string Password { get; set; }
 
         public List<MoneyItem> MoneyItems { get; set; }
@@ -22,10 +27,12 @@ namespace MoneyNoteLibrary5.Models
 
         public List<BankBook> BankBooks { get; set; }
 
+        [Required]
         public DateTimeOffset CreatedTime { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset UpdatedTime { get; set; }
 
+        [Required]
         public bool IsApproved { get; set; } = false;
     }
 }

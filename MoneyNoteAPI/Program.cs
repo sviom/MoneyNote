@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<MoneyContext>();
 builder.Services.AddDbContext<MoneyContext>(options =>
-                    options.UseSqlServer(AzureKeyVault.OnGetAsync(KeyVaultName.MoneyNoteConnectionString).Result),
+                    options.UseSqlServer('별도 저장된 쿼리'),
                     ServiceLifetime.Scoped,
                     ServiceLifetime.Scoped);
 
