@@ -5,19 +5,17 @@ module.exports = {
         node: true,
         es6: true,
     },
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         sourceType: 'module',
         parser: '@babel/eslint-parser',
         ecmaVersion: 2022,
     },
-    extends: [
-        // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
-        // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-        // 'plugin:vue/essential',
-        'eslint:recommended',
-    ],
+    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
     // required to lint *.vue files
-    // plugins: ['vue'],
+    plugins: ['@typescript-eslint'],
     // add your custom rules here
-    rules: {},
+    rules: {
+        eqeqeq: ['warn', 'always'],
+    },
 };
